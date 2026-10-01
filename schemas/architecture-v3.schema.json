@@ -1,0 +1,735 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Merestone architecture-v3",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": [
+        "3.0"
+      ]
+    },
+    "assessment_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "system_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authorization_ref": {
+      "type": "string"
+    },
+    "snapshot_ref": {
+      "type": "string"
+    },
+    "inventory_review": {
+      "type": "object",
+      "properties": {
+        "reviewer": {
+          "type": "string"
+        },
+        "reviewed_at": {
+          "type": "string"
+        },
+        "evidence_ref": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "reviewer",
+        "reviewed_at",
+        "evidence_ref"
+      ],
+      "additionalProperties": false
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "owner": {
+            "type": "string"
+          },
+          "provider_responsibility": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "owner",
+          "provider_responsibility"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "routes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "asset_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "boundary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "actor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "access": {
+            "type": "string",
+            "enum": [
+              "black-box",
+              "gray-box",
+              "white-box",
+              "unknown",
+              "none"
+            ]
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "in_scope",
+              "out_of_scope"
+            ]
+          },
+          "capabilities": {
+            "type": "object",
+            "properties": {
+              "api": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "artifact_loading": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "automated_judge": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "automated_scanner": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "autonomous_loop": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "cache": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "code_execution": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "conversation_storage": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "delegation": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "dependencies": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "deployment": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "effectful_operations": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "external_provider": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "file_access": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "fine_tuning": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "guardrail": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "html_rendering": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "human_approval": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "llm_generation": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "mcp_client": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "mcp_host": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "mcp_http": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "mcp_server": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "mcp_stdio": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "model_inference": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "multi_tenant": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "multimodal_input": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "network_egress": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "oauth": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "oauth_proxy": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "persistent_memory": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "predictive_model": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "retrieval": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "scheduled_or_event_trigger": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "streaming": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "telemetry": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "text_to_sql": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "tool_calling": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              },
+              "training": {
+                "type": "string",
+                "enum": [
+                  "present",
+                  "absent",
+                  "unknown"
+                ]
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
+          "capability_evidence": {
+            "type": "object",
+            "properties": {
+              "api": {
+                "type": "string"
+              },
+              "artifact_loading": {
+                "type": "string"
+              },
+              "automated_judge": {
+                "type": "string"
+              },
+              "automated_scanner": {
+                "type": "string"
+              },
+              "autonomous_loop": {
+                "type": "string"
+              },
+              "cache": {
+                "type": "string"
+              },
+              "code_execution": {
+                "type": "string"
+              },
+              "conversation_storage": {
+                "type": "string"
+              },
+              "delegation": {
+                "type": "string"
+              },
+              "dependencies": {
+                "type": "string"
+              },
+              "deployment": {
+                "type": "string"
+              },
+              "effectful_operations": {
+                "type": "string"
+              },
+              "external_provider": {
+                "type": "string"
+              },
+              "file_access": {
+                "type": "string"
+              },
+              "fine_tuning": {
+                "type": "string"
+              },
+              "guardrail": {
+                "type": "string"
+              },
+              "html_rendering": {
+                "type": "string"
+              },
+              "human_approval": {
+                "type": "string"
+              },
+              "llm_generation": {
+                "type": "string"
+              },
+              "mcp_client": {
+                "type": "string"
+              },
+              "mcp_host": {
+                "type": "string"
+              },
+              "mcp_http": {
+                "type": "string"
+              },
+              "mcp_server": {
+                "type": "string"
+              },
+              "mcp_stdio": {
+                "type": "string"
+              },
+              "model_inference": {
+                "type": "string"
+              },
+              "multi_tenant": {
+                "type": "string"
+              },
+              "multimodal_input": {
+                "type": "string"
+              },
+              "network_egress": {
+                "type": "string"
+              },
+              "oauth": {
+                "type": "string"
+              },
+              "oauth_proxy": {
+                "type": "string"
+              },
+              "persistent_memory": {
+                "type": "string"
+              },
+              "predictive_model": {
+                "type": "string"
+              },
+              "retrieval": {
+                "type": "string"
+              },
+              "scheduled_or_event_trigger": {
+                "type": "string"
+              },
+              "streaming": {
+                "type": "string"
+              },
+              "telemetry": {
+                "type": "string"
+              },
+              "text_to_sql": {
+                "type": "string"
+              },
+              "tool_calling": {
+                "type": "string"
+              },
+              "training": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
+          "threat_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1
+          },
+          "activity_types": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "DESIGN",
+                "CONFIG",
+                "TEST",
+                "REDTEAM"
+              ]
+            },
+            "minItems": 1
+          },
+          "test_protocols": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "case_id",
+                "required_variants",
+                "min_trials_per_variant",
+                "design",
+                "decision_rule",
+                "justification"
+              ],
+              "properties": {
+                "case_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "required_variants": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "minItems": 1,
+                  "uniqueItems": true
+                },
+                "min_trials_per_variant": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "design": {
+                  "enum": [
+                    "deterministic",
+                    "stochastic-fixed",
+                    "adaptive-exploration"
+                  ]
+                },
+                "decision_rule": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "justification": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "id",
+          "asset_id",
+          "boundary",
+          "actor",
+          "access",
+          "scope",
+          "capabilities",
+          "capability_evidence",
+          "threat_ids",
+          "activity_types"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "threats": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hypothesis": {
+            "type": "string",
+            "minLength": 1
+          },
+          "risk": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "hypothesis",
+          "risk"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "limits": {
+      "type": "object",
+      "properties": {
+        "requests": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cost_minor_units": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "duration_seconds": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "concurrency": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "requests",
+        "tokens",
+        "cost_minor_units",
+        "duration_seconds",
+        "concurrency"
+      ],
+      "additionalProperties": false
+    },
+    "stop_conditions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "evidence_store": {
+      "type": "string"
+    },
+    "provenance": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "assessment_id",
+    "system_name",
+    "authorization_ref",
+    "snapshot_ref",
+    "inventory_review",
+    "assets",
+    "routes",
+    "threats",
+    "limits",
+    "stop_conditions",
+    "evidence_store",
+    "provenance"
+  ],
+  "additionalProperties": false
+}

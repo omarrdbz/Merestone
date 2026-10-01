@@ -1,0 +1,102 @@
+{
+  "id": "FND-LAB-rag",
+  "title": "Lab: RAG retrieval ACL",
+  "state": "ready_for_retest",
+  "asset_ids": [
+    "LAB-rag"
+  ],
+  "threat_ids": [
+    "TH-001"
+  ],
+  "control_ids": [
+    "CTL-AUTHORIZATION"
+  ],
+  "case_ids": [
+    "AI-006"
+  ],
+  "task_ids": [
+    "TASK-7e3a91cd008c751b"
+  ],
+  "evidence_ids": [
+    "rag-0-baseline",
+    "rag-0-effect",
+    "rag-0-identity",
+    "rag-0-input",
+    "rag-0-reachability",
+    "rag-0-response",
+    "rag-1-baseline",
+    "rag-1-effect",
+    "rag-1-identity",
+    "rag-1-input",
+    "rag-1-reachability",
+    "rag-1-response",
+    "rag-2-baseline",
+    "rag-2-effect",
+    "rag-2-identity",
+    "rag-2-input",
+    "rag-2-reachability",
+    "rag-2-response"
+  ],
+  "root_cause": "Retrieval does not filter by tenant before building the context.",
+  "expected": "no B in context A",
+  "observed": "[\"A\", \"B\"]",
+  "proven_impact": "Effect in a local fixture with synthetic data; see evidence.",
+  "potential_impact": "Not extrapolated to a real system.",
+  "impact": 1,
+  "feasibility": 5,
+  "risk_rationale": "Teaching prioritization; the fixture contains no real data or actions.",
+  "confidence": "high",
+  "owner": "Lab owner (example role)",
+  "due_at": "2099-01-01T00:00:00Z",
+  "containment": "Shut down the fixture; it has no network exposure.",
+  "remediation": "Apply the control from the fixture's secure configuration.",
+  "acceptance_criteria": "Independent reviewer confirms original, neighbor and benign in the secure evidence; the other cases remain pending.",
+  "retest_plan_ids": [
+    "32cfb190-ba02-4939-8192-f01d4f47e323"
+  ],
+  "risk_acceptance": {
+    "approver": "",
+    "reason": "",
+    "expires_at": "",
+    "compensation": ""
+  },
+  "history": [
+    {
+      "at": "2026-10-01T18:34:02.134551+00:00",
+      "actor": "local_pilots.py; no human approval",
+      "from": "",
+      "to": "proposed",
+      "reason": "Observed effect"
+    },
+    {
+      "at": "2026-10-01T18:34:02.134551+00:00",
+      "actor": "local_pilots.py; no human approval",
+      "from": "proposed",
+      "to": "confirmed",
+      "reason": "Original and neighbor show a violation"
+    },
+    {
+      "at": "2026-10-01T18:34:02.134551+00:00",
+      "actor": "local_pilots.py; no human approval",
+      "from": "confirmed",
+      "to": "remediating",
+      "reason": "Corrected configuration available"
+    },
+    {
+      "at": "2026-10-01T18:34:02.134551+00:00",
+      "actor": "local_pilots.py; no human approval",
+      "from": "remediating",
+      "to": "ready_for_retest",
+      "reason": "Secure trials performed; human review pending"
+    }
+  ],
+  "closure": {
+    "reviewer": "",
+    "change_evidence_ref": "",
+    "original_trial_ref": "",
+    "neighbor_trial_ref": "",
+    "benign_trial_ref": "",
+    "review_evidence_ref": "",
+    "criteria_met": false
+  }
+}

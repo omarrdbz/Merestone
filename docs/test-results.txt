@@ -1,0 +1,49 @@
+test_changed_depth_invalidates_manifest (test_governance.GovernanceTests) ... ok
+test_documentary_closure_does_not_require_attack_trials (test_governance.GovernanceTests) ... ok
+test_earlier_block_not_downstream_pass (test_governance.GovernanceTests) ... ok
+test_expired_risk_rejected (test_governance.GovernanceTests) ... ok
+test_finding_history_and_references (test_governance.GovernanceTests) ... ok
+test_import_event_verifies_bytes (test_governance.GovernanceTests) ... ok
+test_missing_planned_variant_rejected (test_governance.GovernanceTests) ... ok
+test_module_coverage_retains_nonapplicable (test_governance.GovernanceTests) ... ok
+test_no_closure_without_retest (test_governance.GovernanceTests) ... ok
+test_reduced_sample_rejected (test_governance.GovernanceTests) ... ok
+test_report_includes_verified_findings (test_governance.GovernanceTests) ... ok
+test_unplanned_protocol_never_pass (test_governance.GovernanceTests) ... ok
+test_wrong_snapshot_rejected (test_governance.GovernanceTests) ... ok
+test_any_of (test_jsonutil.JsonUtilTests) ... ok
+test_arrays (test_jsonutil.JsonUtilTests) ... ok
+test_bom_accepted (test_jsonutil.JsonUtilTests) ... ok
+test_canonical_is_order_independent (test_jsonutil.JsonUtilTests) ... ok
+test_duplicate_keys_rejected (test_jsonutil.JsonUtilTests) ... ok
+test_non_finite_rejected (test_jsonutil.JsonUtilTests) ... ok
+test_required_and_additional_properties (test_jsonutil.JsonUtilTests) ... ok
+test_types_enum_pattern_bounds (test_jsonutil.JsonUtilTests) ... ok
+test_write_roundtrip (test_jsonutil.JsonUtilTests) ... ok
+test_all_capabilities_select_conditional_cases (test_operational.OperationalTests) ... ok
+test_altered_case_rejected (test_operational.OperationalTests) ... ok
+test_complete_documentary_review (test_operational.OperationalTests) ... ok
+test_core_design_required (test_operational.OperationalTests) ... ok
+test_deleted_task_rejected (test_operational.OperationalTests) ... ok
+test_duplicate_trial_rejected (test_operational.OperationalTests) ... ok
+test_external_manifest_pins_scope (test_operational.OperationalTests) ... ok
+test_fail_cannot_be_hidden (test_operational.OperationalTests) ... ok
+test_incomplete_evidence_never_green (test_operational.OperationalTests) ... ok
+test_markdown_contains_evidence_oracles_originals (test_operational.OperationalTests) ... ok
+test_mcp_stdio_without_llm_oauth (test_operational.OperationalTests) ... ok
+test_no_overwrite (test_operational.OperationalTests) ... ERROR: Existing output/manifest; do not overwrite the log
+ok
+test_path_traversal_rejected (test_operational.OperationalTests) ... ok
+test_profile_drafts_not_green (test_operational.OperationalTests) ... ok
+test_rag_without_tools_sql_or_html (test_operational.OperationalTests) ... ok
+test_same_case_two_assets_allowed (test_operational.OperationalTests) ... ok
+test_source_boundaries_and_ids (test_operational.OperationalTests) ... ok
+test_technical_fail_and_pass (test_operational.OperationalTests) ... ok
+test_unknown_cannot_be_completed (test_operational.OperationalTests) ... ok
+test_unknown_is_not_absent (test_operational.OperationalTests) ... ok
+test_unreached_input_not_pass (test_operational.OperationalTests) ... ok
+
+----------------------------------------------------------------------
+Ran 43 tests in 19.097s
+
+OK

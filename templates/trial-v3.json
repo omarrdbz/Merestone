@@ -1,0 +1,19 @@
+{
+  "trial_id": "TRIAL-001",
+  "variant": "original",
+  "example_id": "",
+  "technique_id": "",
+  "snapshot_ref": "",
+  "execution": "NOT_RUN",
+  "result": "",
+  "baseline_ok": false,
+  "reachability": "",
+  "blocking_control_id": "",
+  "identity": "",
+  "expected": "",
+  "observed": "",
+  "evidence_ids": [],
+  "rationale": "",
+  "parameters_ref": "",
+  "adaptation_diff": ""
+}

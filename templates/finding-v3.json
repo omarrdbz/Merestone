@@ -1,0 +1,42 @@
+{
+  "id": "FND-001",
+  "title": "",
+  "state": "proposed",
+  "asset_ids": [],
+  "threat_ids": [],
+  "control_ids": [],
+  "case_ids": [],
+  "task_ids": [],
+  "evidence_ids": [],
+  "root_cause": "",
+  "expected": "",
+  "observed": "",
+  "proven_impact": "",
+  "potential_impact": "",
+  "impact": 1,
+  "feasibility": 1,
+  "risk_rationale": "",
+  "confidence": "low",
+  "owner": "",
+  "due_at": "",
+  "containment": "",
+  "remediation": "",
+  "acceptance_criteria": "",
+  "retest_plan_ids": [],
+  "risk_acceptance": {
+    "approver": "",
+    "reason": "",
+    "expires_at": "",
+    "compensation": ""
+  },
+  "history": [],
+  "closure": {
+    "reviewer": "",
+    "change_evidence_ref": "",
+    "original_trial_ref": "",
+    "neighbor_trial_ref": "",
+    "benign_trial_ref": "",
+    "review_evidence_ref": "",
+    "criteria_met": false
+  }
+}

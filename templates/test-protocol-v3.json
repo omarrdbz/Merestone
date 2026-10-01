@@ -1,0 +1,12 @@
+{
+  "case_id": "AI-006",
+  "required_variants": [
+    "original",
+    "cache-warm",
+    "revoked-role"
+  ],
+  "min_trials_per_variant": 1,
+  "design": "deterministic",
+  "decision_rule": "No unauthorized chunk in the context; authorized baseline available.",
+  "justification": "Deterministic ACL check under three independent conditions; it does not measure the stochastic robustness of an LLM."
+}

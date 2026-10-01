@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "required_variants",
+    "min_trials_per_variant",
+    "design",
+    "decision_rule",
+    "justification"
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "required_variants": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "min_trials_per_variant": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "design": {
+      "enum": [
+        "deterministic",
+        "stochastic-fixed",
+        "adaptive-exploration"
+      ]
+    },
+    "decision_rule": {
+      "type": "string",
+      "minLength": 1
+    },
+    "justification": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

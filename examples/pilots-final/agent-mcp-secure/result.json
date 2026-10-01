@@ -1,0 +1,127 @@
+{
+  "plan_id": "09d9b30a-045f-4c22-8885-34087e60a7d3",
+  "counts": {
+    "NOT_APPLICABLE": 59,
+    "NOT_RUN": 21,
+    "PASS": 1
+  },
+  "coverage_by_module": {
+    "LLM": {
+      "NOT_APPLICABLE": 7
+    },
+    "RAG": {
+      "NOT_APPLICABLE": 7
+    },
+    "CORE": {
+      "NOT_APPLICABLE": 7,
+      "NOT_RUN": 11
+    },
+    "AGENT": {
+      "NOT_APPLICABLE": 5,
+      "NOT_RUN": 2
+    },
+    "OUTPUT": {
+      "NOT_APPLICABLE": 3
+    },
+    "TOOLS": {
+      "NOT_RUN": 2,
+      "PASS": 1,
+      "NOT_APPLICABLE": 3
+    },
+    "MCP": {
+      "NOT_RUN": 4,
+      "NOT_APPLICABLE": 4
+    },
+    "PLATFORM": {
+      "NOT_APPLICABLE": 8,
+      "NOT_RUN": 1
+    },
+    "MODEL": {
+      "NOT_APPLICABLE": 8
+    },
+    "ML-DATA": {
+      "NOT_APPLICABLE": 1
+    },
+    "MULTIMODAL": {
+      "NOT_APPLICABLE": 1
+    },
+    "SCENARIOS": {
+      "NOT_APPLICABLE": 5,
+      "NOT_RUN": 1
+    }
+  },
+  "activity_types_selected": [
+    "CONFIG",
+    "DESIGN",
+    "REDTEAM",
+    "TEST"
+  ],
+  "coverage_by_activity": {
+    "CONFIG": {
+      "NOT_RUN": 3,
+      "NOT_APPLICABLE": 3
+    },
+    "DESIGN": {
+      "NOT_APPLICABLE": 1,
+      "NOT_RUN": 8
+    },
+    "REDTEAM": {
+      "NOT_APPLICABLE": 5,
+      "NOT_RUN": 1
+    },
+    "TEST": {
+      "NOT_APPLICABLE": 50,
+      "NOT_RUN": 9,
+      "PASS": 1
+    }
+  },
+  "scope_and_access": {
+    "accessible": 22
+  },
+  "trials_by_task_and_variant": {
+    "TASK-03e158401782471d": {
+      "benign": {
+        "PASS": 1
+      },
+      "neighbor": {
+        "PASS": 1
+      },
+      "original": {
+        "PASS": 1
+      }
+    }
+  },
+  "applicable_obligations": 22,
+  "unknown_obligations": 0,
+  "decided_obligations": 1,
+  "excluded_obligations": 0,
+  "failures": 0,
+  "unresolved": [
+    "TASK-2a71f1391a899154:NOT_RUN:",
+    "TASK-31dc760f56d1cf7d:NOT_RUN:",
+    "TASK-f3681980fdfee2e5:NOT_RUN:",
+    "TASK-0797bf7b142e0e0e:NOT_RUN:",
+    "TASK-6192a3df470fd9b9:NOT_RUN:",
+    "TASK-788fa316ee80b404:NOT_RUN:",
+    "TASK-1aff1eedf8e1706d:NOT_RUN:",
+    "TASK-a1aedca6225c9745:NOT_RUN:",
+    "TASK-43eb2fdcd9f8bc60:NOT_RUN:",
+    "TASK-2850d63864ad23ed:NOT_RUN:",
+    "TASK-f0851d21b6f6ae94:NOT_RUN:",
+    "TASK-7a2c3109031609c7:NOT_RUN:",
+    "TASK-9f498249670dc454:NOT_RUN:",
+    "TASK-9a6c18b446bbb715:NOT_RUN:",
+    "TASK-f338e699e10760a2:NOT_RUN:",
+    "TASK-9f2f6061cd6016d7:NOT_RUN:",
+    "TASK-94a19b7252871d34:NOT_RUN:",
+    "TASK-8594c89760bbe80d:NOT_RUN:",
+    "TASK-2cb97bccd8f912db:NOT_RUN:",
+    "TASK-50849305944195c7:NOT_RUN:",
+    "TASK-e3be961c6c0833a1:NOT_RUN:"
+  ],
+  "readiness_gaps": [],
+  "integrity_verified": true,
+  "technical_exit_code": 2,
+  "exit_code": 2,
+  "note": "Hashes verify integrity, not authenticity or the validity of the judgment. Case coverage, not system certification."
+}

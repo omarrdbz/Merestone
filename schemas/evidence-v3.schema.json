@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Merestone evidence-v3",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "bytes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "collected_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "collector": {
+      "type": "string",
+      "minLength": 1
+    },
+    "origin": {
+      "type": "string",
+      "minLength": 1
+    },
+    "classification": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "baseline",
+        "input",
+        "response",
+        "effect",
+        "identity",
+        "reachability",
+        "review",
+        "configuration",
+        "snapshot",
+        "metric"
+      ]
+    },
+    "redactions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    }
+  },
+  "required": [
+    "id",
+    "path",
+    "sha256",
+    "bytes",
+    "collected_at",
+    "collector",
+    "origin",
+    "classification",
+    "kind",
+    "redactions"
+  ],
+  "additionalProperties": false
+}

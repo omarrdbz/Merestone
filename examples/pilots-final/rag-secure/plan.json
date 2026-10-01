@@ -1,0 +1,3648 @@
+{
+  "schema_version": "3.0",
+  "framework_version": "0.3.0",
+  "plan_id": "32cfb190-ba02-4939-8192-f01d4f47e323",
+  "created_at": "2026-10-01T18:33:59.575598+00:00",
+  "catalog_sha256": "c6bd229633fcae0af1a24da9adb068b2816aa674cf620c2b317215c7d2aaeb1a",
+  "architecture": {
+    "schema_version": "3.0",
+    "assessment_id": "LAB-rag",
+    "system_name": "rag local fixture",
+    "authorization_ref": "local-fixture-only",
+    "snapshot_ref": "fixture-rag-True",
+    "inventory_review": {
+      "reviewer": "automated fixture inventory",
+      "reviewed_at": "2026-10-01T18:33:59.344625+00:00",
+      "evidence_ref": "source adapters/local_pilots.py"
+    },
+    "assets": [
+      {
+        "id": "LAB-rag",
+        "name": "rag",
+        "owner": "fixture maintainer",
+        "provider_responsibility": "none; all local fixtures"
+      }
+    ],
+    "routes": [
+      {
+        "id": "ROUTE-rag",
+        "asset_id": "LAB-rag",
+        "boundary": "local-rag-control",
+        "actor": "fixture-A",
+        "access": "white-box",
+        "scope": "in_scope",
+        "capabilities": {
+          "api": "absent",
+          "artifact_loading": "absent",
+          "automated_judge": "absent",
+          "automated_scanner": "absent",
+          "autonomous_loop": "absent",
+          "cache": "absent",
+          "code_execution": "absent",
+          "conversation_storage": "absent",
+          "delegation": "absent",
+          "dependencies": "absent",
+          "deployment": "absent",
+          "effectful_operations": "absent",
+          "external_provider": "absent",
+          "file_access": "absent",
+          "fine_tuning": "absent",
+          "guardrail": "absent",
+          "html_rendering": "absent",
+          "human_approval": "absent",
+          "llm_generation": "present",
+          "mcp_client": "absent",
+          "mcp_host": "absent",
+          "mcp_http": "absent",
+          "mcp_server": "absent",
+          "mcp_stdio": "absent",
+          "model_inference": "absent",
+          "multi_tenant": "present",
+          "multimodal_input": "absent",
+          "network_egress": "absent",
+          "oauth": "absent",
+          "oauth_proxy": "absent",
+          "persistent_memory": "absent",
+          "predictive_model": "absent",
+          "retrieval": "present",
+          "scheduled_or_event_trigger": "absent",
+          "streaming": "absent",
+          "telemetry": "absent",
+          "text_to_sql": "absent",
+          "tool_calling": "absent",
+          "training": "absent"
+        },
+        "capability_evidence": {
+          "api": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "artifact_loading": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "automated_judge": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "automated_scanner": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "autonomous_loop": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "cache": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "code_execution": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "conversation_storage": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "delegation": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "dependencies": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "deployment": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "effectful_operations": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "external_provider": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "file_access": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "fine_tuning": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "guardrail": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "html_rendering": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "human_approval": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "llm_generation": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "mcp_client": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "mcp_host": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "mcp_http": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "mcp_server": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "mcp_stdio": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "model_inference": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "multi_tenant": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "multimodal_input": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "network_egress": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "oauth": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "oauth_proxy": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "persistent_memory": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "predictive_model": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "retrieval": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "scheduled_or_event_trigger": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "streaming": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "telemetry": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "text_to_sql": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "tool_calling": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+          "training": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated"
+        },
+        "threat_ids": [
+          "TH-001"
+        ],
+        "activity_types": [
+          "DESIGN",
+          "CONFIG",
+          "TEST",
+          "REDTEAM"
+        ],
+        "test_protocols": [
+          {
+            "case_id": "AI-006",
+            "required_variants": [
+              "original",
+              "neighbor",
+              "benign"
+            ],
+            "min_trials_per_variant": 1,
+            "design": "deterministic",
+            "decision_rule": "Compare measured fixture effect with expected label or access policy",
+            "justification": "Deterministic toy components; no statistical generalization to LLMs or trained models."
+          }
+        ]
+      }
+    ],
+    "threats": [
+      {
+        "id": "TH-001",
+        "hypothesis": "Complete actor, access, boundary, effect and control",
+        "risk": "To be evaluated"
+      }
+    ],
+    "limits": {
+      "requests": 50,
+      "tokens": 0,
+      "cost_minor_units": 0,
+      "duration_seconds": 60,
+      "concurrency": 1
+    },
+    "stop_conditions": [
+      "fixture completed or process timeout"
+    ],
+    "evidence_store": "evidence",
+    "provenance": "Instrumented toy components. No production target, external API, trained LLM, real user or real secret."
+  },
+  "architecture_sha256": "f3040b1013c51d0a6184e320033eb7ab8d250f997782c4391177dda0543031a6",
+  "obligations_sha256": "7a3321aee0ff5fde6eff661fb2d42db27a9883cc81551a6538436d6d3862aeb9",
+  "amendments": [],
+  "evidence": [
+    {
+      "id": "rag-0-baseline",
+      "path": "rag-0-baseline.json",
+      "sha256": "65e9585beaaad2556b9d915ea85ef44f0d3821fb40fa8082c8ad1b518abd02dc",
+      "bytes": 174,
+      "collected_at": "2026-10-01T18:33:59.577571+00:00",
+      "collector": "local_pilots.py",
+      "origin": "local instrumented fixture",
+      "classification": "synthetic",
+      "kind": "baseline",
+      "redactions": []
+    },
+    {
+      "id": "rag-0-input",
+      "path": "rag-0-input.json",
+      "sha256": "ac76dbaf0d5b3c156cfa650f8a73e4613f35ad68996fb29c268b3d40f276c252",
+      "bytes": 9,
+      "collected_at": "2026-10-01T18:33:59.577741+00:00",
+      "collector": "local_pilots.py",
+      "origin": "local instrumented fixture",
+      "classification": "synthetic",
+      "kind": "input",
+      "redactions": []
+    },
+    {
+      "id": "rag-0-response",
+      "path": "rag-0-response.json",
+      "sha256": "7ecab51f29c7026ff679fdf3bb988fb2be0899f774c84f1b67c51fb612d4c7a8",
+      "bytes": 143,
+      "collected_at": "2026-10-01T18:33:59.577907+00:00",
+      "collector": "local_pilots.py",
+      "origin": "local instrumented fixture",
+      "classification": "synthetic",
+      "kind": "response",
+      "redactions": []
+    },
+    {
+      "id": "rag-0-effect",
+      "path": "rag-0-effect.json",
+      "sha256": "ed6790596437ccc95f74e3f01d00a82736514661a5a95e560e12ce8cbbf4beeb",
+      "bytes": 10,
+      "collected_at": "2026-10-01T18:33:59.578045+00:00",
+      "collector": "local_pilots.py",
+      "origin": "local instrumented fixture",
+      "classification": "synthetic",
+      "kind": "effect",
+      "redactions": []
+    },
+    {
+      "id": "rag-0-identity",
+      "path": "rag-0-identity.json",
+      "sha256": "59c3d60b3b77422451f932f72ea811494cf4a11a048f687707f2308f033054fb",
+      "bytes": 53,
+      "collected_at": "2026-10-01T18:33:59.578179+00:00",
+      "collector": "local_pilots.py",
+      "origin": "local instrumented fixture",
+      "classification": "synthetic",
+      "kind": "identity",
+      "redactions": []
+    },
+    {
+      "id": "rag-0-reachability",
+      "path": "rag-0-reachability.json",
+      "sha256": "761bb3e7ca13ef802781936dac858ca7866e565d151ac8fc3130b5bfc56db2b9",
+      "bytes": 117,
+      "collected_at": "2026-10-01T18:33:59.578333+00:00",
+      "collector": "local_pilots.py",
+      "origin": "local instrumented fixture",
+      "classification": "synthetic",
+      "kind": "reachability",
+      "redactions": []
+    },
+    {
+      "id": "rag-1-baseline",
+      "path": "rag-1-baseline.json",
+      "sha256": "65e9585beaaad2556b9d915ea85ef44f0d3821fb40fa8082c8ad1b518abd02dc",
+      "bytes": 174,
+      "collected_at": "2026-10-01T18:33:59.578497+00:00",
+      "collector": "local_pilots.py",
+      "origin": "local instrumented fixture",
+      "classification": "synthetic",
+      "kind": "baseline",
+      "redactions": []
+    },
+    {
+      "id": "rag-1-input",
+      "path": "rag-1-input.json",
+      "sha256": "f85e26f1e8b3455da227b6c7940887e339c98c66cb4e752b4e53b59886a5d7c7",
+      "bytes": 17,
+      "collected_at": "2026-10-01T18:33:59.578621+00:00",
+      "collector": "local_pilots.py",
+      "origin": "local instrumented fixture",
+      "classification": "synthetic",
+      "kind": "input",
+      "redactions": []
+    },
+    {
+      "id": "rag-1-response",
+      "path": "rag-1-response.json",
+      "sha256": "7ecab51f29c7026ff679fdf3bb988fb2be0899f774c84f1b67c51fb612d4c7a8",
+      "bytes": 143,
+      "collected_at": "2026-10-01T18:33:59.578767+00:00",
+      "collector": "local_pilots.py",
+      "origin": "local instrumented fixture",
+      "classification": "synthetic",
+      "kind": "response",
+      "redactions": []
+    },
+    {
+      "id": "rag-1-effect",
+      "path": "rag-1-effect.json",
+      "sha256": "ed6790596437ccc95f74e3f01d00a82736514661a5a95e560e12ce8cbbf4beeb",
+      "bytes": 10,
+      "collected_at": "2026-10-01T18:33:59.578903+00:00",
+      "collector": "local_pilots.py",
+      "origin": "local instrumented fixture",
+      "classification": "synthetic",
+      "kind": "effect",
+      "redactions": []
+    },
+    {
+      "id": "rag-1-identity",
+      "path": "rag-1-identity.json",
+      "sha256": "59c3d60b3b77422451f932f72ea811494cf4a11a048f687707f2308f033054fb",
+      "bytes": 53,
+      "collected_at": "2026-10-01T18:33:59.579036+00:00",
+      "collector": "local_pilots.py",
+      "origin": "local instrumented fixture",
+      "classification": "synthetic",
+      "kind": "identity",
+      "redactions": []
+    },
+    {
+      "id": "rag-1-reachability",
+      "path": "rag-1-reachability.json",
+      "sha256": "761bb3e7ca13ef802781936dac858ca7866e565d151ac8fc3130b5bfc56db2b9",
+      "bytes": 117,
+      "collected_at": "2026-10-01T18:33:59.579166+00:00",
+      "collector": "local_pilots.py",
+      "origin": "local instrumented fixture",
+      "classification": "synthetic",
+      "kind": "reachability",
+      "redactions": []
+    },
+    {
+      "id": "rag-2-baseline",
+      "path": "rag-2-baseline.json",
+      "sha256": "65e9585beaaad2556b9d915ea85ef44f0d3821fb40fa8082c8ad1b518abd02dc",
+      "bytes": 174,
+      "collected_at": "2026-10-01T18:33:59.579369+00:00",
+      "collector": "local_pilots.py",
+      "origin": "local instrumented fixture",
+      "classification": "synthetic",
+      "kind": "baseline",
+      "redactions": []
+    },
+    {
+      "id": "rag-2-input",
+      "path": "rag-2-input.json",
+      "sha256": "7f633c3f5014c34deeae62fafc3577265c6addef988a3386c70da25e462d86be",
+      "bytes": 11,
+      "collected_at": "2026-10-01T18:33:59.579491+00:00",
+      "collector": "local_pilots.py",
+      "origin": "local instrumented fixture",
+      "classification": "synthetic",
+      "kind": "input",
+      "redactions": []
+    },
+    {
+      "id": "rag-2-response",
+      "path": "rag-2-response.json",
+      "sha256": "7ecab51f29c7026ff679fdf3bb988fb2be0899f774c84f1b67c51fb612d4c7a8",
+      "bytes": 143,
+      "collected_at": "2026-10-01T18:33:59.579629+00:00",
+      "collector": "local_pilots.py",
+      "origin": "local instrumented fixture",
+      "classification": "synthetic",
+      "kind": "response",
+      "redactions": []
+    },
+    {
+      "id": "rag-2-effect",
+      "path": "rag-2-effect.json",
+      "sha256": "ed6790596437ccc95f74e3f01d00a82736514661a5a95e560e12ce8cbbf4beeb",
+      "bytes": 10,
+      "collected_at": "2026-10-01T18:33:59.579801+00:00",
+      "collector": "local_pilots.py",
+      "origin": "local instrumented fixture",
+      "classification": "synthetic",
+      "kind": "effect",
+      "redactions": []
+    },
+    {
+      "id": "rag-2-identity",
+      "path": "rag-2-identity.json",
+      "sha256": "59c3d60b3b77422451f932f72ea811494cf4a11a048f687707f2308f033054fb",
+      "bytes": 53,
+      "collected_at": "2026-10-01T18:33:59.579941+00:00",
+      "collector": "local_pilots.py",
+      "origin": "local instrumented fixture",
+      "classification": "synthetic",
+      "kind": "identity",
+      "redactions": []
+    },
+    {
+      "id": "rag-2-reachability",
+      "path": "rag-2-reachability.json",
+      "sha256": "761bb3e7ca13ef802781936dac858ca7866e565d151ac8fc3130b5bfc56db2b9",
+      "bytes": 117,
+      "collected_at": "2026-10-01T18:33:59.580072+00:00",
+      "collector": "local_pilots.py",
+      "origin": "local instrumented fixture",
+      "classification": "synthetic",
+      "kind": "reachability",
+      "redactions": []
+    }
+  ],
+  "tasks": [
+    {
+      "task_id": "TASK-dd164b2ed2084cf2",
+      "case_id": "AI-001",
+      "case_revision": "2.0.0",
+      "title": "Direct injection",
+      "module": "LLM",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-CONTEXT"
+      ],
+      "technique_ids": [
+        "PI-01",
+        "PI-02",
+        "PI-03",
+        "PI-04",
+        "PI-05",
+        "PI-06",
+        "PI-07",
+        "PI-08",
+        "JB-01",
+        "JB-02",
+        "JB-03",
+        "JB-04",
+        "JB-05",
+        "JB-06",
+        "JB-07",
+        "JB-08"
+      ],
+      "example_ids": [
+        "EX-PI-01",
+        "EX-PI-02",
+        "EX-PI-03",
+        "EX-PI-04",
+        "EX-PI-05",
+        "EX-PI-06",
+        "EX-PI-07",
+        "EX-PI-08",
+        "EX-JB-01",
+        "EX-JB-02",
+        "EX-JB-03",
+        "EX-JB-04",
+        "EX-JB-05",
+        "EX-JB-06",
+        "EX-JB-07",
+        "EX-JB-08",
+        "EX-ORIG-001",
+        "EX-ORIG-002",
+        "EX-ORIG-003",
+        "EX-ORIG-004",
+        "EX-ORIG-005",
+        "EX-ORIG-006",
+        "EX-ORIG-007",
+        "EX-ORIG-008",
+        "EX-ORIG-009",
+        "EX-ORIG-010",
+        "EX-ORIG-011",
+        "EX-ORIG-012",
+        "EX-ORIG-013",
+        "EX-ORIG-014",
+        "EX-ORIG-015",
+        "EX-ORIG-016",
+        "EX-ORIG-017",
+        "EX-ORIG-018",
+        "EX-ORIG-019",
+        "EX-ORIG-020",
+        "EX-ORIG-021",
+        "EX-ORIG-022",
+        "EX-ORIG-023",
+        "EX-ORIG-024",
+        "EX-ORIG-025",
+        "EX-ORIG-026",
+        "EX-ORIG-034",
+        "EX-ORIG-035",
+        "EX-ORIG-036",
+        "EX-ORIG-037",
+        "EX-ORIG-038",
+        "EX-ORIG-039",
+        "EX-ORIG-040",
+        "EX-ORIG-041",
+        "EX-ORIG-042",
+        "EX-ORIG-043",
+        "EX-ORIG-044"
+      ],
+      "applicability": "APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-e9b2d9c59b51c677",
+      "case_id": "AI-002",
+      "case_revision": "2.0.0",
+      "title": "Indirect injection in RAG",
+      "module": "RAG",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-CONTEXT"
+      ],
+      "technique_ids": [
+        "PI-09",
+        "PI-10",
+        "PI-11",
+        "OUT-02"
+      ],
+      "example_ids": [
+        "EX-PI-09",
+        "EX-PI-10",
+        "EX-PI-11",
+        "EX-OUT-02",
+        "EX-ORIG-027",
+        "EX-ORIG-028",
+        "EX-ORIG-029",
+        "EX-ORIG-030",
+        "EX-ORIG-031",
+        "EX-ORIG-032",
+        "EX-ORIG-033"
+      ],
+      "applicability": "APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-bb9b334b9d2ffe22",
+      "case_id": "AI-003",
+      "case_revision": "2.0.0",
+      "title": "Exposure of protected context",
+      "module": "LLM",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-CONFIDENTIALITY"
+      ],
+      "technique_ids": [
+        "PI-01",
+        "PI-02",
+        "PI-03",
+        "PI-04",
+        "PI-05",
+        "PI-06",
+        "PI-07"
+      ],
+      "example_ids": [
+        "EX-PI-01",
+        "EX-PI-02",
+        "EX-PI-03",
+        "EX-PI-04",
+        "EX-PI-05",
+        "EX-PI-06",
+        "EX-PI-07",
+        "EX-ORIG-001",
+        "EX-ORIG-002",
+        "EX-ORIG-003",
+        "EX-ORIG-004",
+        "EX-ORIG-005",
+        "EX-ORIG-006",
+        "EX-ORIG-007",
+        "EX-ORIG-008",
+        "EX-ORIG-009",
+        "EX-ORIG-010",
+        "EX-ORIG-011",
+        "EX-ORIG-012",
+        "EX-ORIG-013",
+        "EX-ORIG-014",
+        "EX-ORIG-015",
+        "EX-ORIG-016",
+        "EX-ORIG-017",
+        "EX-ORIG-018",
+        "EX-ORIG-019",
+        "EX-ORIG-020",
+        "EX-ORIG-021",
+        "EX-ORIG-022",
+        "EX-ORIG-023",
+        "EX-ORIG-024"
+      ],
+      "applicability": "APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-f6a69783965d04a4",
+      "case_id": "AI-004",
+      "case_revision": "2.0.0",
+      "title": "Cross-session and cache leakage",
+      "module": "CORE",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-ISOLATION"
+      ],
+      "technique_ids": [
+        "OUT-09",
+        "APP-03"
+      ],
+      "example_ids": [
+        "EX-OUT-09",
+        "EX-APP-03"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-4d44d6428a618c74",
+      "case_id": "AI-005",
+      "case_revision": "2.0.0",
+      "title": "Contaminated persistent memory",
+      "module": "AGENT",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-MEMORY"
+      ],
+      "technique_ids": [
+        "MEM-01"
+      ],
+      "example_ids": [
+        "EX-MEM-01"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-7e3a91cd008c751b",
+      "case_id": "AI-006",
+      "case_revision": "2.0.0",
+      "title": "RAG retrieval ACL",
+      "module": "RAG",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-AUTHORIZATION"
+      ],
+      "technique_ids": [
+        "T-AI-006"
+      ],
+      "example_ids": [
+        "EX-T-AI-006"
+      ],
+      "applicability": "APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": {
+        "case_id": "AI-006",
+        "required_variants": [
+          "original",
+          "neighbor",
+          "benign"
+        ],
+        "min_trials_per_variant": 1,
+        "design": "deterministic",
+        "decision_rule": "Compare measured fixture effect with expected label or access policy",
+        "justification": "Deterministic toy components; no statistical generalization to LLMs or trained models."
+      },
+      "execution": "COMPLETED",
+      "result": "PASS",
+      "rationale": "",
+      "observations": "\nMeasured local fixture. Only this case has executed trials; other obligations remain NOT_RUN.",
+      "reviewer": "automated fixture oracle; independent human review pending",
+      "evidence_ids": [
+        "rag-0-baseline",
+        "rag-0-effect",
+        "rag-0-identity",
+        "rag-0-input",
+        "rag-0-reachability",
+        "rag-0-response",
+        "rag-1-baseline",
+        "rag-1-effect",
+        "rag-1-identity",
+        "rag-1-input",
+        "rag-1-reachability",
+        "rag-1-response",
+        "rag-2-baseline",
+        "rag-2-effect",
+        "rag-2-identity",
+        "rag-2-input",
+        "rag-2-reachability",
+        "rag-2-response"
+      ],
+      "trials": [
+        {
+          "trial_id": "rag-original",
+          "variant": "original",
+          "example_id": "",
+          "technique_id": "",
+          "snapshot_ref": "fixture-rag-True",
+          "execution": "COMPLETED",
+          "result": "PASS",
+          "baseline_ok": true,
+          "reachability": "reached",
+          "blocking_control_id": "",
+          "identity": "fixture-A",
+          "expected": "no B in context A",
+          "observed": "[\"A\"]",
+          "evidence_ids": [
+            "rag-0-baseline",
+            "rag-0-input",
+            "rag-0-response",
+            "rag-0-effect",
+            "rag-0-identity",
+            "rag-0-reachability"
+          ],
+          "rationale": "",
+          "parameters_ref": "adapters/local_pilots.py",
+          "adaptation_diff": "Original Merestone toy fixture."
+        },
+        {
+          "trial_id": "rag-neighbor",
+          "variant": "neighbor",
+          "example_id": "",
+          "technique_id": "",
+          "snapshot_ref": "fixture-rag-True",
+          "execution": "COMPLETED",
+          "result": "PASS",
+          "baseline_ok": true,
+          "reachability": "reached",
+          "blocking_control_id": "",
+          "identity": "fixture-A",
+          "expected": "no B in context A",
+          "observed": "[\"A\"]",
+          "evidence_ids": [
+            "rag-1-baseline",
+            "rag-1-input",
+            "rag-1-response",
+            "rag-1-effect",
+            "rag-1-identity",
+            "rag-1-reachability"
+          ],
+          "rationale": "",
+          "parameters_ref": "adapters/local_pilots.py",
+          "adaptation_diff": "Original Merestone toy fixture."
+        },
+        {
+          "trial_id": "rag-benign",
+          "variant": "benign",
+          "example_id": "",
+          "technique_id": "",
+          "snapshot_ref": "fixture-rag-True",
+          "execution": "COMPLETED",
+          "result": "PASS",
+          "baseline_ok": true,
+          "reachability": "reached",
+          "blocking_control_id": "",
+          "identity": "fixture-A",
+          "expected": "no B in context A",
+          "observed": "[\"A\"]",
+          "evidence_ids": [
+            "rag-2-baseline",
+            "rag-2-input",
+            "rag-2-response",
+            "rag-2-effect",
+            "rag-2-identity",
+            "rag-2-reachability"
+          ],
+          "rationale": "",
+          "parameters_ref": "adapters/local_pilots.py",
+          "adaptation_diff": "Original Merestone toy fixture."
+        }
+      ],
+      "cleanup_confirmed": true,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-f2c501e34651b640",
+      "case_id": "AI-007",
+      "case_revision": "2.0.0",
+      "title": "Knowledge revocation and deletion",
+      "module": "RAG",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-REVOCATION"
+      ],
+      "technique_ids": [
+        "RAG-01"
+      ],
+      "example_ids": [
+        "EX-RAG-01"
+      ],
+      "applicability": "APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-ba94ecd12183e33a",
+      "case_id": "AI-008",
+      "case_revision": "2.0.0",
+      "title": "Poisoning of a retrievable source",
+      "module": "RAG",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-PROVENANCE"
+      ],
+      "technique_ids": [
+        "PI-09",
+        "DATA-07"
+      ],
+      "example_ids": [
+        "EX-PI-09",
+        "EX-DATA-07",
+        "EX-ORIG-027"
+      ],
+      "applicability": "APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-956e35b337a3acd9",
+      "case_id": "AI-009",
+      "case_revision": "2.0.0",
+      "title": "Ranking saturation",
+      "module": "RAG",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-RETRIEVAL"
+      ],
+      "technique_ids": [
+        "RAG-02"
+      ],
+      "example_ids": [
+        "EX-RAG-02"
+      ],
+      "applicability": "APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-7a66e1ac805ba9e0",
+      "case_id": "AI-010",
+      "case_revision": "2.0.0",
+      "title": "Unsupported citations and responses",
+      "module": "LLM",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-GROUNDING"
+      ],
+      "technique_ids": [
+        "OUT-11",
+        "OUT-12"
+      ],
+      "example_ids": [
+        "EX-OUT-11",
+        "EX-OUT-12"
+      ],
+      "applicability": "APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-b28fdc0eba6038b7",
+      "case_id": "AI-011",
+      "case_revision": "2.0.0",
+      "title": "Output to HTML",
+      "module": "OUTPUT",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-OUTPUT"
+      ],
+      "technique_ids": [
+        "OUT-01",
+        "OUT-02"
+      ],
+      "example_ids": [
+        "EX-OUT-01",
+        "EX-OUT-02"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-b72af48b4f3fe3ba",
+      "case_id": "AI-012",
+      "case_revision": "2.0.0",
+      "title": "Output to SQL",
+      "module": "OUTPUT",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-OUTPUT"
+      ],
+      "technique_ids": [
+        "OUT-03",
+        "OUT-04",
+        "OUT-05",
+        "OUT-08",
+        "MCP-03"
+      ],
+      "example_ids": [
+        "EX-OUT-03",
+        "EX-OUT-04",
+        "EX-OUT-05",
+        "EX-OUT-08",
+        "EX-MCP-03"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-12e6cb6b1513223c",
+      "case_id": "AI-013",
+      "case_revision": "2.0.0",
+      "title": "Output to a code executor",
+      "module": "OUTPUT",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-EXECUTION"
+      ],
+      "technique_ids": [
+        "OUT-06",
+        "OUT-07",
+        "OUT-08",
+        "MCP-04"
+      ],
+      "example_ids": [
+        "EX-OUT-06",
+        "EX-OUT-07",
+        "EX-OUT-08",
+        "EX-MCP-04"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-b4f087cd495d2941",
+      "case_id": "AI-014",
+      "case_revision": "2.0.0",
+      "title": "Action without approval",
+      "module": "TOOLS",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-INTENT"
+      ],
+      "technique_ids": [
+        "PI-08",
+        "PI-11",
+        "OUT-05",
+        "APP-02"
+      ],
+      "example_ids": [
+        "EX-PI-08",
+        "EX-PI-11",
+        "EX-OUT-05",
+        "EX-APP-02",
+        "EX-ORIG-025",
+        "EX-ORIG-026",
+        "EX-ORIG-032",
+        "EX-ORIG-033"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-b2d155574c9faca5",
+      "case_id": "AI-015",
+      "case_revision": "2.0.0",
+      "title": "Excessive tool privileges",
+      "module": "TOOLS",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-AUTHORIZATION"
+      ],
+      "technique_ids": [
+        "PI-01",
+        "PI-08",
+        "OUT-04",
+        "OUT-07",
+        "APP-01"
+      ],
+      "example_ids": [
+        "EX-PI-01",
+        "EX-PI-08",
+        "EX-OUT-04",
+        "EX-OUT-07",
+        "EX-APP-01",
+        "EX-ORIG-001",
+        "EX-ORIG-002",
+        "EX-ORIG-003",
+        "EX-ORIG-025",
+        "EX-ORIG-026"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-96ba554e65c3229d",
+      "case_id": "AI-016",
+      "case_revision": "2.0.0",
+      "title": "Agent resources and loops",
+      "module": "AGENT",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-BUDGET"
+      ],
+      "technique_ids": [
+        "APP-05"
+      ],
+      "example_ids": [
+        "EX-APP-05"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-dc9a3e7373e80432",
+      "case_id": "AI-017",
+      "case_revision": "2.0.0",
+      "title": "Retry and idempotency",
+      "module": "AGENT",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-IDEMPOTENCY"
+      ],
+      "technique_ids": [
+        "AGT-01"
+      ],
+      "example_ids": [
+        "EX-AGT-01"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-f682906a9d022743",
+      "case_id": "AI-018",
+      "case_revision": "2.0.0",
+      "title": "Delegation between agents",
+      "module": "AGENT",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-DELEGATION"
+      ],
+      "technique_ids": [
+        "AGT-02"
+      ],
+      "example_ids": [
+        "EX-AGT-02"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-5ad3dfc58a47ef49",
+      "case_id": "AI-019",
+      "case_revision": "2.0.0",
+      "title": "Poisoned MCP tool description",
+      "module": "MCP",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-MCP-TRUST"
+      ],
+      "technique_ids": [
+        "MCP-01",
+        "MCP-06",
+        "MCP-08"
+      ],
+      "example_ids": [
+        "EX-MCP-01",
+        "EX-MCP-06",
+        "EX-MCP-08"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-793854461fa00536",
+      "case_id": "AI-020",
+      "case_revision": "2.0.0",
+      "title": "Tool change after approval",
+      "module": "MCP",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-MCP-TRUST"
+      ],
+      "technique_ids": [
+        "MCP-07"
+      ],
+      "example_ids": [
+        "EX-MCP-07"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-d4560498ec1a4560",
+      "case_id": "AI-021",
+      "case_revision": "2.0.0",
+      "title": "MCP token audience and scope",
+      "module": "MCP",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-TOKEN"
+      ],
+      "technique_ids": [
+        "MCP-09"
+      ],
+      "example_ids": [
+        "EX-MCP-09"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-a4d68a5338fabfe8",
+      "case_id": "AI-022",
+      "case_revision": "2.0.0",
+      "title": "MCP session and identity",
+      "module": "MCP",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-SESSION"
+      ],
+      "technique_ids": [
+        "MCP-09"
+      ],
+      "example_ids": [
+        "EX-MCP-09"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-22a232d731563853",
+      "case_id": "AI-023",
+      "case_revision": "2.0.0",
+      "title": "MCP discovery and SSRF",
+      "module": "MCP",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-EGRESS"
+      ],
+      "technique_ids": [
+        "T-AI-023"
+      ],
+      "example_ids": [
+        "EX-T-AI-023"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-06261a28a08f12fd",
+      "case_id": "AI-024",
+      "case_revision": "2.0.0",
+      "title": "Local MCP server and permissions",
+      "module": "MCP",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-ISOLATION"
+      ],
+      "technique_ids": [
+        "MCP-09"
+      ],
+      "example_ids": [
+        "EX-MCP-09"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-04de5a4bd74de37e",
+      "case_id": "AI-025",
+      "case_revision": "2.0.0",
+      "title": "API object authorization",
+      "module": "PLATFORM",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-AUTHORIZATION"
+      ],
+      "technique_ids": [
+        "OUT-04",
+        "OUT-08",
+        "MCP-01",
+        "APP-01"
+      ],
+      "example_ids": [
+        "EX-OUT-04",
+        "EX-OUT-08",
+        "EX-MCP-01",
+        "EX-APP-01"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-01ff5e0ea1b11b40",
+      "case_id": "AI-026",
+      "case_revision": "2.0.0",
+      "title": "API properties and role",
+      "module": "PLATFORM",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-AUTHORIZATION"
+      ],
+      "technique_ids": [
+        "API-01"
+      ],
+      "example_ids": [
+        "EX-API-01"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-475c312d537d622c",
+      "case_id": "AI-027",
+      "case_revision": "2.0.0",
+      "title": "API and inference limits",
+      "module": "MODEL",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-BUDGET"
+      ],
+      "technique_ids": [
+        "APP-05"
+      ],
+      "example_ids": [
+        "EX-APP-05"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-5e2207c140e9a400",
+      "case_id": "AI-028",
+      "case_revision": "2.0.0",
+      "title": "Sensitive logs and telemetry",
+      "module": "PLATFORM",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-CONFIDENTIALITY"
+      ],
+      "technique_ids": [
+        "MCP-02",
+        "APP-03"
+      ],
+      "example_ids": [
+        "EX-MCP-02",
+        "EX-APP-03"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-f3c38997533c4fe9",
+      "case_id": "AI-029",
+      "case_revision": "2.0.0",
+      "title": "RAG chain to simulated exfiltration",
+      "module": "RAG",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-EGRESS"
+      ],
+      "technique_ids": [
+        "PI-10",
+        "OUT-09",
+        "OUT-10",
+        "MCP-06",
+        "MCP-08",
+        "APP-02"
+      ],
+      "example_ids": [
+        "EX-PI-10",
+        "EX-OUT-09",
+        "EX-OUT-10",
+        "EX-MCP-06",
+        "EX-MCP-08",
+        "EX-APP-02",
+        "EX-ORIG-028",
+        "EX-ORIG-029",
+        "EX-ORIG-030",
+        "EX-ORIG-031"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-4674b6dd0e6ac76b",
+      "case_id": "AI-030",
+      "case_revision": "2.0.0",
+      "title": "Training poisoning",
+      "module": "ML-DATA",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-POISONING"
+      ],
+      "technique_ids": [
+        "DATA-01",
+        "DATA-02",
+        "DATA-03",
+        "DATA-04",
+        "DATA-07"
+      ],
+      "example_ids": [
+        "EX-DATA-01",
+        "EX-DATA-02",
+        "EX-DATA-03",
+        "EX-DATA-04",
+        "EX-DATA-07"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-df47bfd03fbb1e8c",
+      "case_id": "AI-031",
+      "case_revision": "2.0.0",
+      "title": "Model artifact integrity",
+      "module": "MODEL",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-INTEGRITY"
+      ],
+      "technique_ids": [
+        "DATA-06",
+        "APP-06"
+      ],
+      "example_ids": [
+        "EX-DATA-06",
+        "EX-APP-06"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-4d8c6c28df62834b",
+      "case_id": "AI-032",
+      "case_revision": "2.0.0",
+      "title": "Insecure deserialization",
+      "module": "MODEL",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-LOADER"
+      ],
+      "technique_ids": [
+        "DATA-05",
+        "DATA-06"
+      ],
+      "example_ids": [
+        "EX-DATA-05",
+        "EX-DATA-06"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-da32b5c1426c8035",
+      "case_id": "AI-033",
+      "case_revision": "2.0.0",
+      "title": "Dependencies and provenance",
+      "module": "PLATFORM",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-SUPPLY"
+      ],
+      "technique_ids": [
+        "OUT-12",
+        "APP-07"
+      ],
+      "example_ids": [
+        "EX-OUT-12",
+        "EX-APP-07"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-5a21d29a504525f1",
+      "case_id": "AI-034",
+      "case_revision": "2.0.0",
+      "title": "Deployment secrets and identity",
+      "module": "PLATFORM",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-AUTHORIZATION"
+      ],
+      "technique_ids": [
+        "APP-06"
+      ],
+      "example_ids": [
+        "EX-APP-06"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-3675a6dbe2d6bb12",
+      "case_id": "AI-035",
+      "case_revision": "2.0.0",
+      "title": "Execution isolation",
+      "module": "PLATFORM",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-ISOLATION"
+      ],
+      "technique_ids": [
+        "MCP-09"
+      ],
+      "example_ids": [
+        "EX-MCP-09"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-ec618130266b9545",
+      "case_id": "AI-036",
+      "case_revision": "2.0.0",
+      "title": "Deployment admission and rollback",
+      "module": "PLATFORM",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-RELEASE"
+      ],
+      "technique_ids": [
+        "APP-06",
+        "APP-07"
+      ],
+      "example_ids": [
+        "EX-APP-06",
+        "EX-APP-07"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-359a5e7ad82d43bd",
+      "case_id": "AI-037",
+      "case_revision": "2.0.0",
+      "title": "Privacy through memorization",
+      "module": "MODEL",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-PRIVACY"
+      ],
+      "technique_ids": [
+        "T-AI-037"
+      ],
+      "example_ids": [
+        "EX-T-AI-037"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-9fc6c5ad059b15c9",
+      "case_id": "AI-038",
+      "case_revision": "2.0.0",
+      "title": "Membership inference",
+      "module": "MODEL",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-PRIVACY"
+      ],
+      "technique_ids": [
+        "PRV-01"
+      ],
+      "example_ids": [
+        "EX-PRV-01"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-0327e8fc6e67ee20",
+      "case_id": "AI-039",
+      "case_revision": "2.0.0",
+      "title": "Guardrail or classifier evasion",
+      "module": "LLM",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-POLICY"
+      ],
+      "technique_ids": [
+        "JB-01",
+        "JB-02",
+        "JB-03",
+        "JB-04",
+        "JB-05",
+        "JB-06",
+        "JB-07",
+        "JB-08",
+        "OUT-13"
+      ],
+      "example_ids": [
+        "EX-JB-01",
+        "EX-JB-02",
+        "EX-JB-03",
+        "EX-JB-04",
+        "EX-JB-05",
+        "EX-JB-06",
+        "EX-JB-07",
+        "EX-JB-08",
+        "EX-OUT-13",
+        "EX-ORIG-034",
+        "EX-ORIG-035",
+        "EX-ORIG-036",
+        "EX-ORIG-037",
+        "EX-ORIG-038",
+        "EX-ORIG-039",
+        "EX-ORIG-040",
+        "EX-ORIG-041",
+        "EX-ORIG-042",
+        "EX-ORIG-043",
+        "EX-ORIG-044"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-aca78cc499bc3c66",
+      "case_id": "AI-040",
+      "case_revision": "2.0.0",
+      "title": "OAuth consent in an MCP proxy",
+      "module": "MCP",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-CONSENT"
+      ],
+      "technique_ids": [
+        "MCP-10"
+      ],
+      "example_ids": [
+        "EX-MCP-10"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-e0aaa8a55f857264",
+      "case_id": "AI-041",
+      "case_revision": "1.0.0",
+      "title": "Model behavior extraction",
+      "module": "MODEL",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-SUPPLY"
+      ],
+      "technique_ids": [
+        "APP-04"
+      ],
+      "example_ids": [
+        "EX-APP-04"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-df93efdfa499714b",
+      "case_id": "AI-042",
+      "case_revision": "1.0.0",
+      "title": "SSRF in a URL retrieval tool",
+      "module": "TOOLS",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-EGRESS"
+      ],
+      "technique_ids": [
+        "MCP-05"
+      ],
+      "example_ids": [
+        "EX-MCP-05"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-ec96e0154e5f7517",
+      "case_id": "AI-043",
+      "case_revision": "1.0.0",
+      "title": "Tool arguments and dispatcher",
+      "module": "TOOLS",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-EXECUTION"
+      ],
+      "technique_ids": [
+        "T-AI-043"
+      ],
+      "example_ids": [
+        "EX-T-AI-043"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-0fcd33c092caa73f",
+      "case_id": "AI-044",
+      "case_revision": "1.0.0",
+      "title": "Binding and validity of human approval",
+      "module": "TOOLS",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-INTENT"
+      ],
+      "technique_ids": [
+        "T-AI-044"
+      ],
+      "example_ids": [
+        "EX-T-AI-044"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-570aed00231fd8bc",
+      "case_id": "AI-045",
+      "case_revision": "1.0.0",
+      "title": "RAG document ingestion and transformation",
+      "module": "RAG",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-PROVENANCE"
+      ],
+      "technique_ids": [
+        "T-AI-045"
+      ],
+      "example_ids": [
+        "EX-T-AI-045"
+      ],
+      "applicability": "APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-5c725dd2661c4fc8",
+      "case_id": "AI-046",
+      "case_revision": "1.0.0",
+      "title": "Indirect injection from tool results",
+      "module": "LLM",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-CONTEXT"
+      ],
+      "technique_ids": [
+        "PI-12"
+      ],
+      "example_ids": [
+        "EX-PI-12"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-f48aadae3c22f00f",
+      "case_id": "AI-047",
+      "case_revision": "1.0.0",
+      "title": "Classifier evasion through rephrasing and benign additions",
+      "module": "MODEL",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-POLICY"
+      ],
+      "technique_ids": [
+        "T-AI-047"
+      ],
+      "example_ids": [
+        "EX-T-AI-047"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-ab2a7e97b4c239b2",
+      "case_id": "AI-048",
+      "case_revision": "1.0.0",
+      "title": "Protected attribute inversion",
+      "module": "MODEL",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-PRIVACY"
+      ],
+      "technique_ids": [
+        "T-AI-048"
+      ],
+      "example_ids": [
+        "EX-T-AI-048"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-b2b52a7e899c8786",
+      "case_id": "AI-049",
+      "case_revision": "1.0.0",
+      "title": "Unavailable guardrail and alternate routes",
+      "module": "LLM",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-POLICY"
+      ],
+      "technique_ids": [
+        "T-AI-049"
+      ],
+      "example_ids": [
+        "EX-T-AI-049"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-ff1d943b681cbef3",
+      "case_id": "AI-050",
+      "case_revision": "1.0.0",
+      "title": "Evaluator and rubric integrity",
+      "module": "CORE",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-EVALUATION"
+      ],
+      "technique_ids": [
+        "T-AI-050"
+      ],
+      "example_ids": [
+        "EX-T-AI-050"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-9a98290f3330ba02",
+      "case_id": "AI-051",
+      "case_revision": "1.0.0",
+      "title": "Distributed budget, queues and cancellation",
+      "module": "AGENT",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-BUDGET"
+      ],
+      "technique_ids": [
+        "T-AI-051"
+      ],
+      "example_ids": [
+        "EX-T-AI-051"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-a50bd40cbdd8aaca",
+      "case_id": "AI-052",
+      "case_revision": "1.0.0",
+      "title": "Instructions in multimodal inputs",
+      "module": "MULTIMODAL",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-CONTEXT-TRANSFORM"
+      ],
+      "technique_ids": [
+        "T-AI-052"
+      ],
+      "example_ids": [
+        "EX-T-AI-052"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-d404db89cb6a2067",
+      "case_id": "AI-053",
+      "case_revision": "1.0.0",
+      "title": "Detection of and response to boundary violations",
+      "module": "PLATFORM",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-OBSERVABILITY"
+      ],
+      "technique_ids": [
+        "T-AI-053"
+      ],
+      "example_ids": [
+        "EX-T-AI-053"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-cdb693a423e3513a",
+      "case_id": "AI-054",
+      "case_revision": "1.0.0",
+      "title": "Shared responsibility with the AI provider",
+      "module": "CORE",
+      "activity": "DESIGN",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-GOVERNANCE"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-24eaad815cde2aef",
+      "case_id": "AI-055",
+      "case_revision": "1.0.0",
+      "title": "Negotiated MCP capabilities and requests to the client",
+      "module": "MCP",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-CONSENT"
+      ],
+      "technique_ids": [
+        "T-AI-055"
+      ],
+      "example_ids": [
+        "EX-T-AI-055"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-fa0d81da61596c3b",
+      "case_id": "AI-056",
+      "case_revision": "1.0.0",
+      "title": "Tool file path and workspace",
+      "module": "TOOLS",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-ISOLATION"
+      ],
+      "technique_ids": [
+        "T-AI-056"
+      ],
+      "example_ids": [
+        "EX-T-AI-056"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-68c7106198841460",
+      "case_id": "AI-057",
+      "case_revision": "1.0.0",
+      "title": "Integrity of adapters, tokenizer and embeddings",
+      "module": "PLATFORM",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-SUPPLY"
+      ],
+      "technique_ids": [
+        "T-AI-057"
+      ],
+      "example_ids": [
+        "EX-T-AI-057"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-c1c2255e06835473",
+      "case_id": "AI-058",
+      "case_revision": "1.0.0",
+      "title": "Memory isolation and lifecycle",
+      "module": "AGENT",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-MEMORY"
+      ],
+      "technique_ids": [
+        "T-AI-058"
+      ],
+      "example_ids": [
+        "EX-T-AI-058"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-e0b5acaa60195524",
+      "case_id": "AI-059",
+      "case_revision": "1.0.0",
+      "title": "External triggers and scheduled tasks",
+      "module": "AGENT",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-INTENT"
+      ],
+      "technique_ids": [
+        "T-AI-059"
+      ],
+      "example_ids": [
+        "EX-T-AI-059"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-d27bf30bf70b4c72",
+      "case_id": "AI-061",
+      "case_revision": "1.0.0",
+      "title": "Use of evaluation probes and detectors",
+      "module": "CORE",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-EVALUATION"
+      ],
+      "technique_ids": [
+        "T-AI-061"
+      ],
+      "example_ids": [
+        "EX-T-AI-061"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-bee3989111438988",
+      "case_id": "AI-062",
+      "case_revision": "1.0.0",
+      "title": "Input and output safeguard integration",
+      "module": "LLM",
+      "activity": "TEST",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-POLICY"
+      ],
+      "technique_ids": [
+        "T-AI-062"
+      ],
+      "example_ids": [
+        "EX-T-AI-062"
+      ],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-8656ecdc1023808b",
+      "case_id": "CORE-001",
+      "case_revision": "1.0.0",
+      "title": "Scope and rules of engagement",
+      "module": "CORE",
+      "activity": "DESIGN",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-GOVERNANCE"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-5e4f455b0b92163f",
+      "case_id": "CORE-002",
+      "case_revision": "1.0.0",
+      "title": "Cross-checked architecture and inventory",
+      "module": "CORE",
+      "activity": "DESIGN",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-GOVERNANCE"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-351b21842fd33ea3",
+      "case_id": "CORE-003",
+      "case_revision": "1.0.0",
+      "title": "Threats and security requirements",
+      "module": "CORE",
+      "activity": "DESIGN",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-GOVERNANCE"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-587a927dce017de3",
+      "case_id": "CORE-004",
+      "case_revision": "1.0.0",
+      "title": "Accountability and identity",
+      "module": "CORE",
+      "activity": "DESIGN",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-GOVERNANCE"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-0b698e39f35f3ee3",
+      "case_id": "CORE-005",
+      "case_revision": "1.0.0",
+      "title": "Data, persistence and retention",
+      "module": "CORE",
+      "activity": "DESIGN",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-GOVERNANCE"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-ed1d5657bc84effc",
+      "case_id": "CORE-006",
+      "case_revision": "1.0.0",
+      "title": "Provenance and changes",
+      "module": "CORE",
+      "activity": "DESIGN",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-GOVERNANCE"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-5df9923a6c59c69a",
+      "case_id": "CORE-007",
+      "case_revision": "1.0.0",
+      "title": "Operation and recovery",
+      "module": "CORE",
+      "activity": "DESIGN",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-GOVERNANCE"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-f95bd15eccfdf0fa",
+      "case_id": "CORE-008",
+      "case_revision": "1.0.0",
+      "title": "Plan, evidence and decision",
+      "module": "CORE",
+      "activity": "DESIGN",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-GOVERNANCE"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-bf002b73443877cd",
+      "case_id": "CFG-001",
+      "case_revision": "1.0.0",
+      "title": "Effective permissions and credentials",
+      "module": "CORE",
+      "activity": "CONFIG",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-AUTHORIZATION"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-8fb67ab5e089eb68",
+      "case_id": "CFG-002",
+      "case_revision": "1.0.0",
+      "title": "Data isolation and persistence",
+      "module": "CORE",
+      "activity": "CONFIG",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-ISOLATION"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-468154e9dce957b7",
+      "case_id": "CFG-003",
+      "case_revision": "1.0.0",
+      "title": "MCP host and transport configuration",
+      "module": "CORE",
+      "activity": "CONFIG",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-TOKEN"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-c402bef114a0a93d",
+      "case_id": "CFG-004",
+      "case_revision": "1.0.0",
+      "title": "Loader, provenance and admission",
+      "module": "CORE",
+      "activity": "CONFIG",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-LOADER"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-c3dced591f3aa4a6",
+      "case_id": "CFG-005",
+      "case_revision": "1.0.0",
+      "title": "Limits, streaming and guardrails",
+      "module": "CORE",
+      "activity": "CONFIG",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-BUDGET"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-74cca22bf907d528",
+      "case_id": "CFG-006",
+      "case_revision": "1.0.0",
+      "title": "Changes and delivery of AI components",
+      "module": "CORE",
+      "activity": "CONFIG",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-SUPPLY"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-5924df884e2e63ae",
+      "case_id": "SCN-001",
+      "case_revision": "1.0.0",
+      "title": "Document to another tenant's read",
+      "module": "SCENARIOS",
+      "activity": "REDTEAM",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-AUTHORIZATION",
+        "CTL-CONTEXT",
+        "CTL-REVOCATION"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-a866c7856b384a7b",
+      "case_id": "SCN-002",
+      "case_revision": "1.0.0",
+      "title": "Document to sending via MCP",
+      "module": "SCENARIOS",
+      "activity": "REDTEAM",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-AUTHORIZATION",
+        "CTL-CONTEXT",
+        "CTL-EGRESS",
+        "CTL-INTENT"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-c3e30e5ff5aaa2b2",
+      "case_id": "SCN-003",
+      "case_revision": "1.0.0",
+      "title": "Memory to action in a later session",
+      "module": "SCENARIOS",
+      "activity": "REDTEAM",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-INTENT",
+        "CTL-MEMORY"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-8630503a04b1e01b",
+      "case_id": "SCN-004",
+      "case_revision": "1.0.0",
+      "title": "Delegation, retry and duplicated effect",
+      "module": "SCENARIOS",
+      "activity": "REDTEAM",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-BUDGET",
+        "CTL-DELEGATION",
+        "CTL-IDEMPOTENCY"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-a9f96ee2e28a9b37",
+      "case_id": "SCN-005",
+      "case_revision": "1.0.0",
+      "title": "Poisoning to a deployed model",
+      "module": "SCENARIOS",
+      "activity": "REDTEAM",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-INTEGRITY",
+        "CTL-POISONING",
+        "CTL-RELEASE"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    },
+    {
+      "task_id": "TASK-95dd7128b02ff8ef",
+      "case_id": "SCN-006",
+      "case_revision": "1.0.0",
+      "title": "Adversarial MCP server to host",
+      "module": "SCENARIOS",
+      "activity": "REDTEAM",
+      "asset_id": "LAB-rag",
+      "route_id": "ROUTE-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "threat_ids": [
+        "TH-001"
+      ],
+      "control_ids": [
+        "CTL-CONSENT",
+        "CTL-MCP-TRUST"
+      ],
+      "technique_ids": [],
+      "example_ids": [],
+      "applicability": "NOT_APPLICABLE",
+      "scope": "in_scope",
+      "access": "white-box",
+      "test_protocol": null,
+      "execution": "NOT_RUN",
+      "result": "",
+      "rationale": "",
+      "observations": "",
+      "reviewer": "",
+      "evidence_ids": [],
+      "trials": [],
+      "cleanup_confirmed": false,
+      "exclusion": null
+    }
+  ]
+}

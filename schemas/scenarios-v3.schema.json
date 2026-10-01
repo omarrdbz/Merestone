@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Merestone scenarios 3.0",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "revision": {
+        "type": "string",
+        "minLength": 1
+      },
+      "title": {
+        "type": "string",
+        "minLength": 1
+      },
+      "activity": {
+        "type": "string"
+      },
+      "applies_if": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "case_ids": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "objective": {
+        "type": "string",
+        "minLength": 1
+      },
+      "actor": {
+        "type": "string"
+      },
+      "preconditions": {
+        "type": "array"
+      },
+      "steps": {
+        "type": "array"
+      },
+      "success_criteria": {
+        "type": "string"
+      },
+      "stop_conditions": {
+        "type": "array"
+      },
+      "cleanup": {
+        "type": "string"
+      },
+      "reporting": {
+        "type": "string"
+      },
+      "execution_status": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "id",
+      "revision",
+      "title",
+      "objective",
+      "actor",
+      "applies_if",
+      "case_ids",
+      "steps",
+      "success_criteria",
+      "stop_conditions",
+      "cleanup"
+    ],
+    "additionalProperties": false
+  }
+}

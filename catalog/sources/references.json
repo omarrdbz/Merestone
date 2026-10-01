@@ -1,0 +1,13 @@
+{
+  "snapshot_path": "reference-snapshot.json",
+  "snapshot_sha256": "e05b29e2f125757d782e2cd59a4341a01e1f981044fee6a01e5483b2b8151068",
+  "sources": {
+    "OWASP LLM Top 10": "https://raw.githubusercontent.com/GenAI-Security-Project/GenAI-LLM-Top10/main/2026/README.md",
+    "MITRE ATLAS": "https://raw.githubusercontent.com/mitre-atlas/atlas-data/main/dist/v6/ATLAS-2026.09.yaml",
+    "OWASP API Security Top 10": "https://owasp.org/API-Security/editions/2023/en/0x11-t10/",
+    "NIST AI RMF": "https://airc.nist.gov/airmf-resources/playbook/",
+    "OWASP Agentic": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
+    "MCP": "https://modelcontextprotocol.io/specification/2025-11-25/basic/security_best_practices",
+    "NIST AML": "https://csrc.nist.gov/pubs/ai/100/2/e2025/final"
+  }
+}

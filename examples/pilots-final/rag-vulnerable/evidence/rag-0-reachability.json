@@ -1,0 +1,5 @@
+{
+  "boundary": "local-rag-control",
+  "reached": true,
+  "mechanism": "function invocation / subprocess response"
+}

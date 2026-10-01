@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "checks": {
+    "cases": 75,
+    "controls": 31,
+    "techniques": 85,
+    "examples": 129,
+    "scenarios": 6,
+    "walkthroughs": 15,
+    "local_links_verified": 595,
+    "mappings": 114
+  },
+  "errors": [],
+  "scope": "Integrity of the catalog, generated views, walkthroughs, references and local links. No claim of system certification; no independent human review.",
+  "verified_at": "2026-10-01T18:34:40.583087+00:00",
+  "tests": {
+    "passed": 43,
+    "record": "test-results.txt"
+  },
+  "cli_smoke": "validate-library, list, init/plan/check-plan/report for six profiles, pilot check-plan/check-finding/report, governance revise/compare, importer via pilots, MCP fixture server and render"
+}

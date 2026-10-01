@@ -1,0 +1,5 @@
+{
+  "boundary": "local-classifier-control",
+  "reached": true,
+  "mechanism": "function invocation / subprocess response"
+}

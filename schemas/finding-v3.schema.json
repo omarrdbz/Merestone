@@ -1,0 +1,271 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Merestone finding-v3",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "confirmed",
+        "assigned",
+        "remediating",
+        "ready_for_retest",
+        "closed",
+        "duplicate",
+        "false_positive",
+        "risk_accepted"
+      ]
+    },
+    "asset_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "threat_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "control_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "case_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "task_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "root_cause": {
+      "type": "string",
+      "minLength": 1
+    },
+    "expected": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observed": {
+      "type": "string",
+      "minLength": 1
+    },
+    "proven_impact": {
+      "type": "string",
+      "minLength": 1
+    },
+    "potential_impact": {
+      "type": "string"
+    },
+    "impact": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "feasibility": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "risk_rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "confidence": {
+      "type": "string",
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ]
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1
+    },
+    "due_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "containment": {
+      "type": "string",
+      "minLength": 1
+    },
+    "remediation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "acceptance_criteria": {
+      "type": "string",
+      "minLength": 1
+    },
+    "retest_plan_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "risk_acceptance": {
+      "type": "object",
+      "properties": {
+        "approver": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "expires_at": {
+          "type": "string"
+        },
+        "compensation": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "approver",
+        "reason",
+        "expires_at",
+        "compensation"
+      ],
+      "additionalProperties": false
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "at": {
+            "type": "string",
+            "minLength": 1
+          },
+          "actor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "at",
+          "actor",
+          "from",
+          "to",
+          "reason"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "closure": {
+      "type": "object",
+      "properties": {
+        "reviewer": {
+          "type": "string"
+        },
+        "change_evidence_ref": {
+          "type": "string"
+        },
+        "original_trial_ref": {
+          "type": "string"
+        },
+        "neighbor_trial_ref": {
+          "type": "string"
+        },
+        "benign_trial_ref": {
+          "type": "string"
+        },
+        "review_evidence_ref": {
+          "type": "string"
+        },
+        "criteria_met": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "reviewer",
+        "change_evidence_ref",
+        "original_trial_ref",
+        "neighbor_trial_ref",
+        "benign_trial_ref",
+        "review_evidence_ref",
+        "criteria_met"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "state",
+    "asset_ids",
+    "threat_ids",
+    "control_ids",
+    "case_ids",
+    "task_ids",
+    "evidence_ids",
+    "root_cause",
+    "expected",
+    "observed",
+    "proven_impact",
+    "potential_impact",
+    "impact",
+    "feasibility",
+    "risk_rationale",
+    "confidence",
+    "owner",
+    "due_at",
+    "containment",
+    "remediation",
+    "acceptance_criteria",
+    "retest_plan_ids",
+    "risk_acceptance",
+    "history"
+  ],
+  "additionalProperties": false
+}

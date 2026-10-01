@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Merestone trial-v3",
+  "type": "object",
+  "properties": {
+    "trial_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "variant": {
+      "type": "string",
+      "minLength": 1
+    },
+    "example_id": {
+      "type": "string"
+    },
+    "technique_id": {
+      "type": "string"
+    },
+    "snapshot_ref": {
+      "type": "string"
+    },
+    "execution": {
+      "type": "string",
+      "enum": [
+        "NOT_RUN",
+        "BLOCKED",
+        "ERROR",
+        "COMPLETED"
+      ]
+    },
+    "result": {
+      "type": "string",
+      "enum": [
+        "",
+        "PASS",
+        "FAIL",
+        "INCONCLUSIVE"
+      ]
+    },
+    "baseline_ok": {
+      "type": "boolean"
+    },
+    "reachability": {
+      "type": "string",
+      "enum": [
+        "",
+        "reached",
+        "not_reached",
+        "blocked_by_control",
+        "unknown"
+      ]
+    },
+    "blocking_control_id": {
+      "type": "string"
+    },
+    "identity": {
+      "type": "string"
+    },
+    "expected": {
+      "type": "string"
+    },
+    "observed": {
+      "type": "string"
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "rationale": {
+      "type": "string"
+    },
+    "parameters_ref": {
+      "type": "string"
+    },
+    "adaptation_diff": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "trial_id",
+    "variant",
+    "example_id",
+    "technique_id",
+    "snapshot_ref",
+    "execution",
+    "result",
+    "baseline_ok",
+    "reachability",
+    "blocking_control_id",
+    "identity",
+    "expected",
+    "observed",
+    "evidence_ids",
+    "rationale",
+    "parameters_ref",
+    "adaptation_diff"
+  ],
+  "additionalProperties": false
+}

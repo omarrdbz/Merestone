@@ -1,0 +1,97 @@
+{
+  "schema_version": "3.0",
+  "assessment_id": "DRAFT-full",
+  "system_name": "Complete system",
+  "authorization_ref": "",
+  "snapshot_ref": "",
+  "inventory_review": {
+    "reviewer": "",
+    "reviewed_at": "",
+    "evidence_ref": ""
+  },
+  "assets": [
+    {
+      "id": "SYSTEM",
+      "name": "System to be cross-checked",
+      "owner": "",
+      "provider_responsibility": "unknown"
+    }
+  ],
+  "routes": [
+    {
+      "id": "ROUTE-1",
+      "asset_id": "SYSTEM",
+      "boundary": "To be identified",
+      "actor": "To be identified",
+      "access": "unknown",
+      "scope": "in_scope",
+      "capabilities": {
+        "api": "present",
+        "artifact_loading": "present",
+        "automated_judge": "present",
+        "automated_scanner": "present",
+        "autonomous_loop": "present",
+        "cache": "present",
+        "code_execution": "present",
+        "conversation_storage": "present",
+        "delegation": "present",
+        "dependencies": "present",
+        "deployment": "present",
+        "effectful_operations": "present",
+        "external_provider": "present",
+        "file_access": "present",
+        "fine_tuning": "present",
+        "guardrail": "present",
+        "html_rendering": "present",
+        "human_approval": "present",
+        "llm_generation": "present",
+        "mcp_client": "present",
+        "mcp_host": "present",
+        "mcp_http": "present",
+        "mcp_server": "present",
+        "mcp_stdio": "present",
+        "model_inference": "present",
+        "multi_tenant": "present",
+        "multimodal_input": "present",
+        "network_egress": "present",
+        "oauth": "present",
+        "oauth_proxy": "present",
+        "persistent_memory": "present",
+        "predictive_model": "present",
+        "retrieval": "present",
+        "scheduled_or_event_trigger": "present",
+        "streaming": "present",
+        "telemetry": "present",
+        "text_to_sql": "present",
+        "tool_calling": "present",
+        "training": "present"
+      },
+      "capability_evidence": {},
+      "threat_ids": [
+        "TH-001"
+      ],
+      "activity_types": [
+        "DESIGN",
+        "CONFIG",
+        "TEST"
+      ]
+    }
+  ],
+  "threats": [
+    {
+      "id": "TH-001",
+      "hypothesis": "Complete actor, access, boundary, effect and control",
+      "risk": "To be evaluated"
+    }
+  ],
+  "limits": {
+    "requests": 0,
+    "tokens": 0,
+    "cost_minor_units": 0,
+    "duration_seconds": 0,
+    "concurrency": 0
+  },
+  "stop_conditions": [],
+  "evidence_store": "",
+  "provenance": "Profile draft: PRESENT is a suggestion; UNKNOWN requires review. It does not authorize tests."
+}

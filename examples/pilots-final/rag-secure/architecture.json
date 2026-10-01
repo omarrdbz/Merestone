@@ -1,0 +1,154 @@
+{
+  "schema_version": "3.0",
+  "assessment_id": "LAB-rag",
+  "system_name": "rag local fixture",
+  "authorization_ref": "local-fixture-only",
+  "snapshot_ref": "fixture-rag-True",
+  "inventory_review": {
+    "reviewer": "automated fixture inventory",
+    "reviewed_at": "2026-10-01T18:33:59.344625+00:00",
+    "evidence_ref": "source adapters/local_pilots.py"
+  },
+  "assets": [
+    {
+      "id": "LAB-rag",
+      "name": "rag",
+      "owner": "fixture maintainer",
+      "provider_responsibility": "none; all local fixtures"
+    }
+  ],
+  "routes": [
+    {
+      "id": "ROUTE-rag",
+      "asset_id": "LAB-rag",
+      "boundary": "local-rag-control",
+      "actor": "fixture-A",
+      "access": "white-box",
+      "scope": "in_scope",
+      "capabilities": {
+        "api": "absent",
+        "artifact_loading": "absent",
+        "automated_judge": "absent",
+        "automated_scanner": "absent",
+        "autonomous_loop": "absent",
+        "cache": "absent",
+        "code_execution": "absent",
+        "conversation_storage": "absent",
+        "delegation": "absent",
+        "dependencies": "absent",
+        "deployment": "absent",
+        "effectful_operations": "absent",
+        "external_provider": "absent",
+        "file_access": "absent",
+        "fine_tuning": "absent",
+        "guardrail": "absent",
+        "html_rendering": "absent",
+        "human_approval": "absent",
+        "llm_generation": "present",
+        "mcp_client": "absent",
+        "mcp_host": "absent",
+        "mcp_http": "absent",
+        "mcp_server": "absent",
+        "mcp_stdio": "absent",
+        "model_inference": "absent",
+        "multi_tenant": "present",
+        "multimodal_input": "absent",
+        "network_egress": "absent",
+        "oauth": "absent",
+        "oauth_proxy": "absent",
+        "persistent_memory": "absent",
+        "predictive_model": "absent",
+        "retrieval": "present",
+        "scheduled_or_event_trigger": "absent",
+        "streaming": "absent",
+        "telemetry": "absent",
+        "text_to_sql": "absent",
+        "tool_calling": "absent",
+        "training": "absent"
+      },
+      "capability_evidence": {
+        "api": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "artifact_loading": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "automated_judge": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "automated_scanner": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "autonomous_loop": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "cache": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "code_execution": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "conversation_storage": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "delegation": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "dependencies": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "deployment": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "effectful_operations": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "external_provider": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "file_access": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "fine_tuning": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "guardrail": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "html_rendering": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "human_approval": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "llm_generation": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "mcp_client": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "mcp_host": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "mcp_http": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "mcp_server": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "mcp_stdio": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "model_inference": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "multi_tenant": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "multimodal_input": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "network_egress": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "oauth": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "oauth_proxy": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "persistent_memory": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "predictive_model": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "retrieval": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "scheduled_or_event_trigger": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "streaming": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "telemetry": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "text_to_sql": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "tool_calling": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated",
+        "training": "adapters/local_pilots.py component definition; LLM generation is a stub where indicated"
+      },
+      "threat_ids": [
+        "TH-001"
+      ],
+      "activity_types": [
+        "DESIGN",
+        "CONFIG",
+        "TEST",
+        "REDTEAM"
+      ],
+      "test_protocols": [
+        {
+          "case_id": "AI-006",
+          "required_variants": [
+            "original",
+            "neighbor",
+            "benign"
+          ],
+          "min_trials_per_variant": 1,
+          "design": "deterministic",
+          "decision_rule": "Compare measured fixture effect with expected label or access policy",
+          "justification": "Deterministic toy components; no statistical generalization to LLMs or trained models."
+        }
+      ]
+    }
+  ],
+  "threats": [
+    {
+      "id": "TH-001",
+      "hypothesis": "Complete actor, access, boundary, effect and control",
+      "risk": "To be evaluated"
+    }
+  ],
+  "limits": {
+    "requests": 50,
+    "tokens": 0,
+    "cost_minor_units": 0,
+    "duration_seconds": 60,
+    "concurrency": 1
+  },
+  "stop_conditions": [
+    "fixture completed or process timeout"
+  ],
+  "evidence_store": "evidence",
+  "provenance": "Instrumented toy components. No production target, external API, trained LLM, real user or real secret."
+}

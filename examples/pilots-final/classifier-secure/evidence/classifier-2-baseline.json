@@ -1,0 +1,8 @@
+{
+  "input": "hello",
+  "expected": "benign",
+  "observed": {
+    "label": "benign",
+    "score": 0
+  }
+}

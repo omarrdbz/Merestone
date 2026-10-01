@@ -1,0 +1,356 @@
+[
+  {
+    "id": "CTL-CONTEXT",
+    "revision": "1.0.0",
+    "title": "Separation between data and instructions",
+    "invariant": "Lower-trust content does not change instructions, permissions or the authorized purpose.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-001",
+      "AI-002",
+      "AI-046"
+    ]
+  },
+  {
+    "id": "CTL-CONFIDENTIALITY",
+    "revision": "1.0.0",
+    "title": "Confidentiality",
+    "invariant": "Protected data are visible only to authorized identities and channels.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-003",
+      "AI-028"
+    ]
+  },
+  {
+    "id": "CTL-ISOLATION",
+    "revision": "1.0.0",
+    "title": "Isolation",
+    "invariant": "Sessions, tenants and environments do not access resources outside their authorized domain.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-004",
+      "AI-024",
+      "AI-035",
+      "AI-056",
+      "CFG-002"
+    ]
+  },
+  {
+    "id": "CTL-MEMORY",
+    "revision": "1.0.0",
+    "title": "Memory integrity",
+    "invariant": "Memory writes and reads preserve the provenance, scope and validity of instructions.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-005",
+      "AI-058"
+    ]
+  },
+  {
+    "id": "CTL-AUTHORIZATION",
+    "revision": "1.0.0",
+    "title": "Effective authorization",
+    "invariant": "The authenticated identity and a policy external to the model limit object, action and properties.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-006",
+      "AI-015",
+      "AI-025",
+      "AI-026",
+      "AI-034",
+      "CFG-001"
+    ]
+  },
+  {
+    "id": "CTL-REVOCATION",
+    "revision": "1.0.0",
+    "title": "Revocation and deletion",
+    "invariant": "No route serves revoked content after the agreed deadline.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-007"
+    ]
+  },
+  {
+    "id": "CTL-PROVENANCE",
+    "revision": "1.0.0",
+    "title": "Knowledge provenance",
+    "invariant": "Untrusted content does not acquire authority without validation and traceability.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-008",
+      "AI-045"
+    ]
+  },
+  {
+    "id": "CTL-RETRIEVAL",
+    "revision": "1.0.0",
+    "title": "Retrieval integrity",
+    "invariant": "Selection and ranking do not allow protected decisions to be altered through untrusted sources.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-009"
+    ]
+  },
+  {
+    "id": "CTL-GROUNDING",
+    "revision": "1.0.0",
+    "title": "Decision support",
+    "invariant": "A claim or citation is validated against evidence before a protected decision.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-010"
+    ]
+  },
+  {
+    "id": "CTL-OUTPUT",
+    "revision": "1.0.0",
+    "title": "Safe consumption",
+    "invariant": "Generated data are not interpreted as executable syntax outside the consumer's contract.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-011",
+      "AI-012"
+    ]
+  },
+  {
+    "id": "CTL-EXECUTION",
+    "revision": "1.0.0",
+    "title": "Bounded execution",
+    "invariant": "Only registered capabilities and validated arguments reach the isolated executor.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-013",
+      "AI-043"
+    ]
+  },
+  {
+    "id": "CTL-INTENT",
+    "revision": "1.0.0",
+    "title": "Intent and approval",
+    "invariant": "Effects match the authorized task and an approval bound to arguments and resources.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-014",
+      "AI-044",
+      "AI-059"
+    ]
+  },
+  {
+    "id": "CTL-BUDGET",
+    "revision": "1.0.0",
+    "title": "Budget and stopping",
+    "invariant": "Requests, steps, costs, time and actions stay within measured limits.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-016",
+      "AI-027",
+      "AI-051",
+      "CFG-005"
+    ]
+  },
+  {
+    "id": "CTL-IDEMPOTENCY",
+    "revision": "1.0.0",
+    "title": "Effect uniqueness",
+    "invariant": "Retries and concurrency do not duplicate the same logical operation.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-017"
+    ]
+  },
+  {
+    "id": "CTL-DELEGATION",
+    "revision": "1.0.0",
+    "title": "Delegated scope",
+    "invariant": "Delegation preserves identity, restrictions and accountability without expanding privileges.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-018"
+    ]
+  },
+  {
+    "id": "CTL-MCP-TRUST",
+    "revision": "1.0.0",
+    "title": "Trust in MCP capabilities",
+    "invariant": "Server metadata, changes and collisions do not expand the host's authority.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-019",
+      "AI-020"
+    ]
+  },
+  {
+    "id": "CTL-TOKEN",
+    "revision": "1.0.0",
+    "title": "Per-recipient credentials",
+    "invariant": "Every token is validated for issuer, audience, validity and the permissions of the receiving resource.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-021",
+      "CFG-003"
+    ]
+  },
+  {
+    "id": "CTL-SESSION",
+    "revision": "1.0.0",
+    "title": "Session binding",
+    "invariant": "A session does not replace authentication or allow mixing users or events.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-022"
+    ]
+  },
+  {
+    "id": "CTL-EGRESS",
+    "revision": "1.0.0",
+    "title": "Egress channels",
+    "invariant": "Every destination, redirect and sent data item satisfies the egress policy.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-023",
+      "AI-029",
+      "AI-042"
+    ]
+  },
+  {
+    "id": "CTL-POISONING",
+    "revision": "1.0.0",
+    "title": "Data admission",
+    "invariant": "Adversarial data changes do not alter protected properties without detection and treatment.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-030"
+    ]
+  },
+  {
+    "id": "CTL-INTEGRITY",
+    "revision": "1.0.0",
+    "title": "Artifact integrity",
+    "invariant": "Only approved and verifiable artifacts are loaded or deployed.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-031"
+    ]
+  },
+  {
+    "id": "CTL-LOADER",
+    "revision": "1.0.0",
+    "title": "Loading without implicit code",
+    "invariant": "Untrusted data/models do not enable code or executable formats outside approval.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-032",
+      "CFG-004"
+    ]
+  },
+  {
+    "id": "CTL-SUPPLY",
+    "revision": "1.0.0",
+    "title": "Approved dependencies",
+    "invariant": "The provenance and version of every dependency are verified before admission.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-033",
+      "AI-041",
+      "AI-057",
+      "CFG-006"
+    ]
+  },
+  {
+    "id": "CTL-RELEASE",
+    "revision": "1.0.0",
+    "title": "Controlled deployment",
+    "invariant": "Only authorized, non-revoked revisions are admitted; recovery is verifiable.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-036"
+    ]
+  },
+  {
+    "id": "CTL-PRIVACY",
+    "revision": "1.0.0",
+    "title": "Model privacy",
+    "invariant": "Responses do not allow recovering or inferring protected data above the agreed threshold.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-037",
+      "AI-038",
+      "AI-048"
+    ]
+  },
+  {
+    "id": "CTL-POLICY",
+    "revision": "1.0.0",
+    "title": "Evaluable policy",
+    "invariant": "The response and the action satisfy an explicit policy measured with a rubric and benign controls.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-039",
+      "AI-047",
+      "AI-049",
+      "AI-062"
+    ]
+  },
+  {
+    "id": "CTL-CONSENT",
+    "revision": "1.0.0",
+    "title": "Specific consent",
+    "invariant": "Consent identifies the client, permissions, action and destination; it is not improperly inherited.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-040",
+      "AI-055"
+    ]
+  },
+  {
+    "id": "CTL-OBSERVABILITY",
+    "revision": "1.0.0",
+    "title": "Detection and recovery",
+    "invariant": "Critical events are correlated, detected and contained within agreed objectives.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-053"
+    ]
+  },
+  {
+    "id": "CTL-EVALUATION",
+    "revision": "1.0.0",
+    "title": "Evaluation integrity",
+    "invariant": "The evaluated system does not control the oracle, the test set or the evidence of its own result.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-050",
+      "AI-061"
+    ]
+  },
+  {
+    "id": "CTL-CONTEXT-TRANSFORM",
+    "revision": "1.0.0",
+    "title": "Multimodal transformation",
+    "invariant": "Extraction and normalization preserve trust boundaries between modalities.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-052"
+    ]
+  },
+  {
+    "id": "CTL-GOVERNANCE",
+    "revision": "1.0.0",
+    "title": "Traceable assessment",
+    "invariant": "Every applicable obligation has an owner, activity, evidence or explicit exception.",
+    "owner_role": "Owner of the component that enforces the boundary; the assessor verifies.",
+    "case_ids": [
+      "AI-054",
+      "CORE-001",
+      "CORE-002",
+      "CORE-003",
+      "CORE-004",
+      "CORE-005",
+      "CORE-006",
+      "CORE-007",
+      "CORE-008"
+    ]
+  }
+]

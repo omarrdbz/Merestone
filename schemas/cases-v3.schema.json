@@ -1,0 +1,187 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Merestone cases 3.0",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "minLength": 1
+      },
+      "revision": {
+        "type": "string",
+        "minLength": 1
+      },
+      "title": {
+        "type": "string",
+        "minLength": 1
+      },
+      "domain": {
+        "type": "string"
+      },
+      "objective": {
+        "type": "string",
+        "minLength": 1
+      },
+      "component": {
+        "type": "string"
+      },
+      "preconditions": {
+        "type": "array"
+      },
+      "procedure": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1
+        },
+        "minItems": 1
+      },
+      "variants": {
+        "type": "array"
+      },
+      "success_criteria": {
+        "type": "object",
+        "properties": {
+          "attack_success": {
+            "type": "string",
+            "minLength": 1
+          },
+          "control_pass": {
+            "type": "string",
+            "minLength": 1
+          },
+          "inconclusive": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "attack_success",
+          "control_pass",
+          "inconclusive"
+        ],
+        "additionalProperties": false
+      },
+      "evidence": {
+        "type": "array"
+      },
+      "potential_impact": {
+        "type": "string"
+      },
+      "mitigations": {
+        "type": "array"
+      },
+      "mappings": {
+        "type": "array"
+      },
+      "automation": {
+        "type": "string"
+      },
+      "cleanup": {
+        "type": "string"
+      },
+      "provenance": {
+        "type": "object"
+      },
+      "module": {
+        "type": "string"
+      },
+      "activity": {
+        "enum": [
+          "DESIGN",
+          "CONFIG",
+          "TEST",
+          "REDTEAM"
+        ]
+      },
+      "applies_if": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "control_ids": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "technique_ids": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "execution_modes": {
+        "type": "array"
+      },
+      "routes": {
+        "type": "array"
+      },
+      "actor": {
+        "type": "string"
+      },
+      "access_required": {
+        "type": "string"
+      },
+      "baseline": {
+        "type": "object"
+      },
+      "metrics": {
+        "type": "object"
+      },
+      "stop_conditions": {
+        "type": "array"
+      },
+      "retest": {
+        "type": "array"
+      },
+      "review": {
+        "type": "object"
+      },
+      "example_ids": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "limitations": {
+        "type": "array"
+      },
+      "technique_procedures": {
+        "type": "array"
+      },
+      "evidence_requirements": {
+        "type": "array"
+      }
+    },
+    "required": [
+      "id",
+      "revision",
+      "title",
+      "module",
+      "activity",
+      "objective",
+      "potential_impact",
+      "applies_if",
+      "control_ids",
+      "preconditions",
+      "procedure",
+      "evidence",
+      "success_criteria",
+      "technique_ids",
+      "example_ids",
+      "review"
+    ],
+    "additionalProperties": false
+  }
+}

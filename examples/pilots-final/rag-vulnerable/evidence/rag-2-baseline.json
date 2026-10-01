@@ -1,0 +1,17 @@
+{
+  "input": "policy",
+  "identity": "B",
+  "expected_document": "B",
+  "observed": [
+    {
+      "id": "A",
+      "tenant": "A",
+      "text": "policy CANARY-A"
+    },
+    {
+      "id": "B",
+      "tenant": "B",
+      "text": "policy CANARY-B"
+    }
+  ]
+}

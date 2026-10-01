@@ -1,0 +1,62 @@
+[
+  {
+    "fixture": "classifier",
+    "configuration": "vulnerable",
+    "case_id": "AI-047",
+    "case_result": "FAIL",
+    "plan_exit_code": 2,
+    "trials": 3,
+    "violations": 2,
+    "report": "classifier-vulnerable/report.md"
+  },
+  {
+    "fixture": "classifier",
+    "configuration": "secure",
+    "case_id": "AI-047",
+    "case_result": "PASS",
+    "plan_exit_code": 2,
+    "trials": 3,
+    "violations": 0,
+    "report": "classifier-secure/report.md"
+  },
+  {
+    "fixture": "rag",
+    "configuration": "vulnerable",
+    "case_id": "AI-006",
+    "case_result": "FAIL",
+    "plan_exit_code": 2,
+    "trials": 3,
+    "violations": 2,
+    "report": "rag-vulnerable/report.md"
+  },
+  {
+    "fixture": "rag",
+    "configuration": "secure",
+    "case_id": "AI-006",
+    "case_result": "PASS",
+    "plan_exit_code": 2,
+    "trials": 3,
+    "violations": 0,
+    "report": "rag-secure/report.md"
+  },
+  {
+    "fixture": "agent-mcp",
+    "configuration": "vulnerable",
+    "case_id": "AI-015",
+    "case_result": "FAIL",
+    "plan_exit_code": 2,
+    "trials": 3,
+    "violations": 2,
+    "report": "agent-mcp-vulnerable/report.md"
+  },
+  {
+    "fixture": "agent-mcp",
+    "configuration": "secure",
+    "case_id": "AI-015",
+    "case_result": "PASS",
+    "plan_exit_code": 2,
+    "trials": 3,
+    "violations": 0,
+    "report": "agent-mcp-secure/report.md"
+  }
+]

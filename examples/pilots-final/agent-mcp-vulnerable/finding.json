@@ -1,0 +1,102 @@
+{
+  "id": "FND-LAB-agent-mcp",
+  "title": "Lab: Excessive tool privileges",
+  "state": "ready_for_retest",
+  "asset_ids": [
+    "LAB-agent-mcp"
+  ],
+  "threat_ids": [
+    "TH-001"
+  ],
+  "control_ids": [
+    "CTL-AUTHORIZATION"
+  ],
+  "case_ids": [
+    "AI-015"
+  ],
+  "task_ids": [
+    "TASK-03e158401782471d"
+  ],
+  "evidence_ids": [
+    "agent-mcp-0-baseline",
+    "agent-mcp-0-effect",
+    "agent-mcp-0-identity",
+    "agent-mcp-0-input",
+    "agent-mcp-0-reachability",
+    "agent-mcp-0-response",
+    "agent-mcp-1-baseline",
+    "agent-mcp-1-effect",
+    "agent-mcp-1-identity",
+    "agent-mcp-1-input",
+    "agent-mcp-1-reachability",
+    "agent-mcp-1-response",
+    "agent-mcp-2-baseline",
+    "agent-mcp-2-effect",
+    "agent-mcp-2-identity",
+    "agent-mcp-2-input",
+    "agent-mcp-2-reachability",
+    "agent-mcp-2-response"
+  ],
+  "root_cause": "The server uses the requested ID without applying the principal's fixed identity.",
+  "expected": "allow only A",
+  "observed": "\"CANARY-B\"",
+  "proven_impact": "Effect in a local fixture with synthetic data; see evidence.",
+  "potential_impact": "Not extrapolated to a real system.",
+  "impact": 1,
+  "feasibility": 5,
+  "risk_rationale": "Teaching prioritization; the fixture contains no real data or actions.",
+  "confidence": "high",
+  "owner": "Lab owner (example role)",
+  "due_at": "2099-01-01T00:00:00Z",
+  "containment": "Shut down the fixture; it has no network exposure.",
+  "remediation": "Apply the control from the fixture's secure configuration.",
+  "acceptance_criteria": "Independent reviewer confirms original, neighbor and benign in the secure evidence; the other cases remain pending.",
+  "retest_plan_ids": [
+    "09d9b30a-045f-4c22-8885-34087e60a7d3"
+  ],
+  "risk_acceptance": {
+    "approver": "",
+    "reason": "",
+    "expires_at": "",
+    "compensation": ""
+  },
+  "history": [
+    {
+      "at": "2026-10-01T18:34:02.268930+00:00",
+      "actor": "local_pilots.py; no human approval",
+      "from": "",
+      "to": "proposed",
+      "reason": "Observed effect"
+    },
+    {
+      "at": "2026-10-01T18:34:02.268930+00:00",
+      "actor": "local_pilots.py; no human approval",
+      "from": "proposed",
+      "to": "confirmed",
+      "reason": "Original and neighbor show a violation"
+    },
+    {
+      "at": "2026-10-01T18:34:02.268930+00:00",
+      "actor": "local_pilots.py; no human approval",
+      "from": "confirmed",
+      "to": "remediating",
+      "reason": "Corrected configuration available"
+    },
+    {
+      "at": "2026-10-01T18:34:02.268930+00:00",
+      "actor": "local_pilots.py; no human approval",
+      "from": "remediating",
+      "to": "ready_for_retest",
+      "reason": "Secure trials performed; human review pending"
+    }
+  ],
+  "closure": {
+    "reviewer": "",
+    "change_evidence_ref": "",
+    "original_trial_ref": "",
+    "neighbor_trial_ref": "",
+    "benign_trial_ref": "",
+    "review_evidence_ref": "",
+    "criteria_met": false
+  }
+}

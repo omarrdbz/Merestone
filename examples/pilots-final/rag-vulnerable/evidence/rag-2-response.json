@@ -1,0 +1,10 @@
+{
+  "context": [
+    {
+      "id": "A",
+      "tenant": "A",
+      "text": "policy CANARY-A"
+    }
+  ],
+  "answer_stub": "Summary available"
+}
