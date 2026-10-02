@@ -67,6 +67,8 @@ python fieldguide.py check-plan runs/plan.json --manifest runs/plan.json.manifes
 python fieldguide.py report runs/plan.json --manifest runs/plan.json.manifest.json --evidence-root private/evidence --out runs/report.md
 ```
 
+In a guided-CLI workspace the same check and report are `merestone status` and `merestone report`. For people who do not use the terminal, `merestone report --format html` writes a self-contained, read-only dashboard (`--layout document` for a top-to-bottom, print-friendly version); `--format both` writes Markdown and HTML together.
+
 Code 0: selected obligations resolved without FAIL and references verified. Code 1: there are FAILs and nothing pending. Code 2: missing readiness/evidence/verification, pending items/exclusions exist or the record is inconsistent. A code 0 does not certify the system: it depends on the scope, the frozen catalog and technical judgment. Without an external manifest or a verifiable store, no green closure is issued.
 
 ## 5. Consolidate, correct and retest
