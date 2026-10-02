@@ -81,6 +81,6 @@ test_start_screen_creates_and_opens_workspaces (test_ui.UiServerTests) ... ok
 test_static_data_and_fieldcards (test_ui.UiServerTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 81 tests in 78.211s
+Ran 81 tests in 80.353s
 
 OK

@@ -114,61 +114,66 @@ MARK = ('<svg class="mark" viewBox="0 -14 100 140" width="26" height="36" aria-h
         '<polygon points="50,6 94,36 84,106 50,106" fill="var(--sand)"/><polygon points="50,6 94,36 84,106 16,106 6,36" fill="none" stroke="var(--ink)" '
         'stroke-width="7" stroke-linejoin="round"/><line x1="50" y1="-12" x2="50" y2="124" stroke="var(--ochre)" stroke-width="4.5" stroke-dasharray="8 7"/></svg>')
 
-CSS = """
-:root{--bg:#EEF1EE;--card:#FFFFFF;--ink:#18221F;--muted:#56635E;--line:#CBD3CD;--teal:#0F6A62;--sand:#F1E3C8;--ochre:#A8701C;
---pass:#2D7A4B;--pass-s:#D8EDDF;--fail:#B03F37;--fail-s:#F5DCD9;--unk:#A8701C;--unk-s:#F1E3C8;--todo:#3F5C56;--todo-s:#DDE8E5;--na:#9AA59F;--na-s:#E8ECE9;--ex:#6F6A86;--ex-s:#E6E4EE;
---night:#0E1513;--night-ink:#E4ECE8;color-scheme:light}
-@media (prefers-color-scheme:dark){:root{--bg:#111917;--card:#18221F;--ink:#E4ECE8;--muted:#9BABA5;--line:#2C3A36;--teal:#5CC2B3;--sand:#3A2D18;--ochre:#D9A050;
---pass:#6CC48D;--pass-s:#1A3324;--fail:#E77B72;--fail-s:#3D1F1C;--unk:#D9A050;--unk-s:#3A2D18;--todo:#9FC9C1;--todo-s:#1E2D2A;--na:#7E8C86;--na-s:#1C2522;--ex:#ADA7C9;--ex-s:#25233A;color-scheme:dark}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
-code,pre,.mono{font-family:ui-monospace,"Cascadia Mono",Consolas,Menlo,monospace}
-.wrap{max-width:1240px;margin:0 auto;padding:0 20px}
-header.top{background:var(--night);color:var(--night-ink);padding:22px 0 26px}
-header.top .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;letter-spacing:-.02em}
-header.top .brand .mark polygon:nth-child(2){fill:#18221F}header.top .brand .mark polygon:nth-child(3){stroke:#E4ECE8}
-.hero{display:grid;grid-template-columns:auto 1fr auto;gap:28px;align-items:center;margin-top:18px}
-.code{width:120px;height:120px;border-radius:50%;display:grid;place-items:center;font:700 72px/1 system-ui;color:#fff}
-.c0{background:#2D7A4B}.c1{background:#B03F37}.c2{background:#A8701C}
-.hero h1{margin:0;font-size:34px;letter-spacing:-.02em;line-height:1.1}.hero p{margin:6px 0 0;color:#B9C6C1;max-width:70ch}
-.meta{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:12px;font-size:13px;color:#9BABA5}.meta b{color:#E4ECE8;font-weight:600}
-.kpis{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin:22px 0 8px}
-.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}.kpi b{display:block;font-size:26px;line-height:1.1}.kpi span{font-size:12px;color:var(--muted)}
-h2{font-size:20px;margin:30px 0 12px;letter-spacing:-.01em}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
-.gaps{display:flex;flex-wrap:wrap;gap:8px}.gap{background:var(--unk-s);color:var(--unk);border-radius:8px;padding:4px 10px;font-size:13px;font-weight:600}
-.mods{display:grid;gap:8px}.mod{display:grid;grid-template-columns:110px 1fr 240px;gap:12px;align-items:center;font-size:13px}
-.bar{display:flex;height:16px;border-radius:5px;overflow:hidden;background:var(--na-s)}.bar i{display:block;height:100%}
-.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted);margin-top:10px}.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
-.s-FAIL{background:var(--fail)}.s-TODO{background:var(--todo)}.s-UNKNOWN{background:var(--unk)}.s-PASS{background:var(--pass)}.s-EXCLUDED{background:var(--ex)}.s-NOT_APPLICABLE{background:var(--na)}
-.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
-.tools input,.tools select{font:inherit;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
-.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:start}
-.col{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;min-width:0}
-.col>h3{margin:2px 4px 2px;font-size:15px;display:flex;justify-content:space-between;align-items:center}.col>h3 small{font-weight:600;border-radius:999px;padding:1px 9px;color:#fff}
-.col>p{margin:0 4px 10px;font-size:12px;color:var(--muted)}
-.extra{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
-details.task{border:1px solid var(--line);border-left:4px solid var(--c);border-radius:9px;margin:0 0 8px;background:var(--bg)}
-details.task>summary{list-style:none;cursor:pointer;padding:8px 10px;display:grid;gap:2px}details.task>summary::-webkit-details-marker{display:none}
-details.task>summary .id{font:600 12px ui-monospace,Consolas,monospace;color:var(--c)}details.task>summary .tt{font-weight:600;font-size:14px;line-height:1.3}
-details.task>summary .tg{font-size:11px;color:var(--muted)}
-details.task[open]>summary{background:var(--card);outline:2px solid var(--c);border-radius:8px}
-details.task .body{position:fixed;top:0;right:0;bottom:0;width:min(760px,100vw);overflow:auto;z-index:20;background:var(--card);border-left:4px solid var(--c);box-shadow:-18px 0 50px rgba(0,0,0,.28);padding:18px 26px 40px;font-size:14px}
-.body .dh{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;position:sticky;top:-18px;background:var(--card);padding:12px 0 10px;margin-top:-12px;border-bottom:1px solid var(--line)}
-.body .dh h3{margin:0;font-size:20px;line-height:1.2}.body .dh .id{font:600 13px ui-monospace,Consolas,monospace;color:var(--c)}
-.x{font:inherit;font-size:13px;padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer;white-space:nowrap}
-#scrim{position:fixed;inset:0;background:rgba(10,16,14,.45);z-index:19}
-.body h3,.body h4,.body h5{margin:14px 0 4px;font-size:14px}.body pre{white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px;font-size:12px}
-.body ul,.body ol{padding-left:20px;margin:4px 0}.facts{display:grid;grid-template-columns:max-content 1fr;gap:3px 12px;font-size:13px;margin:8px 0}
-.facts dt{color:var(--muted)}.facts dd{margin:0}
-div.tw{overflow-x:auto}table.ev{width:100%;min-width:520px;border-collapse:collapse;font-size:12px;margin:6px 0}table.ev td,table.ev th{border-bottom:1px solid var(--line);padding:4px 6px;text-align:left;vertical-align:top}
-.chip{display:inline-block;font:600 11px ui-monospace,Consolas,monospace;padding:1px 7px;border-radius:5px}
-.cP{background:var(--pass-s);color:var(--pass)}.cF{background:var(--fail-s);color:var(--fail)}.cO{background:var(--na-s);color:var(--muted)}
-.finding{border-left:4px solid var(--fail);margin-bottom:10px}
-footer{margin:36px 0 40px;font-size:12.5px;color:var(--muted)}
-.empty{font-size:12.5px;color:var(--muted);padding:6px 4px}
-@media (max-width:980px){.board{grid-template-columns:repeat(2,minmax(0,1fr))}.kpis{grid-template-columns:repeat(4,1fr)}.hero{grid-template-columns:auto 1fr}.hero .mojo{display:none}}
-@media (max-width:620px){.board,.extra{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}.mod{grid-template-columns:80px 1fr}.mod .n{display:none}}
-@media print{body{background:#fff}header.top{background:#fff;color:#000}.tools,#scrim,.x{display:none}details.task{break-inside:avoid}details.task .body{position:static;width:auto;box-shadow:none;border:0;padding:6px 10px}}
+BASE_CSS = """
+:root{--bg:#FFFFFF;--soft:#F7F7F5;--ink:#1A1F1D;--muted:#5E6662;--faint:#9AA19D;--line:#E4E6E2;--line2:#EFF0EE;--teal:#0F6A62;--ochre:#A8701C;
+--pass:#2F8150;--fail:#C2453C;--unk:#B0791E;--todo:#9AA19D;--na:#C9CEca;--ex:#6F6A86;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#121615;--soft:#181D1C;--ink:#E3E8E6;--muted:#9AA5A0;--faint:#68726E;--line:#262D2B;--line2:#1C2221;--teal:#5CC2B3;--ochre:#D9A050;
+--pass:#6BBF8A;--fail:#E3786F;--unk:#D7A04F;--todo:#68726E;--na:#3E4744;--ex:#ADA7C9;color-scheme:dark}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 -apple-system,"Segoe UI",system-ui,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+code,pre,.mono{font-family:ui-monospace,"SF Mono","Cascadia Mono",Menlo,Consolas,monospace;font-size:12.5px}
+.brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:13.5px;color:var(--ink)}.brand .mark{width:13px;height:18px}.brand span{font-weight:400;color:var(--muted)}
+h1{font-size:26px;font-weight:600;letter-spacing:-.015em;margin:22px 0 2px;line-height:1.2}.sub{color:var(--muted);margin:0;font-size:13px}
+h2{font-size:16px;font-weight:600;margin:40px 0 12px;padding-top:0;display:flex;gap:10px;align-items:baseline}
+h2 .num{font-weight:400;color:var(--faint);font-size:13px}
+.code{display:flex;align-items:baseline;gap:10px;margin-top:22px;padding:14px 0 14px 16px;border-left:3px solid var(--vc)}
+.code b{font-size:15px;font-weight:600}.code p{margin:2px 0 0;color:var(--muted);font-size:13.5px}
+.c0{--vc:var(--pass)}.c1{--vc:var(--fail)}.c2{--vc:var(--unk)}
+.code .dot{width:9px;height:9px;border-radius:50%;background:var(--vc);flex:none;transform:translateY(-1px)}
+.nums{display:flex;flex-wrap:wrap;margin-top:18px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.nums div{flex:1 1 100px;padding:12px 14px 10px;border-left:1px solid var(--line)}.nums div:first-child{border-left:0;padding-left:0}
+.nums b{display:block;font-size:22px;font-weight:600;line-height:1.15;font-variant-numeric:tabular-nums}.nums span{font-size:12px;color:var(--muted)}
+.metaT{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}.metaT td{padding:6px 0;border-bottom:1px solid var(--line2);vertical-align:top}.metaT td:first-child{color:var(--muted);width:200px}
+.gaps{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:13px}.gaps span{color:var(--unk)}.gaps span::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--unk);margin-right:6px;vertical-align:1px}
+.dotS{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);white-space:nowrap}.dotS::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--sc)}
+.s-FAIL{--sc:var(--fail)}.s-TODO{--sc:var(--todo)}.s-UNKNOWN{--sc:var(--unk)}.s-PASS{--sc:var(--pass)}.s-EXCLUDED{--sc:var(--ex)}.s-NOT_APPLICABLE{--sc:var(--na)}
+.facts{display:grid;grid-template-columns:max-content 1fr;gap:4px 16px;font-size:13px;margin:8px 0}.facts dt{color:var(--muted)}.facts dd{margin:0}
+div.tw{overflow-x:auto}table.ev{width:100%;min-width:520px;border-collapse:collapse;font-size:12.5px;margin:6px 0}table.ev td,table.ev th{border-bottom:1px solid var(--line2);padding:5px 8px 5px 0;text-align:left;vertical-align:top}table.ev th{font-weight:500;color:var(--muted);border-color:var(--line)}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:12px}.chip::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--todo)}.cP{color:var(--pass)}.cP::before{background:var(--pass)}.cF{color:var(--fail)}.cF::before{background:var(--fail)}.cO{color:var(--muted)}
+.det h3,.det h4,.det h5{margin:16px 0 4px;font-size:13.5px;font-weight:600}.det pre{white-space:pre-wrap;background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:8px;font-size:12px}
+.det ul,.det ol{padding-left:20px;margin:4px 0}.det p,.det li{font-size:13.5px}
+footer{margin-top:48px;padding-top:12px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+"""
+
+CSS = BASE_CSS + """
+.wrap{max-width:1180px;margin:0 auto;padding:28px 28px 40px}
+.two{display:grid;grid-template-columns:1fr 1.3fr;gap:48px}
+.mods{display:grid}.mod{display:grid;grid-template-columns:96px 1fr 210px;gap:14px;align-items:center;font-size:12.5px;padding:6px 0;border-bottom:1px solid var(--line2)}
+.mod b{font-weight:500}.mod .n{color:var(--muted);text-align:right}
+.bar{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--line2)}.bar i{display:block;height:100%;background:var(--sc)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 6px}
+.tools input,.tools select{font:inherit;font-size:13px;padding:5px 9px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}.tools input{width:260px}
+.tools span{font-size:12.5px;color:var(--faint)}
+.col{min-width:0;margin-top:14px}
+.col>h3{margin:0;font-size:12.5px;font-weight:600;display:flex;gap:6px;align-items:baseline;padding:10px 0 6px;border-bottom:1px solid var(--line)}.col>h3 small{font-weight:400;color:var(--faint);font-size:12px}
+.col>p{display:none}
+.empty{font-size:12.5px;color:var(--faint);padding:8px 0}
+details.task{border-bottom:1px solid var(--line2)}
+details.task>summary{list-style:none;cursor:pointer;padding:7px 4px;display:grid;grid-template-columns:14px 170px 1fr 190px 120px;gap:10px;align-items:baseline}
+details.task>summary::-webkit-details-marker{display:none}details.task>summary:hover{background:var(--soft)}
+details.task>summary::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c);transform:translateY(-1px)}
+details.task>summary .id{font:12px ui-monospace,Menlo,Consolas,monospace;color:var(--muted)}details.task>summary .tt{font-size:13.5px}
+details.task>summary .tg{font-size:12.5px;color:var(--muted)}details.task>summary .st{font-size:12.5px;color:var(--muted);text-align:right}
+details.task[open]>summary{background:var(--soft);box-shadow:inset 2px 0 0 var(--teal)}
+details.task .body{position:fixed;top:0;right:0;bottom:0;width:min(640px,100vw);overflow:auto;z-index:20;background:var(--bg);border-left:1px solid var(--line);box-shadow:-20px 0 50px rgba(0,0,0,.12);padding:0 24px 40px}
+.body .dh{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;position:sticky;top:0;background:var(--bg);padding:16px 0 12px;border-bottom:1px solid var(--line);margin-bottom:6px}
+.body .dh h3{margin:4px 0 0;font-size:18px;font-weight:600}.body .dh .id{font:12px ui-monospace,Menlo,Consolas,monospace;color:var(--muted)}
+.x{font:inherit;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--muted);cursor:pointer;white-space:nowrap}
+#scrim{position:fixed;inset:0;background:rgba(10,14,13,.25);z-index:19}
+.finding{border-left:2px solid var(--fail);padding:4px 0 4px 14px;margin-bottom:12px}
+@media (max-width:900px){.two{grid-template-columns:1fr;gap:8px}details.task>summary{grid-template-columns:14px 1fr auto}details.task>summary .tg{display:none}details.task>summary .tt{grid-column:2/-1;order:3}}
+@media (max-width:620px){.mod{grid-template-columns:80px 1fr}.mod .n{display:none}.tools input{width:100%}}
+@media print{.tools,#scrim,.x{display:none}details.task{break-inside:avoid}details.task .body{position:static;width:auto;box-shadow:none;border:0;padding:6px 10px}}
 """
 
 JS = """
@@ -191,7 +196,7 @@ COLORS = {'FAIL': 'var(--fail)', 'TODO': 'var(--todo)', 'UNKNOWN': 'var(--unk)',
 
 def state_label(t):
     b = bucket(t)
-    return (t['result'] or t['execution']) if b == 'TODO' else STATE_META[b][0]
+    return (t['result'] or t['execution']).replace('_', ' ').capitalize() if b == 'TODO' else STATE_META[b][0]
 
 
 def anchor(t): return 't-' + re.sub(r'[^A-Za-z0-9]+', '-', alias(t))
@@ -232,7 +237,7 @@ def task_card(t, case, ev_index):
             '<button type="button" class="x" data-close>Close (Esc)</button></div>') + task_details(t, case, ev_index)
     return (f'<details class="task" style="--c:{colors[b]}" data-m="{E(t["module"])}" data-s="{E(search)}"><summary>'
             f'<span class="id">{E(alias(t))}</span><span class="tt">{E(t["title"])}</span>'
-            f'<span class="tg">{E(t["module"])} · {E(t["activity"])} · {E(state)}</span></summary><div class="body">{body}</div></details>')
+            f'<span class="tg">{E(t["module"])} · {E(t["activity"].title())}</span><span class="st">{E(state)}</span></summary><div class="body"><div class="det">{body}</div></div></details>')
 
 
 def render_board(plan, result, findings=(), generated_at=None):
@@ -253,18 +258,18 @@ def render_board(plan, result, findings=(), generated_at=None):
         segs = ''.join(f'<i class="s-{k}" style="width:{100 * c[k] / tot:.2f}%" title="{STATE_META[k][0]}: {c[k]}"></i>' for k in STATE_ORDER if c[k])
         summary = ' · '.join(f'{c[k]} {STATE_META[k][0].lower()}' for k in STATE_ORDER if c[k])
         mod_rows += f'<div class="mod"><b>{E(m)}</b><div class="bar" role="img" aria-label="{E(m)}: {E(summary)}">{segs}</div><span class="n">{E(summary)}</span></div>'
-    legend = ''.join(f'<span><i class="s-{k}"></i>{STATE_META[k][0]}</span>' for k in STATE_ORDER)
+    legend = ''.join(f'<span class="dotS s-{k}">{STATE_META[k][0]}</span>' for k in STATE_ORDER)
 
     def column(k):
         label, why = STATE_META[k]
         cards = ''.join(task_card(t, cases.get(t['case_id']), ev_index) for t in groups[k]) or '<div class="empty">Nothing here.</div>'
-        return f'<section class="col"><h3>{label} <small class="s-{k}">{n[k]}</small></h3><p>{E(why)}</p>{cards}</section>'
+        return f'<section class="col" title="{E(why)}"><h3>{label} <small>{n[k]}</small></h3><p>{E(why)}</p>{cards}</section>'
 
     gaps = result['readiness_gaps']
-    gaps_html = ('<div class="gaps">' + ''.join(f'<span class="gap">{E(GAP_LABEL.get(g, g.replace(":evidence:", ": source missing for ")))}</span>' for g in gaps) + '</div>') if gaps else '<p>No readiness gaps.</p>'
+    gaps_html = ('<div class="gaps">' + ''.join(f'<span>{E(GAP_LABEL.get(g, g.replace(":evidence:", ": source missing for ")))}</span>' for g in gaps) + '</div>') if gaps else '<p class="sub">No readiness gaps.</p>'
     find_html = ''
     for f in findings:
-        find_html += (f'<div class="panel finding"><b>{E(f["id"])} — {E(f["title"])}</b><dl class="facts"><dt>Status</dt><dd>{E(f["state"])}</dd>'
+        find_html += (f'<div class="finding"><b>{E(f["id"])} — {E(f["title"])}</b><dl class="facts"><dt>Status</dt><dd>{E(f["state"])}</dd>'
                       f'<dt>Priority (I×F)</dt><dd>{E(f["impact"])}×{E(f["feasibility"])} = {E(f["impact"] * f["feasibility"])}; confidence {E(f["confidence"])}</dd>'
                       f'<dt>Root cause</dt><dd>{E(f["root_cause"])}</dd><dt>Proven impact</dt><dd>{E(f["proven_impact"])}</dd>'
                       f'<dt>Correction</dt><dd>{E(f["remediation"])}</dd><dt>Owner / due</dt><dd>{E(f["owner"])} / {E(f["due_at"])}</dd></dl></div>')
@@ -276,78 +281,47 @@ def render_board(plan, result, findings=(), generated_at=None):
     integrity = 'Integrity verified against the approved manifest and the evidence store.' if result['integrity_verified'] else 'Integrity NOT verified (no external manifest or evidence store was supplied).'
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:">
-<title>Merestone report · {E(arch['system_name'])}</title><style>{CSS}</style></head><body>
-<header class="top"><div class="wrap">
-<div class="brand">{MARK}merestone <span style="font-weight:400;color:#9BABA5;font-size:14px">· read-only assessment report</span></div>
-<div class="hero"><div class="code c{code}" aria-label="exit code {code}">{code}</div>
-<div><h1>{E(title)}</h1><p>{E(why)}</p>
-<div class="meta"><span>System <b>{E(arch['system_name'])}</b></span><span>Assessment <b>{E(arch['assessment_id'])}</b></span>
-<span>Plan <b class="mono">{E(plan['plan_id'][:8])}</b></span><span>Version under test <b>{E(arch['snapshot_ref'] or '—')}</b></span>
-<span>Authorization <b>{E(arch['authorization_ref'] or '—')}</b></span><span>Generated <b>{E(gen)}</b></span></div></div>
-{mojo_svg(code)}</div></div></header>
-<main class="wrap">
-<div class="kpis">{''.join(f'<div class="kpi"><b>{v}</b><span>{E(l)}</span></div>' for v, l in kpis)}</div>
-<h2>Readiness</h2><div class="panel">{gaps_html}<p style="margin:10px 0 0;font-size:13px;color:var(--muted)">{E(integrity)}</p></div>
-<h2>Coverage by module</h2><div class="panel"><div class="mods">{mod_rows}</div><div class="legend">{legend}</div></div>
+<title>Merestone report · {E(arch['system_name'])}</title><style>{CSS}</style></head><body><div class="wrap">
+<div class="brand">{MARK}merestone<span>· assessment dashboard</span></div>
+<h1>{E(arch['system_name'])}</h1><p class="sub">Assessment {E(arch['assessment_id'])} · plan <span class="mono">{E(plan['plan_id'][:8])}</span> · version under test {E(arch['snapshot_ref'] or '—')} · authorization {E(arch['authorization_ref'] or '—')} · generated {E(gen)}</p>
+<div class="code c{code}" aria-label="exit code {code}"><span class="dot"></span><div><b>Exit code {code} · {E(title)}</b><p>{E(why)}</p></div></div>
+<div class="nums">{''.join(f'<div><b>{v}</b><span>{E(l)}</span></div>' for v, l in kpis)}</div>
+<div class="two"><div><h2>Readiness</h2>{gaps_html}<p class="sub" style="margin-top:10px">{E(integrity)}</p></div>
+<div><h2>Coverage by module</h2><div class="mods">{mod_rows}</div><div class="legend">{legend}</div></div></div>
 {('<h2>Findings</h2>' + find_html) if findings else ''}
 <h2>Tasks</h2>
-<div class="tools"><input id="q" type="search" placeholder="Search tasks (ID, title, boundary)" aria-label="Search tasks">
-<select id="m" aria-label="Module"><option value="">All modules</option>{options}</select><span style="font-size:12.5px;color:var(--muted)">Select a task to see its details, evidence and fieldcard.</span></div>
-<div class="board">{''.join(column(k) for k in STATE_ORDER[:4])}</div>
-<div class="extra">{column('EXCLUDED')}{column('NOT_APPLICABLE')}</div>
+<div class="tools"><input id="q" type="search" placeholder="Search by ID, title or boundary" aria-label="Search tasks">
+<select id="m" aria-label="Module"><option value="">All modules</option>{options}</select><span>Select a task to see its details, evidence and fieldcard.</span></div>
+{''.join(column(k) for k in STATE_ORDER if n[k] or k in ('FAIL', 'TODO', 'UNKNOWN', 'PASS'))}
 <footer><p>{E(result['note'])}</p><p>Generated by Merestone {E(op.VERSION)} from the frozen plan record. This page is a view: it does not change or re-decide any result. Catalog <span class="mono">{E(plan['catalog_sha256'][:12])}</span> · architecture <span class="mono">{E(plan['architecture_sha256'][:12])}</span> · obligations <span class="mono">{E(plan['obligations_sha256'][:12])}</span>.</p></footer>
-<div id="scrim" hidden></div></main><script>{JS}</script></body></html>
+<div id="scrim" hidden></div></div><script>{JS}</script></body></html>
 """
 
 
 # ---------- alternative layout: "document" (read top to bottom, print-friendly) ----------
-DOC_CSS = """
-:root{--bg:#F6F4EE;--card:#FFFFFF;--ink:#18221F;--muted:#5A6661;--line:#D8DCD5;--teal:#0F6A62;--sand:#F1E3C8;--ochre:#A8701C;
---pass:#2D7A4B;--pass-s:#D8EDDF;--fail:#B03F37;--fail-s:#F5DCD9;--unk:#A8701C;--unk-s:#F3E6CC;--todo:#3F5C56;--todo-s:#DDE8E5;--na:#B4BCB7;--na-s:#ECEFEC;--ex:#6F6A86;--ex-s:#E6E4EE;color-scheme:light}
-@media (prefers-color-scheme:dark){:root{--bg:#141B19;--card:#1B2422;--ink:#E4ECE8;--muted:#9BABA5;--line:#2C3A36;--teal:#5CC2B3;--sand:#3A2D18;--ochre:#D9A050;
---pass:#6CC48D;--pass-s:#1A3324;--fail:#E77B72;--fail-s:#3D1F1C;--unk:#D9A050;--unk-s:#3A2D18;--todo:#9FC9C1;--todo-s:#1E2D2A;--na:#55635E;--na-s:#1C2522;--ex:#ADA7C9;--ex-s:#25233A;color-scheme:dark}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.6 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
-code,pre,.mono{font-family:ui-monospace,"Cascadia Mono",Consolas,Menlo,monospace}
-.page{max-width:980px;margin:0 auto;padding:36px 22px 60px}
-.serif,h1,h2{font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;font-weight:700;letter-spacing:-.01em}
-.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;color:var(--muted);border-bottom:2px solid var(--ink);padding-bottom:10px}
-.brand .mark polygon:nth-child(2){fill:var(--sand)}
-h1{font-size:40px;line-height:1.08;margin:26px 0 6px}.sub{color:var(--muted);margin:0 0 22px}
-h2{font-size:24px;margin:44px 0 14px;display:flex;gap:12px;align-items:baseline;border-top:1px solid var(--line);padding-top:18px}
-h2 .num{font:600 13px ui-monospace,Consolas,monospace;color:var(--ochre);letter-spacing:.12em}
-.verdict{display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center;background:var(--card);border:1px solid var(--line);border-left:10px solid var(--vc);border-radius:6px;padding:20px 24px}
-.verdict .n{font:700 64px/1 "Iowan Old Style",Georgia,serif;color:var(--vc)}.verdict h3{margin:0;font-size:22px}.verdict p{margin:4px 0 0;color:var(--muted)}
-.metaT{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}.metaT td{padding:6px 0;border-bottom:1px solid var(--line);vertical-align:top}.metaT td:first-child{color:var(--muted);width:210px}
-.nums{display:flex;flex-wrap:wrap;gap:0;margin-top:18px;border:1px solid var(--line);border-radius:6px;background:var(--card)}
-.nums div{flex:1 1 110px;padding:12px 14px;border-left:1px solid var(--line)}.nums div:first-child{border-left:0}.nums b{display:block;font:700 28px/1.1 "Iowan Old Style",Georgia,serif}.nums span{font-size:12px;color:var(--muted)}
-.field{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px 18px}
-.frow{display:grid;grid-template-columns:120px 1fr 150px;gap:14px;align-items:center;padding:6px 0;border-bottom:1px dashed var(--line)}.frow:last-child{border-bottom:0}
-.frow b{font-size:13px}.frow .cnt{font-size:12px;color:var(--muted);text-align:right}
-.stones{display:flex;flex-wrap:wrap;gap:4px}.stones a{display:block;line-height:0;border-radius:3px}.stones a:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
-.stones svg{width:20px;height:21px;transition:transform .12s}.stones a:hover svg{transform:translateY(-3px) scale(1.15)}
-.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12.5px;color:var(--muted);margin-top:12px}.legend svg{width:13px;height:14px;vertical-align:-2px;margin-right:4px}
-.f-FAIL{fill:var(--fail)}.f-TODO{fill:var(--todo)}.f-UNKNOWN{fill:var(--unk)}.f-PASS{fill:var(--pass)}.f-EXCLUDED{fill:var(--ex)}.f-NOT_APPLICABLE{fill:var(--na)}
-.att{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--fail);border-radius:6px;padding:14px 20px;margin-bottom:14px}
-.att h3{margin:0 0 2px;font-size:18px}.att .id{font:600 12.5px ui-monospace,Consolas,monospace;color:var(--fail)}
-.list{margin:6px 0 0;padding-left:20px}.list a{color:var(--ink)}
-.pill{display:inline-block;font:600 11px ui-monospace,Consolas,monospace;padding:2px 8px;border-radius:5px;white-space:nowrap}
-.p-FAIL{background:var(--fail-s);color:var(--fail)}.p-TODO{background:var(--todo-s);color:var(--todo)}.p-UNKNOWN{background:var(--unk-s);color:var(--unk)}.p-PASS{background:var(--pass-s);color:var(--pass)}.p-EXCLUDED{background:var(--ex-s);color:var(--ex)}.p-NOT_APPLICABLE{background:var(--na-s);color:var(--muted)}
-h3.mod{font-size:15px;margin:22px 0 6px;display:flex;justify-content:space-between}h3.mod small{font-weight:400;color:var(--muted)}
-details.row{border-bottom:1px solid var(--line);background:var(--card)}details.row:first-of-type{border-top:1px solid var(--line)}
-details.row>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:150px 1fr 80px 110px;gap:12px;padding:8px 12px;align-items:center;font-size:14px}
-details.row>summary::-webkit-details-marker{display:none}details.row>summary:hover{background:var(--bg)}
-details.row>summary .id{font:600 12px ui-monospace,Consolas,monospace}details.row>summary .act{font-size:12px;color:var(--muted)}
-details.row[open]>summary{background:var(--bg);font-weight:600}details.row:target>summary{outline:2px solid var(--teal)}
-.rbody{padding:6px 18px 16px;font-size:14px;border-top:1px dashed var(--line)}
-.rbody h3,.rbody h4,.rbody h5{margin:14px 0 4px;font-size:14px}.rbody pre{white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px;font-size:12px}
-.rbody ul,.rbody ol{padding-left:20px;margin:4px 0}.facts{display:grid;grid-template-columns:max-content 1fr;gap:3px 14px;font-size:13.5px;margin:8px 0}.facts dt{color:var(--muted)}.facts dd{margin:0}
-div.tw{overflow-x:auto}table.ev{width:100%;min-width:520px;border-collapse:collapse;font-size:12.5px;margin:6px 0}table.ev td,table.ev th{border-bottom:1px solid var(--line);padding:4px 6px;text-align:left;vertical-align:top}
-.chip{display:inline-block;font:600 11px ui-monospace,Consolas,monospace;padding:1px 7px;border-radius:5px}.cP{background:var(--pass-s);color:var(--pass)}.cF{background:var(--fail-s);color:var(--fail)}.cO{background:var(--na-s);color:var(--muted)}
-.gaps span{display:inline-block;background:var(--unk-s);color:var(--unk);border-radius:6px;padding:3px 10px;font-size:13px;font-weight:600;margin:0 6px 6px 0}
-footer{margin-top:48px;padding-top:14px;border-top:2px solid var(--ink);font-size:12.5px;color:var(--muted)}
-@media (max-width:640px){h1{font-size:30px}.verdict{grid-template-columns:auto 1fr}.verdict .mojo{display:none}.frow{grid-template-columns:1fr}.frow .cnt{text-align:left}
+DOC_CSS = BASE_CSS + """
+.page{max-width:900px;margin:0 auto;padding:32px 24px 60px}
+h2{border-top:1px solid var(--line);padding-top:22px;margin-top:44px}
+.field{border-top:1px solid var(--line)}
+.frow{display:grid;grid-template-columns:110px 1fr 170px;gap:14px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line2)}
+.frow b{font-size:12.5px;font-weight:500}.frow .cnt{font-size:12px;color:var(--muted);text-align:right}
+.stones{display:flex;flex-wrap:wrap;gap:3px}.stones a{display:block;line-height:0;border-radius:2px}.stones a:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.stones svg{width:15px;height:16px;transition:transform .12s}.stones a:hover svg{transform:translateY(-2px)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--muted);margin-top:12px}.legend svg{width:11px;height:12px;vertical-align:-1px;margin-right:4px}
+.f-FAIL{fill:var(--fail)}.f-TODO{fill:none;stroke:var(--todo);stroke-width:5}.f-UNKNOWN{fill:var(--unk)}.f-PASS{fill:var(--pass)}.f-EXCLUDED{fill:var(--ex)}.f-NOT_APPLICABLE{fill:var(--na)}
+.att{border-left:2px solid var(--fail);padding:2px 0 2px 16px;margin-bottom:18px}
+.att h3{margin:2px 0 4px;font-size:16px;font-weight:600}.att .id{font:12px ui-monospace,Menlo,Consolas,monospace;color:var(--fail)}
+.list{margin:6px 0 0;padding-left:18px;font-size:13.5px}.list a{color:var(--ink)}
+h3.mod{font-size:13px;font-weight:600;margin:24px 0 0;display:flex;justify-content:space-between;padding-bottom:6px;border-bottom:1px solid var(--line)}h3.mod small{font-weight:400;color:var(--muted)}
+details.row{border-bottom:1px solid var(--line2)}
+details.row>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:160px 1fr 70px 120px;gap:12px;padding:7px 4px;align-items:baseline;font-size:13.5px}
+details.row>summary::-webkit-details-marker{display:none}details.row>summary:hover{background:var(--soft)}
+details.row>summary .id{font:12px ui-monospace,Menlo,Consolas,monospace;color:var(--muted)}details.row>summary .act{font-size:12px;color:var(--muted)}
+details.row[open]>summary{background:var(--soft);font-weight:500}details.row:target>summary{box-shadow:inset 2px 0 0 var(--teal)}
+.rbody{padding:6px 16px 18px}
+@media (max-width:640px){h1{font-size:22px}.frow{grid-template-columns:1fr}.frow .cnt{text-align:left}
 details.row>summary{grid-template-columns:1fr auto}details.row>summary .tt{grid-column:1/-1;order:3}details.row>summary .act{display:none}.metaT td:first-child{width:120px}}
-@media print{body{background:#fff}.page{padding:0}details.row>summary:hover{background:none}.stones svg{transition:none}}
+@media print{.page{padding:0}details.row>summary:hover{background:none}.stones svg{transition:none}}
 """
 
 DOC_JS = """
@@ -378,10 +352,10 @@ def render_document(plan, result, findings=(), generated_at=None):
 
     fails = [t for t in tasks if bucket(t) == 'FAIL']
     att = ''.join(f'<div class="att"><div class="id">{E(alias(t))} · {E(t["module"])} · {E(t["activity"])}</div><h3>{E(t["title"])}</h3>'
-                  f'<div class="rbody" style="border:0;padding:0">{task_details(t, cases.get(t["case_id"]), ev_index)}</div></div>' for t in fails)
+                  f'<div class="rbody det" style="padding:0">{task_details(t, cases.get(t["case_id"]), ev_index)}</div></div>' for t in fails)
     if not fails: att = '<p>No failed tasks.</p>'
     gaps = result['readiness_gaps']
-    gaps_html = ('<p><b>Readiness gaps.</b> The plan cannot close until these are defined:</p><div class="gaps">' + ''.join(f'<span>{E(GAP_LABEL.get(g, g.replace(":evidence:", ": source missing for ")))}</span>' for g in gaps) + '</div>') if gaps else ''
+    gaps_html = ('<p style="margin:16px 0 6px"><b>Readiness gaps.</b> The plan cannot close until these are defined:</p><div class="gaps">' + ''.join(f'<span>{E(GAP_LABEL.get(g, g.replace(":evidence:", ": source missing for ")))}</span>' for g in gaps) + '</div>') if gaps else ''
     todo = [t for t in tasks if bucket(t) == 'TODO']
     todo_html = (f'<p><b>{len(todo)} applicable tasks are not decided yet.</b></p><ul class="list">' + ''.join(f'<li><a href="#{anchor(t)}">{E(alias(t))}</a> {E(t["title"])}</li>' for t in todo[:10]) + (f'<li>… and {len(todo) - 10} more below.</li>' if len(todo) > 10 else '') + '</ul>') if todo else ''
     unk = by['UNKNOWN']
@@ -389,9 +363,9 @@ def render_document(plan, result, findings=(), generated_at=None):
 
     sections = ''
     for m, ts in mods.items():
-        rows = ''.join(f'<details class="row" id="{anchor(t)}"><summary><span class="id" style="color:{COLORS[bucket(t)]}">{E(alias(t))}</span><span class="tt">{E(t["title"])}</span>'
-                       f'<span class="act">{E(t["activity"])}</span><span><span class="pill p-{bucket(t)}">{E(state_label(t))}</span></span></summary>'
-                       f'<div class="rbody">{task_details(t, cases.get(t["case_id"]), ev_index)}</div></details>' for t in ts)
+        rows = ''.join(f'<details class="row" id="{anchor(t)}"><summary><span class="id">{E(alias(t))}</span><span class="tt">{E(t["title"])}</span>'
+                       f'<span class="act">{E(t["activity"].title())}</span><span class="dotS s-{bucket(t)}">{E(state_label(t))}</span></summary>'
+                       f'<div class="rbody det">{task_details(t, cases.get(t["case_id"]), ev_index)}</div></details>' for t in ts)
         c = Counter(bucket(t) for t in ts)
         sections += f'<h3 class="mod">{E(m)} <small>{len(ts)} obligations · {c["PASS"]} passed · {c["FAIL"]} failed</small></h3>{rows}'
 
@@ -409,15 +383,15 @@ def render_document(plan, result, findings=(), generated_at=None):
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:">
 <title>Merestone report · {E(arch['system_name'])}</title><style>{DOC_CSS}</style></head><body><div class="page">
-<div class="brand">{MARK}merestone <span style="font-weight:400">· assessment report</span></div>
+<div class="brand">{MARK}merestone<span>· assessment report</span></div>
 <h1>{E(arch['system_name'])}</h1><p class="sub">Assessment {E(arch['assessment_id'])} · plan <span class="mono">{E(plan['plan_id'][:8])}</span> · generated {E(gen)}</p>
-<div class="verdict" style="--vc:{vcol}"><div class="n">{code}</div><div><h3>{E(title)}</h3><p>{E(why)}</p></div>{mojo_svg(code, 4)}</div>
+<div class="code c{code}"><span class="dot"></span><div><b>Exit code {code} · {E(title)}</b><p>{E(why)}</p></div></div>
 <div class="nums">{''.join(f'<div><b>{v}</b><span>{E(l)}</span></div>' for v, l in nums)}</div>
 <table class="metaT"><tr><td>Version under test</td><td>{E(arch['snapshot_ref'] or '—')}</td></tr><tr><td>Authorization</td><td>{E(arch['authorization_ref'] or '—')}</td></tr>
 <tr><td>Inventory reviewed by</td><td>{E(arch['inventory_review']['reviewer'] or '—')} {E(arch['inventory_review']['reviewed_at'])}</td></tr><tr><td>Integrity</td><td>{E(integrity)}</td></tr></table>
 <h2><span class="num">01</span>At a glance</h2>
-<div class="field">{field}<div class="legend">{legend}</div></div>
-<p style="font-size:13px;color:var(--muted)">Each stone is one obligation: a case at a boundary. Select a stone to jump to its details.</p>
+<div class="field">{field}</div><div class="legend">{legend}</div>
+<p class="sub" style="margin-top:8px">Each stone is one obligation: a case at a boundary. Select a stone to jump to its details.</p>
 <h2><span class="num">02</span>What needs attention</h2>{att}{gaps_html}{todo_html}{unk_html}
 {(f'<h2><span class="num">03</span>Findings</h2>' + find_html) if findings else ''}
 <h2><span class="num">0{sec + 1}</span>All obligations, by module</h2>{sections}
