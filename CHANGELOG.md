@@ -1,5 +1,15 @@
 # Changes
 
+## Unreleased
+
+- Guided CLI `merestone.py` (standard library only) over the unchanged engine: workspaces, guided inventory (`new --guided`), `status` with next steps, `caps`/`set`/`protocol` without JSON editing, readable task IDs (`CASE@ROUTE`), `record`/`decide`/`review` with automatic evidence hashing, `report`, `demo`, `doctor`.
+- `merestone setup`: plain-language wizard for everything needed before planning; the pre-plan checklist now includes route access, actor and boundary, and `plan` refuses to freeze with blocking items unless `--anyway`.
+- `pyproject.toml`: `python -m pip install -e .` installs the `merestone` command (editable; no dependencies). Launchers `merestone` (POSIX) and `merestone.cmd` (Windows) remain for use without installing.
+- `merestone new` refuses to create workspaces inside the framework folder (they hold evidence); a missing-workspace error points to workspaces found in subfolders.
+- Friendly errors with hints and typo suggestions.
+- 23 CLI tests, including an assessment that reaches code 0 using only the guided CLI and tamper detection after recording.
+- `playbook/start.md`: Python requirement aligned to 3.10+.
+
 ## 0.3.0 — 2026-10-01
 
 First release of the operational AI security playbook.

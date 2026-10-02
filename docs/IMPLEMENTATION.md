@@ -4,6 +4,7 @@
 
 | Entry point | Use | Limit |
 |---|---|---|
+| `merestone.py` (guided CLI) | Workspaces, guided inventory, status with next steps, readable task IDs, evidence recording with automatic hashes, demo | Convenience layer: writes the same records and calls the same checks; never relaxes a rule |
 | `fieldguide.py` / `operational.py` | Capability-based selection, frozen plan, fieldcards, validation and reporting | Does not execute attacks or automatically interpret arbitrary evidence |
 | `adapters/import_observations.py` | Imports trials and evidence from the instrumented system | The adapter/evaluator provides the observations and the judgment |
 | `governance.py` | Plan revision, comparison and finding lifecycle | Checks consistency; does not authenticate the approver's identity or authority |
@@ -58,6 +59,25 @@ python adapters/local_pilots.py --out runs/new-pilots
 ```
 
 Fieldcards are regenerated from the catalog. Plans, reports and pilots require a new output to preserve history. `scripts/verify_delivery.py` checks catalog consistency, generated views, walkthroughs, references and links.
+
+## Guided CLI (merestone.py)
+
+`merestone.py` is a convenience layer over the engine. Install the command with `python -m pip install -e .` from the framework folder (editable install; the CLI reads the catalog from this folder). It keeps every contract: plans, manifests, evidence and trials are the same JSON records, decisions go through the observation importer, and `check-plan` remains the source of truth. What it removes is bookkeeping.
+
+| Command | What it does |
+|---|---|
+| `new <folder> --profile P [--guided]` | Creates a workspace (`merestone.json`, `architecture.json`, `evidence/`, `plans/`, `manifests/`, `reports/`, `staging/`). `--guided` asks 16 yes/no/unsure questions that set capabilities; unsure answers stay `unknown`. |
+| `setup` | Asks, one by one and in plain language, for everything needed before freezing the plan: permission, version under test, inventory reviewer and source, stop conditions, load limits, access, actor and boundary. Enter skips an item. |
+| `status` / `check [--json]` | Exit code, coverage by module and the next concrete commands. Before a plan exists it shows a checklist: what each item means, why it matters and the command that sets it. `plan` refuses to freeze while blocking items (readiness gaps and unknown access) remain, unless `--anyway` is passed. |
+| `caps`, `set`, `protocol` | Edit capabilities (with `--source`), scope and readiness fields, and frozen test protocols without editing JSON. |
+| `plan [--reason --approver] [--anyway]` | Freezes `plans/plan-NNN.json`, its manifest and a Markdown guide. A later change requires a reason and approver and produces a revision (via `governance.revise_plan`); results are never transferred. |
+| `tasks`, `show <TASK>` | Readable IDs `CASE@ROUTE` (or the case ID when unique), the fieldcard and the exact recording commands. |
+| `record <TASK> ...` | Stages one trial. Evidence files (`--evidence KIND=FILE`) or short notes (`--note KIND="..."`) are copied into `evidence/` and hashed (SHA-256, size, timestamp, collector). |
+| `decide <TASK> ...` | Builds the import event from the staged trials and commits it as a new plan record (`plan-NNN.rMMM.json`). PASS requires the full planned sample; any FAIL trial makes the task FAIL. |
+| `review <TASK> ...` | Records a DESIGN/CONFIG decision with documentary evidence of kind `review`. |
+| `report`, `demo`, `doctor`, `fieldcard`, `list` | Report into `reports/`, the local pilots with a narrated summary, environment checks, and catalog browsing. |
+
+Records are append-only: the frozen plan is never rewritten, each decision produces a new record and the workspace `history` logs every action. Keep a copy of `manifests/` outside the workspace (or create it with `--manifest-dir`) so the approved manifest stays under separate control.
 
 ## Implementation limits
 

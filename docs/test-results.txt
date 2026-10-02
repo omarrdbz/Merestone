@@ -1,3 +1,26 @@
+test_aliases_resolve_and_suggest (test_cli.CliTests) ... ok
+test_checklist_explains_access_actor_boundary (test_cli.CliTests) ... ok
+test_demo (test_cli.CliTests) ... ok
+test_documentary_assessment_reaches_code_0_with_cli_only (test_cli.CliTests) ... ok
+test_fail_is_decided_even_with_partial_sample (test_cli.CliTests) ... ok
+test_fieldcard_and_doctor (test_cli.CliTests) ... ok
+test_guide_maps_to_real_capabilities (test_cli.CliTests) ... ok
+test_guided_new_sets_states_and_sources (test_cli.CliTests) ... ok
+test_input_provenance_required (test_cli.CliTests) ... ok
+test_missing_workspace_points_to_child (test_cli.CliTests) ... ok
+test_new_never_overwrites (test_cli.CliTests) ... ok
+test_new_refuses_inside_framework (test_cli.CliTests) ... ok
+test_quickstart_without_command (test_cli.CliTests) ... ok
+test_record_lists_missing_evidence_kinds (test_cli.CliTests) ... ok
+test_revision_requires_reason_and_keeps_history (test_cli.CliTests) ... ok
+test_setup_skips_on_enter (test_cli.CliTests) ... ok
+test_setup_wizard_answers_everything_then_plan_freezes (test_cli.CliTests) ... ok
+test_status_before_plan_explains_fixes (test_cli.CliTests) ... ok
+test_tampered_evidence_is_detected (test_cli.CliTests) ... ok
+test_technical_trials_hash_evidence_and_decide (test_cli.CliTests) ... ok
+test_typo_gets_suggestion (test_cli.CliTests) ... ok
+test_unchanged_plan_is_not_refrozen (test_cli.CliTests) ... ok
+test_unknown_access_blocks_with_hint (test_cli.CliTests) ... ok
 test_changed_depth_invalidates_manifest (test_governance.GovernanceTests) ... ok
 test_documentary_closure_does_not_require_attack_trials (test_governance.GovernanceTests) ... ok
 test_earlier_block_not_downstream_pass (test_governance.GovernanceTests) ... ok
@@ -44,6 +67,6 @@ test_unknown_is_not_absent (test_operational.OperationalTests) ... ok
 test_unreached_input_not_pass (test_operational.OperationalTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 43 tests in 19.097s
+Ran 66 tests in 46.150s
 
 OK

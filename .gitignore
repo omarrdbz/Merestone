@@ -10,3 +10,8 @@ __pycache__/
 /secrets/
 *.pem
 *.key
+# Demo output (merestone demo)
+/merestone-demo-*/
+# Editable install metadata (pip install -e .)
+*.egg-info/
+build/

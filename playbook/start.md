@@ -30,7 +30,7 @@ It is not assumed that RAG includes tools, that an agent uses SQL or that MCP ha
 
 ## 2. Generate and review the plan
 
-From the framework folder, with Python 3.12 or later:
+From the framework folder, with Python 3.10 or later (the guided CLI `merestone.py` performs these steps with less typing; see the [README](../README.md)):
 
 ```console
 python fieldguide.py init --profile rag --out runs/architecture.json
