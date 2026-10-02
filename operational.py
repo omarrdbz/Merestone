@@ -237,7 +237,7 @@ def render_case(c,lib=None):
     lines+=[f'{i}. {s}' for i,s in enumerate(c['procedure'],1)]
     lines+=['\n## Techniques and examples\n']
     for tid in c['technique_ids']:
-        t=ts[tid];lines+=[f"\n### {tid} — {t['title']}\n",t['adaptation'],'\n````text\n'+t['example']+'\n````\n']
+        t=ts[tid];lines+=[f"\n### {tid} — {t['title']}\n",'````text\n'+t['example']+'\n````\n']
         lines+=[f'{i}. {s}' for i,s in enumerate(t['steps'],1)]
         lines+=['\nOracle: '+t['validation'],'\nFalse positives: '+t['false_positive_checks']]
     fams=sorted({ts[tid].get('family','') for tid in c['technique_ids'] if ts[tid].get('family')})
@@ -280,8 +280,7 @@ FAMILY_NAMES={'REC':'Reconnaissance','PI':'Prompt injection','JB':'Jailbreaks','
   'CORE':'Common core','MULTIMODAL':'Multimodal'}
 
 def render_walkthroughs(lib):
-    """Generate one Merestone-original walkthrough per technique family from the catalog.
-    All content is Merestone's own."""
+    """Generate one walkthrough per technique family from the catalog."""
     from collections import defaultdict
     base=ROOT/'playbook/walkthroughs';base.mkdir(parents=True,exist_ok=True)
     fams=defaultdict(list)
@@ -293,7 +292,7 @@ def render_walkthroughs(lib):
     for fam in sorted(fams):
         title=FAMILY_NAMES.get(fam,fam)
         L=[f'# {fam} — {title}: walkthrough','',
-           'Merestone-original walkthrough. It applies each technique of the family against an authorized fixture '
+           'This walkthrough applies each technique of the family against an authorized fixture '
            'with a reserved canary. Keep authorization, limits '
            'and telemetry per the field guide, and record every adaptation.','']
         for t in sorted(fams[fam],key=lambda x:x['id']):
@@ -313,8 +312,7 @@ def render_walkthroughs(lib):
             if t.get('related_cases'):
                 L+=['**Fieldcards:** '+', '.join(f"[{cid}](../fieldcards/{cid}.md)" for cid in t['related_cases']),'']
         (base/(fam+'.md')).write_text('\n'.join(L).rstrip()+'\n',encoding='utf-8')
-    idx=['# Walkthroughs','','Step-by-step application of each technique family, with Merestone fixtures. '
-         'These are Merestone-original materials.','','| Family | Techniques |','|---|---|']
+    idx=['# Walkthroughs','','Step-by-step application of each technique family, with Merestone fixtures.','','| Family | Techniques |','|---|---|']
     for fam in sorted(fams):
         idx.append(f"| [{fam} — {FAMILY_NAMES.get(fam,fam)}]({fam}.md) | {len(fams[fam])} |")
     (base/'README.md').write_text('\n'.join(idx)+'\n',encoding='utf-8')

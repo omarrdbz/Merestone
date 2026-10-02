@@ -1,6 +1,6 @@
 # Walkthroughs
 
-Step-by-step application of each technique family, with Merestone fixtures. These are Merestone-original materials.
+Step-by-step application of each technique family, with Merestone fixtures.
 
 | Family | Techniques |
 |---|---|

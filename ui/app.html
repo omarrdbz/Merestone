@@ -1,0 +1,1070 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Merestone</title>
+<style>
+:root{--bg:#EEF1EE;--surface:#FFFFFF;--surface2:#F6F8F6;--ink:#18221F;--muted:#56635E;--faint:#8A968F;--line:#CBD3CD;--line2:#E0E6E1;
+--teal:#0F6A62;--teal-s:#D5EAE6;--teal-ink:#FFFFFF;--ochre:#A8701C;--sand:#F1E3C8;--stone:#A8701C;--stone-s:#F4E8D2;
+--pass:#2D7A4B;--pass-s:#D8EDDF;--fail:#B03F37;--fail-s:#F5DCD9;--unk:#A8701C;--unk-s:#F1E3C8;--todo:#3F5C56;--todo-s:#DDE8E5;--na:#8A968F;--na-s:#E8ECE9;--ex:#6F6A86;--ex-s:#E6E4EE;
+--night:#0E1513;--night2:#16211E;--night-ink:#E4ECE8;--night-muted:#9BABA5;--shadow:0 1px 2px rgba(14,21,19,.06),0 6px 20px rgba(14,21,19,.06);--shadow-lg:0 20px 60px rgba(14,21,19,.25);
+--r:12px;--f:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",sans-serif;--mono:ui-monospace,"Cascadia Mono","SF Mono",Consolas,Menlo,monospace;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0F1614;--surface:#17211E;--surface2:#1C2724;--ink:#E4ECE8;--muted:#9BABA5;--faint:#6E7C76;--line:#2C3A36;--line2:#24312D;
+--teal:#5CC2B3;--teal-s:#16332F;--teal-ink:#0E1513;--ochre:#D9A050;--sand:#3A2D18;--stone:#D9A050;--stone-s:#33281A;
+--pass:#6CC48D;--pass-s:#1A3324;--fail:#E77B72;--fail-s:#3D1F1C;--unk:#D9A050;--unk-s:#3A2D18;--todo:#9FC9C1;--todo-s:#1E2D2A;--na:#7E8C86;--na-s:#1C2522;--ex:#ADA7C9;--ex-s:#25233A;
+--shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);color-scheme:dark}}
+:root[data-theme=dark]{--bg:#0F1614;--surface:#17211E;--surface2:#1C2724;--ink:#E4ECE8;--muted:#9BABA5;--faint:#6E7C76;--line:#2C3A36;--line2:#24312D;
+--teal:#5CC2B3;--teal-s:#16332F;--teal-ink:#0E1513;--ochre:#D9A050;--sand:#3A2D18;--stone:#D9A050;--stone-s:#33281A;
+--pass:#6CC48D;--pass-s:#1A3324;--fail:#E77B72;--fail-s:#3D1F1C;--unk:#D9A050;--unk-s:#3A2D18;--todo:#9FC9C1;--todo-s:#1E2D2A;--na:#7E8C86;--na-s:#1C2522;--ex:#ADA7C9;--ex-s:#25233A;
+--shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14.5px/1.5 var(--f)}
+body{min-height:100vh}
+code,.mono{font-family:var(--mono);font-size:.92em}
+a{color:var(--teal)}
+h1,h2,h3,h4{margin:0;letter-spacing:-.01em;line-height:1.25}
+h2{font-size:19px}h3{font-size:16px}h4{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.muted{color:var(--muted)}.faint{color:var(--faint)}.small{font-size:12.5px}.tiny{font-size:11.5px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.grow{flex:1}.stack{display:grid;gap:12px}.stack-s{display:grid;gap:6px}
+
+/* ---------- top bar ---------- */
+.top{position:sticky;top:0;z-index:30;background:var(--night);color:var(--night-ink);display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:18px;padding:0 18px;height:58px;border-bottom:1px solid #000}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand .mark{flex:none}.brand .mark polygon:nth-child(2){fill:#18221F}.brand .mark polygon:nth-child(3){stroke:#E4ECE8}
+.brand b{font-size:17px;letter-spacing:-.02em}.brand .ws{color:var(--night-muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:28vw}
+nav.tabs{display:flex;gap:4px;justify-self:center}
+nav.tabs button{background:none;border:0;color:var(--night-muted);padding:8px 14px;border-radius:9px;cursor:pointer;font-weight:600;display:flex;gap:7px;align-items:center}
+nav.tabs button:hover{color:var(--night-ink);background:var(--night2)}
+nav.tabs button[aria-current=page]{color:var(--night-ink);background:#22302C;box-shadow:inset 0 -2px 0 #5CC2B3}
+nav.tabs .n{font-size:11px;background:#2C3A36;border-radius:20px;padding:1px 7px;color:#C9D5D0}
+.tools{display:flex;gap:8px;align-items:center}
+.ibtn{background:var(--night2);border:1px solid #2A3833;color:var(--night-ink);height:34px;min-width:34px;border-radius:9px;cursor:pointer;display:inline-grid;place-items:center;padding:0 10px;font-weight:600;gap:6px;grid-auto-flow:column}
+.ibtn:hover{border-color:#5CC2B3}
+.ibtn svg{width:16px;height:16px}
+.sem{display:flex;align-items:center;gap:8px;background:#0A100E;border:1px solid #2A3833;border-radius:30px;padding:4px 12px 4px 6px;cursor:pointer;color:var(--night-ink)}
+.sem .lights{display:flex;gap:4px;background:#000;border-radius:20px;padding:4px 6px}
+.sem .lights i{width:11px;height:11px;border-radius:50%;background:#26302D;display:block}
+.sem .lights i.on.g{background:#4FBF7A;box-shadow:0 0 8px #4FBF7A}.sem .lights i.on.r{background:#E2564B;box-shadow:0 0 8px #E2564B}.sem .lights i.on.a{background:#E0A64E;box-shadow:0 0 8px #E0A64E}
+.sem b{font:700 15px var(--mono)}.sem span{font-size:12.5px;color:var(--night-muted);white-space:nowrap}
+.railbtn{display:none}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:minmax(0,1fr) 340px;min-height:calc(100vh - 58px)}
+main{padding:22px 26px 80px;min-width:0}
+.rail{border-left:1px solid var(--line);background:var(--surface2);position:sticky;top:58px;height:calc(100vh - 58px);overflow:auto;padding:18px 16px 30px}
+.sync{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--faint);margin-top:14px}
+.sync i{width:7px;height:7px;border-radius:50%;background:var(--pass);display:block}
+.sync.busy i{background:var(--ochre);animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.3}}
+@media (max-width:1100px){.shell{grid-template-columns:1fr}.rail{position:fixed;right:0;top:58px;width:min(380px,100vw);z-index:25;transform:translateX(100%);transition:transform .2s;box-shadow:var(--shadow-lg)}
+ body.rail-open .rail{transform:none}.railbtn{display:inline-grid}}
+@media (max-width:520px){.brand b{display:none}}
+@media (max-width:760px){main .ahead{grid-template-columns:1fr}main .ahead .inl{font-size:21px}main .ahead h1{font-size:21px}}
+@media (max-width:760px){.top{grid-template-columns:auto auto;height:auto;padding:8px 12px;gap:8px}nav.tabs{grid-column:1/-1;order:3;justify-self:stretch;overflow-x:auto}.brand .ws{display:none}
+ .sem span{display:none}main{padding:16px 14px 80px}.top .tools .lbl{display:none}.shell{min-height:auto}.rail{top:104px;height:calc(100vh - 104px)}}
+
+/* ---------- rail ---------- */
+.mood{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.mood .mojo{display:block}
+.mood .code{font:800 30px/1 var(--mono)}.mood .code.c0{color:var(--pass)}.mood .code.c1{color:var(--fail)}.mood .code.c2{color:var(--ochre)}
+.mood p{font-size:12.5px;color:var(--muted);margin-top:4px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:12px 0 6px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 4px;text-align:center}
+.stat b{display:block;font-size:17px;line-height:1.2}.stat span{font-size:10.5px;color:var(--muted)}
+.progress{height:8px;border-radius:6px;background:var(--na-s);display:flex;overflow:hidden;margin-top:6px}.progress i{display:block;height:100%}
+.pend-h{display:flex;justify-content:space-between;align-items:baseline;margin:18px 0 8px}
+.pend{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.pend li{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--line);border-radius:10px;padding:9px 11px;display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:start}
+.pend li > .cli{grid-column:1/-1}
+.pend li.block{border-left-color:var(--fail)}.pend li.warn{border-left-color:var(--ochre)}.pend li.go{border-left-color:var(--teal)}.pend li.info{border-left-color:var(--na)}
+.pend b{display:block;font-size:13.5px}.pend p{font-size:12.5px;color:var(--muted);margin-top:2px}
+.pend .cli{display:none;font:11.5px var(--mono);color:var(--teal);margin-top:5px;word-break:break-word}
+body.show-cli .pend .cli{display:block}
+.pend .act{grid-row:1;grid-column:2}
+.allclear{background:var(--pass-s);color:var(--pass);border-radius:10px;padding:10px 12px;font-weight:600;font-size:13px}
+
+/* ---------- generic components ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow)}
+.card + .card{margin-top:16px}
+.card-h{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+.card-h p{color:var(--muted);font-size:13px;margin-top:3px;max-width:75ch}
+.eyebrow{font:600 11.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ochre)}
+.btn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:9px;padding:7px 13px;cursor:pointer;font-weight:600;font-size:13.5px;text-decoration:none;white-space:nowrap}
+.btn:hover{border-color:var(--teal)}
+.btn.primary{background:var(--teal);border-color:var(--teal);color:var(--teal-ink)}.btn.primary:hover{filter:brightness(1.08)}
+.btn.danger{background:var(--fail);border-color:var(--fail);color:#fff}
+.btn.ghost{background:none;border-color:transparent;color:var(--teal);padding:5px 8px}.btn.ghost:hover{background:var(--teal-s)}
+.btn.sm{padding:4px 9px;font-size:12.5px;border-radius:7px}
+.btn[disabled]{opacity:.45;cursor:not-allowed;filter:none}
+.btn svg{width:15px;height:15px}
+.chip{display:inline-flex;align-items:center;gap:5px;border-radius:20px;padding:2px 9px;font-size:11.5px;font-weight:600;background:var(--na-s);color:var(--muted);white-space:nowrap}
+.chip.teal{background:var(--teal-s);color:var(--teal)}.chip.pass{background:var(--pass-s);color:var(--pass)}.chip.fail{background:var(--fail-s);color:var(--fail)}
+.chip.unk{background:var(--unk-s);color:var(--unk)}.chip.todo{background:var(--todo-s);color:var(--todo)}.chip.ex{background:var(--ex-s);color:var(--ex)}
+.badge{font:700 11px var(--mono);letter-spacing:.04em;padding:3px 8px;border-radius:6px}
+.b-FAIL{background:var(--fail);color:#fff}.b-PASS{background:var(--pass);color:#fff}.b-TODO{background:var(--todo-s);color:var(--todo)}.b-UNKNOWN{background:var(--unk-s);color:var(--unk)}
+.b-NOT_APPLICABLE{background:var(--na-s);color:var(--na)}.b-EXCLUDED{background:var(--ex-s);color:var(--ex)}
+.f{display:grid;gap:4px;font-size:12.5px;font-weight:600;color:var(--muted);align-content:start}
+.f .hint{font-weight:400;color:var(--faint)}
+input[type=text],input[type=number],input[type=search],select{min-height:36px}
+input[type=text],input[type=number],input[type=search],select,textarea{width:100%;background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:7px 10px;color:var(--ink);font-size:14px}
+textarea{min-height:64px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-s)}
+input.bad,textarea.bad{border-color:var(--fail)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:760px){.grid2,.grid3{grid-template-columns:1fr}}
+.seg{display:inline-flex;background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg.nowrap{flex-wrap:nowrap}.seg button{white-space:nowrap;border:0;background:none;padding:5px 12px;border-radius:7px;cursor:pointer;font-weight:600;font-size:13px;color:var(--muted)}
+.seg button[aria-pressed=true]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.seg button.r-PASS[aria-pressed=true]{background:var(--pass);color:#fff}.seg button.r-FAIL[aria-pressed=true]{background:var(--fail);color:#fff}.seg button.r-INCONCLUSIVE[aria-pressed=true]{background:var(--ochre);color:#fff}
+.check{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;cursor:pointer}.check input{margin-top:3px;accent-color:var(--teal)}
+.note{background:var(--surface2);border:1px solid var(--line2);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--muted)}
+.note.warn{background:var(--unk-s);border-color:transparent;color:var(--ink)}.note.bad{background:var(--fail-s);border-color:transparent;color:var(--ink)}.note.ok{background:var(--pass-s);border-color:transparent;color:var(--ink)}
+.empty{text-align:center;padding:50px 20px;color:var(--muted)}.empty .mojo{margin:0 auto 10px;display:block}
+hr.sep{border:0;border-top:1px dashed var(--line);margin:16px 0}
+.kbd{font:600 11px var(--mono);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 5px;background:var(--surface2)}
+
+/* ---------- architecture ---------- */
+.ahead{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center}
+.steps{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.step{display:flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface2);border-radius:20px;padding:4px 12px 4px 5px;cursor:pointer;font-size:12.5px;font-weight:600;color:var(--ink)}
+.step:hover{border-color:var(--teal)}
+.step i{font-style:normal;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font:700 10.5px var(--mono);background:var(--unk-s);color:var(--unk)}
+.step.ok i{background:var(--pass-s);color:var(--pass)}.step.bad i{background:var(--fail-s);color:var(--fail)}
+.ahead h1{font-size:26px}
+.ahead .inl{border:1px dashed transparent;border-radius:8px;padding:2px 6px;margin-left:-7px;background:none;font:700 26px var(--f);letter-spacing:-.02em;width:100%}
+.ahead .inl:hover{border-color:var(--line)}.ahead .inl:focus{border-color:var(--teal);background:var(--surface2)}
+.rtabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.map{background:var(--surface2);border:1px solid var(--line2);border-radius:12px;padding:12px;overflow-x:auto}
+.map svg{display:block;margin:0 auto;max-width:100%;height:auto}
+.map .node rect{fill:var(--surface);stroke:var(--line);stroke-width:1.5}
+.map .node.actor rect{stroke:var(--teal);stroke-width:2}
+.map .node.ghost rect{stroke-dasharray:5 4;fill:none}
+.map .node text{fill:var(--ink);font:600 13px var(--f)}.map .node .sub{fill:var(--muted);font:400 10.5px var(--mono)}
+.map .flow{stroke:var(--teal);stroke-width:2.4;fill:none}
+.map .packet{fill:var(--teal)}
+.map .stone{cursor:pointer}
+.map .stone polygon{fill:var(--stone-s);stroke:var(--stone);stroke-width:2}
+.map .stone text{fill:var(--stone);font:700 11px var(--mono);pointer-events:none}
+.map .stone:hover polygon,.map .stone.on polygon{fill:var(--stone)}.map .stone:hover text,.map .stone.on text{fill:var(--surface)}
+.map .stone:focus{outline:none}.map .stone:focus polygon{stroke-width:3}
+.map .lbl{fill:var(--faint);font:10.5px var(--mono)}
+.stone-detail{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:flex-start;font-size:13px}.stone-detail p{flex:1;min-width:240px}
+.stone-detail .tag{font:600 11.5px var(--mono);background:var(--stone-s);color:var(--stone);padding:3px 9px;border-radius:6px;white-space:nowrap}
+.hops{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.hop{display:flex;align-items:center;background:var(--surface2);border:1px solid var(--line);border-radius:9px;padding:2px 2px 2px 8px}
+.hop input{border:0;background:none;padding:4px 2px;width:auto;min-width:60px;font-size:13.5px;box-shadow:none!important}
+.hop button{border:0;background:none;color:var(--faint);cursor:pointer;padding:2px 6px;font-size:15px;border-radius:6px}.hop button:hover{color:var(--fail);background:var(--fail-s)}
+.hops .arrow{color:var(--stone);font-weight:700}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+.opt{border:1px solid var(--line);border-radius:10px;padding:9px 11px;cursor:pointer;background:var(--surface);text-align:left}
+.opt b{display:block;font-size:13.5px}.opt span{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.opt[aria-pressed=true]{border-color:var(--teal);background:var(--teal-s);box-shadow:inset 0 0 0 1px var(--teal)}
+.fields{display:grid;gap:2px}
+.fld{display:grid;grid-template-columns:22px minmax(170px,240px) 1fr;gap:12px;align-items:start;padding:11px 4px;border-top:1px solid var(--line2)}
+.fld:first-child{border-top:0}
+.fld .st{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;margin-top:2px}
+.fld .st.ok{background:var(--pass-s);color:var(--pass)}.fld .st.no{background:var(--fail-s);color:var(--fail)}.fld .st.opt{background:var(--na-s);color:var(--na)}
+.fld b{font-size:13.5px;display:block}.fld p{font-size:12px;color:var(--muted)}
+.fld .ctl{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap}.fld .ctl > input{flex:1;min-width:180px}
+.fld.flash{animation:flash 1.6s}
+@keyframes flash{0%,40%{background:var(--teal-s)}100%{background:none}}
+@media (max-width:760px){.fld{grid-template-columns:22px 1fr}.fld .ctl{grid-column:2}}
+.limits{display:grid;grid-template-columns:repeat(5,minmax(80px,1fr));gap:8px;flex:1}
+.limits label{font-size:11px;color:var(--muted);display:grid;gap:3px}
+@media (max-width:760px){.limits{grid-template-columns:repeat(2,1fr)}}
+.stops{display:grid;gap:6px;flex:1}
+.stops .s{display:flex;gap:8px;align-items:center;background:var(--surface2);border:1px solid var(--line2);border-radius:8px;padding:5px 6px 5px 10px;font-size:13.5px}
+.stops .s span{flex:1}
+.capbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.capgroup{margin-top:14px}.capgroup h4{margin-bottom:6px;display:flex;justify-content:space-between}
+.caps{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:6px}
+.cap{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;border:1px solid var(--line2);border-radius:10px;padding:7px 10px;background:var(--surface)}
+.cap .k{font:11.5px var(--mono);color:var(--faint)}.cap .l{font-size:13.5px;font-weight:600;line-height:1.3}
+.cap .meta{display:flex;gap:6px;align-items:center;margin-top:2px;flex-wrap:wrap}
+.cap .src{font-size:11.5px;color:var(--muted);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cap .src.miss{color:var(--fail);font-weight:600}
+.tri{display:inline-grid;grid-template-columns:repeat(3,30px);background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:2px;gap:2px}
+.tri button{border:0;background:none;border-radius:6px;height:24px;cursor:pointer;font:700 12px var(--mono);color:var(--faint)}
+.tri button:hover{background:var(--line2)}
+.tri button[aria-pressed=true].a{background:var(--na);color:#fff}.tri button[aria-pressed=true].u{background:var(--ochre);color:#fff}.tri button[aria-pressed=true].p{background:var(--pass);color:#fff}
+.qs{display:grid;gap:8px}
+.q{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;border:1px solid var(--line2);border-radius:10px;padding:10px 12px}
+.q b{font-size:14px;font-weight:600}.q .k{font:11px var(--mono);color:var(--faint);margin-top:2px}
+.q .seg button[aria-pressed=true].yes{background:var(--pass);color:#fff}.q .seg button[aria-pressed=true].no{background:var(--na);color:#fff}.q .seg button[aria-pressed=true].dk{background:var(--ochre);color:#fff}
+@media (max-width:760px){.q{grid-template-columns:1fr}}
+.protos{display:grid;gap:8px}
+.proto{border:1px solid var(--line2);border-radius:10px;padding:10px 12px;display:grid;grid-template-columns:1fr auto;gap:8px}
+.proto .v{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.preview{display:grid;gap:8px}
+.pv{display:grid;grid-template-columns:110px 1fr 250px;gap:10px;align-items:center;font-size:12.5px}
+.bar{display:flex;height:12px;border-radius:5px;overflow:hidden;background:var(--na-s)}.bar i{display:block;height:100%}
+@media (max-width:760px){.pv{grid-template-columns:80px 1fr}.pv .c{grid-column:1/-1}}
+.freeze{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center}
+.chipsin{display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:5px}
+.chipsin .chip{background:var(--teal-s);color:var(--teal);font-size:12.5px;padding:3px 4px 3px 10px}
+.chipsin .chip button{border:0;background:none;color:inherit;cursor:pointer;padding:0 4px;font-size:14px}
+.chipsin input{border:0!important;background:none!important;box-shadow:none!important;flex:1;min-width:120px;padding:4px}
+.sugg{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}.sugg button{border:1px dashed var(--line);background:none;border-radius:20px;padding:1px 9px;font-size:12px;cursor:pointer;color:var(--muted)}
+.sugg button:hover{border-color:var(--teal);color:var(--teal)}
+
+/* ---------- board ---------- */
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.toolbar input[type=search]{max-width:280px}.toolbar select{width:auto}
+.cols{display:grid;grid-template-columns:repeat(var(--n,4),minmax(220px,1fr));gap:12px;align-items:start;overflow-x:auto;padding-bottom:6px}
+.col{background:var(--surface2);border:1px solid var(--line2);border-radius:14px;min-width:220px;display:flex;flex-direction:column;max-height:calc(100vh - 210px)}
+.col-h{display:flex;justify-content:space-between;align-items:center;padding:10px 12px 8px;border-bottom:3px solid var(--line);font-weight:700;font-size:13.5px}
+.col-h .n{font:700 12px var(--mono);color:var(--muted)}
+.col.FAIL .col-h{border-color:var(--fail)}.col.TODO .col-h{border-color:var(--todo)}.col.UNKNOWN .col-h{border-color:var(--unk)}.col.PASS .col-h{border-color:var(--pass)}.col.EXCLUDED .col-h{border-color:var(--ex)}.col.NOT_APPLICABLE .col-h{border-color:var(--na)}
+.col-b{padding:8px;display:grid;gap:7px;overflow:auto}
+.col-d{font-size:11.5px;color:var(--muted);padding:6px 12px 0}
+.tcard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px;cursor:pointer;text-align:left;width:100%;display:grid;gap:4px;border-left:4px solid var(--line)}
+.tcard:hover{border-color:var(--teal);border-left-color:var(--teal)}
+.tcard.FAIL{border-left-color:var(--fail)}.tcard.PASS{border-left-color:var(--pass)}.tcard.UNKNOWN{border-left-color:var(--unk)}.tcard.TODO{border-left-color:var(--todo)}.tcard.NOT_APPLICABLE{border-left-color:var(--na);opacity:.8}.tcard.EXCLUDED{border-left-color:var(--ex)}
+.tcard.sel{box-shadow:0 0 0 2px var(--teal)}
+.tcard .id{font:600 11.5px var(--mono);color:var(--muted);display:flex;justify-content:space-between;gap:6px}
+.tcard .t{font-size:13.5px;font-weight:600;line-height:1.3}
+.tcard .ft{display:flex;gap:5px;flex-wrap:wrap}
+.tcard .ready{background:var(--teal);color:var(--teal-ink)}
+.mini{display:flex;gap:2px;margin-top:2px}.mini i{height:4px;flex:1;border-radius:2px;background:var(--line)}.mini i.ok{background:var(--pass)}.mini i.f{background:var(--fail)}.mini i.st{background:var(--ochre)}
+.more{border:1px dashed var(--line);background:none;border-radius:10px;padding:8px;cursor:pointer;color:var(--muted);font-size:12.5px}
+@media (max-width:760px){.cols{grid-template-columns:1fr}.col{max-height:none}}
+
+/* ---------- drawer ---------- */
+.scrim{position:fixed;inset:0;background:rgba(8,12,11,.45);z-index:40;opacity:0;pointer-events:none;transition:opacity .15s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(760px,100vw);background:var(--bg);z-index:41;transform:translateX(100%);transition:transform .2s ease;display:flex;flex-direction:column;box-shadow:var(--shadow-lg)}
+.drawer.on{transform:none}
+.dh{background:var(--surface);border-bottom:1px solid var(--line);padding:16px 20px 0}
+.dh .id{font:600 12.5px var(--mono);color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.dh h2{margin:6px 0 10px;font-size:21px}
+.dtabs{display:flex;gap:2px}
+.dtabs button{border:0;background:none;padding:8px 14px;cursor:pointer;font-weight:600;color:var(--muted);border-bottom:2px solid transparent}
+.dtabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--teal)}
+.db{padding:18px 20px 60px;overflow:auto;flex:1;display:grid;gap:14px;align-content:start}
+.x{position:absolute;top:12px;right:14px;border:0;background:var(--surface2);border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:18px;color:var(--muted)}
+.x:hover{color:var(--ink)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.fact{background:var(--surface);border:1px solid var(--line2);border-radius:10px;padding:7px 10px}.fact span{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}.fact b{font-size:13px;word-break:break-word}
+.fc h3,.fc h4,.fc h5,.fc h6{margin:14px 0 6px;text-transform:none;letter-spacing:0;color:var(--ink)}.fc h3{font-size:18px}.fc h4{font-size:15px}.fc h5{font-size:14px}
+.fc p,.fc li{font-size:13.5px}.fc ul,.fc ol{padding-left:20px;margin:6px 0}.fc pre{background:var(--surface2);border:1px solid var(--line2);padding:10px;border-radius:8px;overflow:auto;font:12px var(--mono);white-space:pre-wrap}
+.fc code{background:var(--surface2);padding:0 4px;border-radius:4px}
+.samples{display:flex;gap:8px;flex-wrap:wrap}
+.sample{border:1px solid var(--line);border-radius:10px;padding:6px 10px;background:var(--surface);min-width:120px}
+.sample b{font:600 12.5px var(--mono)}.sample .dots{display:flex;gap:3px;margin-top:4px}
+.sample .dots i{width:14px;height:14px;border-radius:4px;border:1.5px dashed var(--line)}
+.sample .dots i.PASS{background:var(--pass);border:0}.sample .dots i.FAIL{background:var(--fail);border:0}.sample .dots i.st{border-style:solid;border-color:var(--ochre)}
+.sample.done{border-color:var(--pass)}
+table.t{width:100%;border-collapse:collapse;font-size:12.5px}
+table.t th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--line)}
+table.t td{padding:7px 8px;border-bottom:1px solid var(--line2);vertical-align:top}
+.tw{overflow-x:auto}
+.form{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:14px}
+.form > h3{display:flex;justify-content:space-between;align-items:center}
+.evgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:8px;border-radius:12px;padding:2px;transition:background .15s}
+.evgrid.drag{background:var(--teal-s);outline:2px dashed var(--teal)}
+.ev{border:1.5px dashed var(--line);border-radius:10px;padding:9px 10px;background:var(--surface2);display:grid;gap:5px;align-content:start;min-height:112px;position:relative}
+.ev.has{border-style:solid;border-color:var(--pass);background:var(--surface)}
+.ev.drag{border-color:var(--teal);background:var(--teal-s)}
+.ev .k{font:700 12px var(--mono);display:flex;justify-content:space-between;align-items:center}
+.ev .k .req{font:600 10px var(--f);color:var(--fail);text-transform:uppercase;letter-spacing:.05em}
+.ev.has .k .req{color:var(--pass)}
+.ev p{font-size:11.5px;color:var(--muted);line-height:1.35}
+.ev .drop{border:0;background:none;color:var(--teal);font-weight:600;font-size:12.5px;cursor:pointer;padding:0;text-align:left}
+.ev textarea{min-height:44px;font-size:12.5px;padding:5px 7px}
+.ev .file{font-size:12px;display:grid;gap:2px}
+.ev .file b{word-break:break-all}.ev .hash{font:10.5px var(--mono);color:var(--pass);word-break:break-all}
+.ev .rm{position:absolute;top:6px;right:6px;border:0;background:none;color:var(--faint);cursor:pointer;font-size:14px}
+.ev .rm:hover{color:var(--fail)}
+.ev .modes{display:flex;gap:10px;font-size:12px}
+.ev .modes button{border:0;background:none;cursor:pointer;color:var(--muted);padding:0;font-weight:600}.ev .modes button[aria-pressed=true]{color:var(--teal);text-decoration:underline}
+.checklist{display:flex;gap:6px;flex-wrap:wrap}
+.checklist span{font-size:12px;padding:2px 8px;border-radius:20px;background:var(--fail-s);color:var(--fail);font-weight:600}
+.checklist span.ok{background:var(--pass-s);color:var(--pass)}
+.trial{border:1px solid var(--line2);border-radius:10px;padding:8px 10px;background:var(--surface);display:grid;gap:3px;font-size:12.5px}
+.trial .h{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* ---------- modal, toast, welcome ---------- */
+.modal{position:fixed;inset:0;z-index:50;display:none;place-items:center;padding:16px}
+.modal.on{display:grid}
+.modal .scrim{z-index:0}.modal .box{z-index:1;background:var(--bg);border-radius:16px;box-shadow:var(--shadow-lg);width:min(680px,100%);max-height:90vh;overflow:auto;position:relative}
+.modal .box .mh{padding:18px 20px 6px}.modal .box .mb{padding:10px 20px 20px;display:grid;gap:14px}
+.layouts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.lay{border:1.5px solid var(--line);border-radius:12px;padding:10px;cursor:pointer;background:var(--surface);text-align:left}
+.lay[aria-pressed=true]{border-color:var(--teal);box-shadow:inset 0 0 0 1px var(--teal);background:var(--teal-s)}
+.lay .pic{height:86px;border-radius:8px;background:var(--surface2);border:1px solid var(--line2);margin-bottom:8px;padding:7px;display:grid;gap:4px}
+.lay .pic.board{grid-template-columns:repeat(4,1fr)}.lay .pic.board i{border-radius:4px;background:repeating-linear-gradient(var(--line) 0 9px,transparent 9px 13px)}
+.lay .pic.board i:nth-child(1){background:repeating-linear-gradient(var(--fail-s) 0 9px,transparent 9px 13px)}.lay .pic.board i:nth-child(4){background:repeating-linear-gradient(var(--pass-s) 0 9px,transparent 9px 13px)}
+.lay .pic.doc{grid-template-rows:14px 10px 1fr;padding:7px 20%}.lay .pic.doc i{border-radius:3px;background:var(--line)}.lay .pic.doc i:nth-child(2){background:var(--ochre);width:60%}
+.lay .pic.doc i:nth-child(3){background:repeating-linear-gradient(var(--line2) 0 5px,transparent 5px 9px)}
+@media (max-width:560px){.layouts{grid-template-columns:1fr}}
+.toasts{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:60;display:grid;gap:8px;width:min(560px,calc(100vw - 24px))}
+.toast{background:var(--night);color:var(--night-ink);border-radius:12px;padding:11px 14px;box-shadow:var(--shadow-lg);display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:start;font-size:13.5px;animation:up .2s}
+.toast i{width:10px;height:10px;border-radius:50%;margin-top:5px;background:#4FBF7A}.toast.err i{background:#E2564B}.toast.warn i{background:#E0A64E}
+.toast pre{margin:4px 0 0;font:11.5px var(--mono);white-space:pre-wrap;color:var(--night-muted);max-height:120px;overflow:auto}
+.toast button{border:0;background:none;color:var(--night-muted);cursor:pointer;font-size:16px}
+@keyframes up{from{transform:translateY(10px);opacity:0}}
+.welcome{max-width:980px;margin:30px auto}
+.welcome .hero{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;margin-bottom:22px}
+.welcome .hero h1{font-size:30px}
+.welcome .grid2{gap:16px}
+.timeline{list-style:none;margin:0;padding:0;display:grid}
+.timeline li{display:grid;grid-template-columns:150px 1fr;gap:12px;padding:8px 0;border-top:1px solid var(--line2);font-size:13px}
+.timeline li:first-child{border-top:0}
+.timeline .w{color:var(--faint);font:11.5px var(--mono)}
+@media (max-width:760px){.timeline li{grid-template-columns:1fr;gap:2px}}
+.shortcuts{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:13.5px}
+.spin{width:14px;height:14px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;display:inline-block;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="sr" href="#main">Skip to content</a>
+<header class="top">
+  <div class="brand"><span id="mark"></span><b>Merestone</b><span class="ws" id="wsname"></span></div>
+  <nav class="tabs" id="tabs" aria-label="Views"></nav>
+  <div class="tools">
+    <button class="sem" id="sem" data-act="rail" type="button" title="Plan status (exit code of check-plan)"></button>
+    <button class="ibtn" data-act="export" type="button" id="exportBtn" title="Export the report (E)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span class="lbl">Report</span></button>
+    <button class="ibtn railbtn" data-act="rail" type="button" title="Pending list">Pending</button>
+    <button class="ibtn" data-act="theme" type="button" id="themeBtn" title="Theme (T)"></button>
+    <button class="ibtn" data-act="help" type="button" title="Keyboard shortcuts (?)">?</button>
+  </div>
+</header>
+<div class="shell"><main id="main" tabindex="-1"></main><aside class="rail" id="rail" aria-label="Status and pending work"></aside></div>
+<div class="scrim" id="scrim" data-act="close"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dtitle"></aside>
+<div class="modal" id="modal" role="dialog" aria-modal="true"></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<input type="file" id="filepick" hidden>
+<script nonce="__NONCE__">
+'use strict';
+/* ================= basics ================= */
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store={get(k,d){try{const v=localStorage.getItem('merestone.'+k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('merestone.'+k,JSON.stringify(v))}catch(e){}}};
+let S=null, ST=null;                       // static catalog data, workspace state
+const FC={};                               // fieldcard cache
+const F={};                                // form values, by namespace
+const UI={view:store.get('view','arch'),route:0,drawer:null,dtab:'work',capMode:store.get('capMode','interview'),capQ:'',q:'',module:'',activity:'',showNA:false,stone:0,allPend:false,busy:0,offline:false,theme:store.get('theme','system'),lastSync:Date.now()};
+const PLACEHOLDER='to be identified';
+const ICON={
+  arch:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="12" r="2.5"/><path d="M7.5 12h9"/><path d="M12 7l2.5 2-1 3h-3l-1-3z" fill="currentColor"/></svg>',
+  plan:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="11" rx="1.5"/><rect x="17" y="4" width="4" height="7" rx="1.5"/></svg>',
+  log:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  sun:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+  moon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
+  auto:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>',
+};
+const fmtBytes=n=>n<1024?n+' B':n<1048576?(n/1024).toFixed(1)+' KB':(n/1048576).toFixed(1)+' MB';
+const when=iso=>{const d=new Date(iso);if(isNaN(d))return esc(iso);const s=(Date.now()-d)/1000;
+  const rel=s<60?'just now':s<3600?Math.round(s/60)+' min ago':s<86400?Math.round(s/3600)+' h ago':Math.round(s/86400)+' d ago';
+  return `<span title="${esc(d.toLocaleString())}">${rel}</span>`;};
+const capSource=()=>String(getF('caps.source',store.get('capsource','')||(ST&&ST.arch?ST.arch.inventory_review.evidence_ref:'')||'')).trim();
+const vague=s=>!String(s||'').trim()||String(s).toLowerCase().includes(PLACEHOLDER);
+
+/* ================= form state ================= */
+function ns(name,init){if(!F[name])F[name]=typeof init==='function'?init():(init||{});return F[name];}
+function getF(path,d=''){const i=path.indexOf('.');const n=path.slice(0,i),k=path.slice(i+1);return F[n]&&F[n][k]!==undefined?F[n][k]:d;}
+function setF(path,v){const i=path.indexOf('.');const n=path.slice(0,i),k=path.slice(i+1);ns(n)[k]=v;}
+const bind=(path,extra='')=>`data-bind="${esc(path)}" id="b-${esc(path)}" ${extra}`;
+const val=(path,d='')=>esc(getF(path,d));
+
+/* ================= server ================= */
+async function api(path,body){
+  const opt={headers:{'X-Merestone':'1'},credentials:'same-origin',cache:'no-store'};
+  if(body!==undefined){opt.method='POST';opt.headers['Content-Type']='application/json';opt.body=JSON.stringify(body);}
+  let r;try{r=await fetch('/api/'+path,opt);}catch(e){setOffline(true);throw Object.assign(new Error('The local Merestone server is not running.'),{hint:'Start it again with: merestone ui'});}
+  setOffline(false);
+  let j={};try{j=await r.json();}catch(e){}
+  if(!r.ok)throw Object.assign(new Error(j.error||('HTTP '+r.status)),{hint:j.hint||''});
+  return j;
+}
+async function act(action,body,okTitle){
+  busy(1);
+  try{const res=await api(action,body);await refresh();const lines=(res.output||'').split('\n').filter(Boolean);
+    toast(okTitle||lines[0]||'Saved.',okTitle?lines.join('\n'):lines.slice(1).join('\n'),'ok');return res;}
+  catch(e){toast(e.message,e.hint,'err');return null;}
+  finally{busy(-1);}
+}
+async function refresh(){ST=await api('state');UI.lastSync=Date.now();render();}
+function busy(d){UI.busy+=d;const s=$('.sync');if(s)s.classList.toggle('busy',UI.busy>0);}
+function setOffline(v){if(UI.offline!==v){UI.offline=v;renderSync();}}
+
+/* ================= toasts ================= */
+function toast(title,detail,kind='ok'){
+  const el=document.createElement('div');el.className='toast '+(kind==='err'?'err':kind==='warn'?'warn':'');
+  el.innerHTML=`<i></i><div><b>${esc(title)}</b>${detail?`<pre>${esc(detail)}</pre>`:''}</div><button type="button" aria-label="Dismiss">×</button>`;
+  el.querySelector('button').onclick=()=>el.remove();
+  $('#toasts').append(el);setTimeout(()=>el.remove(),kind==='err'?12000:5000);
+}
+
+/* ================= helpers on the model ================= */
+const plan=()=>ST&&ST.plan, tasks=()=>(ST&&ST.plan?ST.plan.tasks:[]);
+const findTask=a=>tasks().find(t=>t.alias===a);
+const routeOf=id=>ST.arch.routes.find(r=>r.id===id);
+function applies(rule,caps){let unc=false;for(const cl of rule){const v=cl.map(k=>caps[k]||'unknown');if(v.every(x=>x==='present'))return'APPLICABLE';if(!v.includes('absent'))unc=true;}return unc?'UNKNOWN':'NOT_APPLICABLE';}
+function sample(t){
+  const pr=t.test_protocol;if(!pr)return null;
+  const staged=(t.staged&&t.staged.trials)||[];
+  const trials=[...t.trials.map(x=>({...x,_st:false})),...staged.map(x=>({...x,_st:true}))];
+  const rows=pr.required_variants.map(v=>({v,need:pr.min_trials_per_variant,got:trials.filter(x=>x.variant===v&&x.execution==='COMPLETED'&&(x.result==='PASS'||x.result==='FAIL'))}));
+  const complete=rows.every(r=>r.got.length>=r.need), anyFail=trials.some(x=>x.result==='FAIL');
+  return {rows,complete,anyFail,trials,staged,ready:staged.length>0&&(complete||staged.some(x=>x.result==='FAIL'))};
+}
+function code(){return ST&&ST.check?ST.check.exit_code:2;}
+function counts(){const c={FAIL:0,TODO:0,UNKNOWN:0,PASS:0,EXCLUDED:0,NOT_APPLICABLE:0};tasks().forEach(t=>c[t.bucket]++);return c;}
+function missingSources(r){return Object.entries(r.capabilities).filter(([k,v])=>v!=='unknown'&&!String(r.capability_evidence[k]||'').trim()).map(([k])=>k);}
+function hops(boundary){return vague(boundary)?[]:String(boundary).split(/\s*(?:->|→|=>)\s*/).map(s=>s.trim()).filter(Boolean);}
+function blockedAccess(t){return t.access==='unknown'||t.access==='none'||t.scope!=='in_scope';}
+
+/* ================= render: frame ================= */
+function render(){
+  const a=document.activeElement, key=a&&(a.dataset&&a.dataset.bind?'[data-bind="'+a.dataset.bind+'"]':a.id?'#'+a.id:null);
+  let sel=null;try{sel=a&&'selectionStart' in a?[a.selectionStart,a.selectionEnd]:null;}catch(e){}
+  renderTop();renderRail();renderMain();renderDrawer();
+  if(key){const b=document.querySelector(key.replace(/@/g,'\\@'));if(b&&b!==document.activeElement){b.focus({preventScroll:true});try{if(sel)b.setSelectionRange(sel[0],sel[1]);}catch(e){}}}
+}
+function renderTop(){
+  $('#mark').innerHTML=S.mark;
+  const w=ST.workspace;
+  $('#wsname').textContent=w?`${ST.arch.system_name} · ${w.series||'no plan yet'}`:'';
+  const n=counts();
+  const tabs=w?[['arch','Architecture',ST.setup_items.length&&!w.has_plan?ST.setup_items.length:''],['plan','Plan',w.has_plan?n.TODO+n.FAIL:''],['log','Activity','']]:[];
+  $('#tabs').innerHTML=tabs.map(([k,l,c])=>`<button type="button" data-act="view" data-v="${k}" ${UI.view===k?'aria-current="page"':''}>${ICON[k]}${l}${c?`<span class="n">${c}</span>`:''}</button>`).join('');
+  const c=code(), label=!w?'No workspace':!w.has_plan?'No plan yet':S.code_meta[c][0];
+  $('#sem').innerHTML=`<span class="lights"><i class="g ${w&&w.has_plan&&c===0?'on':''}"></i><i class="r ${w&&w.has_plan&&c===1?'on':''}"></i><i class="a ${!w||!w.has_plan||c===2?'on':''}"></i></span><b>${w&&w.has_plan?c:'–'}</b><span>${esc(label)}</span>`;
+  $('#exportBtn').disabled=!(w&&w.has_plan);
+  $('#themeBtn').innerHTML=ICON[UI.theme==='light'?'sun':UI.theme==='dark'?'moon':'auto'];
+  $('#themeBtn').title='Theme: '+UI.theme+' (T)';
+}
+function renderSync(){
+  const s=$('.sync');if(!s)return;
+  s.innerHTML=UI.offline?'<i style="background:var(--fail)"></i> Server stopped. Run <code>merestone ui</code> again.':`<i></i> In sync with the workspace files (and the terminal)`;
+}
+function renderMain(){
+  const m=$('#main');
+  if(!ST.workspace){m.innerHTML=welcome();return;}
+  if(!['arch','plan','log'].includes(UI.view))UI.view='arch';
+  m.innerHTML=UI.view==='arch'?archView():UI.view==='plan'?boardView():logView();
+  if(UI.view==='arch')wireMap();
+}
+
+/* ================= welcome (no workspace) ================= */
+const PROFILE_INFO={chat:'Chat assistant built on a language model',rag:'Assistant that answers from documents (RAG)',agent:'Agent that calls tools and APIs',mcp:'MCP client, host or server',
+  'ml-pipeline':'Training or ML pipeline',full:'Every capability marked unknown (largest plan)'};
+function welcome(){
+  const nb=ST.nearby||[];
+  return `<div class="welcome"><div class="hero">${S.mojo['2']}<div><span class="eyebrow">Merestone · runs on this computer only</span><h1>Start an assessment</h1>
+  <p class="muted" style="margin-top:6px;max-width:70ch">A workspace keeps the architecture, the frozen plan, the hashed evidence and the reports of one assessment. It holds evidence, so keep it outside the framework folder and never commit it.</p></div></div>
+  <div class="grid2"><div class="card stack"><h3>Create a workspace</h3>
+    <label class="f">Folder<input type="text" ${bind('new.folder')} value="${val('new.folder','my-assessment')}" placeholder="my-assessment"><span class="hint">Created inside ${esc(ST.start_dir)} unless you write a full path.</span></label>
+    <label class="f">System name<input type="text" ${bind('new.name')} value="${val('new.name')}" placeholder="e.g. Harbor Desk support assistant"></label>
+    <div class="stack-s"><span class="small muted" style="font-weight:600">Starting profile (a draft you will correct)</span><div class="opts">${S.profiles.map(p=>`<button type="button" class="opt" data-act="setf" data-path="new.profile" data-val="${p}" aria-pressed="${getF('new.profile','rag')===p}"><b>${p}</b><span>${esc(PROFILE_INFO[p]||'')}</span></button>`).join('')}</div></div>
+    <div><button class="btn primary" type="button" data-act="create">Create workspace</button></div></div>
+  <div class="card stack"><h3>Open a workspace</h3>
+    ${nb.length?`<div class="stack-s">${nb.map(n=>`<button type="button" class="opt" data-act="open" data-folder="${esc(n)}"><b>${esc(n)}</b><span>in ${esc(ST.start_dir)}</span></button>`).join('')}</div>`:'<p class="muted small">No workspace found next to where you started <code>merestone ui</code>.</p>'}
+    <label class="f">Path to a workspace folder<input type="text" ${bind('open.folder')} value="${val('open.folder')}" placeholder="C:\\assessments\\harbor-desk"></label>
+    <div><button class="btn" type="button" data-act="open">Open</button></div>
+    <hr class="sep"><p class="small muted">New to Merestone? <code>merestone demo</code> in the terminal shows a FAIL becoming a PASS in a minute.</p></div></div></div>`;
+}
+
+/* ================= architecture ================= */
+function archView(){
+  const a=ST.arch, w=ST.workspace, p=plan();
+  const decided=tasks().filter(t=>t.result).length;
+  return `${p?`<div class="note ${p.stale?'warn':''}" style="margin-bottom:16px">${p.stale?'<b>architecture.json differs from the frozen plan.</b> ':''}The plan <b>${esc(w.series)}</b> is frozen. Changes here are saved right away and take effect when you freeze a revision (reason and approver)${decided?`; the ${decided} decided results stay in ${esc(w.series)} and are <b>not carried over</b> to the revision`:''}.</div>`:''}
+  <div class="card"><div class="ahead"><div><span class="eyebrow">${esc(a.assessment_id)} · profile ${esc(w.profile||'')} · framework ${esc(S.framework_version)}</span>
+    <h1><input class="inl" type="text" ${bind('sys.name')} value="${val('sys.name',a.system_name)}" aria-label="System name" data-save="name"></h1></div>
+    <div class="row">${ST.setup_items.length?`<span class="chip unk">${ST.setup_items.length} to define before planning</span>`:'<span class="chip pass">Ready to plan</span>'}</div></div>
+    <div class="steps">${steps().map(([id,l,st,b,tip])=>`<button type="button" class="step ${st}" data-act="goto" data-target="${id}" title="${esc(tip)}"><i>${b}</i>${l}</button>`).join('')}</div></div>
+  ${routeCard()}${readinessCard()}${capsCard()}${protocolsCard()}${freezeCard()}`;
+}
+function steps(){
+  const a=ST.arch, rs=a.routes, p=plan(), gaps=ST.readiness.filter(g=>!g.includes(':evidence:')&&g!=='core_design_missing');
+  const routeOk=rs.every(r=>!['unknown','none'].includes(r.access)&&!vague(r.actor)&&!vague(r.boundary));
+  const unk=rs.reduce((n,r)=>n+Object.values(r.capabilities).filter(v=>v==='unknown').length,0), miss=rs.reduce((n,r)=>n+missingSources(r).length,0);
+  const np=rs.reduce((n,r)=>n+(r.test_protocols||[]).length,0);
+  return [['sec-route','Route',routeOk?'ok':'bad',routeOk?'✓':'!',routeOk?'complete':'actor, components or access missing'],['sec-ready','Before testing',gaps.length?'bad':'ok',gaps.length||'✓',gaps.length?gaps.length+' missing':'complete'],
+    ['sec-caps','Capabilities',miss?'bad':unk?'':'ok',miss?'!':unk?unk:'✓',miss?miss+' answers without a source':unk?unk+' unknown':'complete'],['sec-proto','Protocols',np?'ok':'',np,np+' defined'],['sec-freeze','Plan',p&&!p.stale?'ok':p?'bad':'',p&&!p.stale?'✓':p?'!':'–',p&&!p.stale?'frozen':p?'revision pending':'not frozen yet']];
+}
+/* ---------- route map ---------- */
+const rbase=r=>({actor:vague(r.actor)?'':r.actor,hops:hops(r.boundary),access:r.access,activities:[...r.activity_types],scope:r.scope});
+const rsame=(f,b)=>(f.actor||'')===b.actor&&f.hops.map(x=>x.trim()).filter(Boolean).join(' -> ')===b.hops.join(' -> ')&&f.access===b.access&&f.activities.join()===b.activities.join()&&f.scope===b.scope;
+function rform(r){const n='route:'+r.id,b=rbase(r),key=JSON.stringify(b);
+  if(F[n]&&F[n]._key!==key&&rsame(F[n],JSON.parse(F[n]._key)))delete F[n];   // changed elsewhere (e.g. the terminal) and not edited here
+  return ns(n,()=>({...JSON.parse(key),_key:key}));}
+function routeDirty(r){return !rsame(rform(r),rbase(r));}
+function routeCard(){
+  const rs=ST.arch.routes;UI.route=Math.min(UI.route,rs.length-1);const r=rs[UI.route], f=rform(r), id=r.id, n='route:'+id;
+  const acc={'black-box':'Only as a user: the UI or the API.','gray-box':'Plus documentation, configuration or test accounts.','white-box':'Code, logs and traces too.'};
+  return `<div class="card" id="sec-route"><div class="card-h"><div><span class="eyebrow">01 · Route and boundaries</span><h2>Where information travels</h2>
+  <p>Risk lives on the route: who acts, which components the request crosses and where trust changes. Each boundary stone is a place where a control should hold.</p></div>
+  ${routeDirty(r)?`<button class="btn primary" type="button" data-act="saveRoute" data-route="${esc(id)}">Save route</button>`:''}</div>
+  ${rs.length>1?`<div class="rtabs">${rs.map((x,i)=>`<button type="button" class="btn sm ${i===UI.route?'primary':''}" data-act="route" data-i="${i}">${esc(x.id)}</button>`).join('')}</div>`:''}
+  <div class="map" id="map">${mapSvg(f)}</div>
+  <div class="stone-detail" id="stoneDetail"></div>
+  <hr class="sep">
+  <div class="stack">
+   <div class="grid2"><label class="f" id="fld-actor">Who acts (actor)<input type="text" ${bind(n+'.actor')} value="${esc(f.actor)}" placeholder="e.g. authenticated user of one customer"><span class="hint">The person or system that attempts something, with its starting permissions.</span></label>
+   <div class="f" id="fld-boundary"><span class="small muted" style="font-weight:600">Components the request crosses, in order</span>
+    <div class="hops">${f.hops.map((h,i)=>`${i?'<span class="arrow">→</span>':''}<span class="hop"><input type="text" ${bind(n+'.hop'+i)} value="${esc(h)}" size="${Math.max(6,h.length)}" aria-label="Component ${i+1}"><button type="button" data-act="hopDel" data-route="${esc(id)}" data-i="${i}" aria-label="Remove">×</button></span>`).join('')}
+    <button type="button" class="btn sm" data-act="hopAdd" data-route="${esc(id)}">+ add</button></div>
+    <span class="hint small faint">e.g. app → document index → model → tool. Trust changes between each pair.</span></div></div>
+   <div id="fld-access"><span class="small muted" style="font-weight:600">How much you can see on this route</span><div class="opts" style="margin-top:5px">${S.access.map(x=>`<button type="button" class="opt" data-act="rset" data-route="${esc(id)}" data-k="access" data-val="${x}" aria-pressed="${f.access===x}"><b>${x}</b><span>${acc[x]}</span></button>`).join('')}</div>
+    ${f.access==='unknown'||f.access==='none'?'<p class="small" style="color:var(--fail);margin-top:4px">Tasks cannot be completed while access is unknown.</p>':''}</div>
+   <div id="fld-activities"><span class="small muted" style="font-weight:600">What this assessment includes</span><div class="opts" style="margin-top:5px">${Object.entries(S.activities).map(([k,d])=>`<button type="button" class="opt" data-act="ract" data-route="${esc(id)}" data-val="${k}" aria-pressed="${f.activities.includes(k)}"><b>${k}</b><span>${esc(d)}</span></button>`).join('')}</div>
+    ${!f.activities.includes('DESIGN')?'<p class="small" style="color:var(--ochre);margin-top:4px">Without DESIGN on at least one route the plan can never close green.</p>':''}</div>
+   <div class="row"><span class="small muted" style="font-weight:600">Scope</span><div class="seg">${['in_scope','out_of_scope'].map(x=>`<button type="button" data-act="rset" data-route="${esc(id)}" data-k="scope" data-val="${x}" aria-pressed="${f.scope===x}">${x.replace('_',' ')}</button>`).join('')}</div></div>
+  </div></div>`;
+}
+function mapSvg(f){
+  const nodes=[{t:'Actor',s:f.actor||'who acts?',cls:'actor'}];
+  if(f.hops.length)f.hops.forEach((h,i)=>nodes.push({t:h,s:i===f.hops.length-1?'final effect':'component '+(i+1)}));
+  else nodes.push({t:'?',s:'describe the route',cls:'ghost'},{t:'?',s:'final effect',cls:'ghost'});
+  const W=140,G=66,H=50,y=50,n=nodes.length,width=Math.max(720,40+n*W+(n-1)*G);
+  const x=i=>20+i*(W+G);const cut=(s,m)=>s.length>m?s.slice(0,m-1)+'…':s;
+  const flow=`M${x(0)+W} ${y+H/2} H${x(n-1)}`;
+  let svg=`<svg viewBox="0 0 ${width} 140" width="${width}" style="min-width:${Math.min(width,560)}px" role="group" aria-label="Route diagram"><path id="flowp" class="flow" d="${flow}"/>`;
+  if(f.hops.length)svg+=`<circle class="packet" r="6"><animateMotion dur="${2+n*0.8}s" repeatCount="indefinite"><mpath href="#flowp"/></animateMotion></circle>`;
+  nodes.forEach((d,i)=>{svg+=`<g class="node ${d.cls||''}"><title>${esc(d.t)} · ${esc(d.s)}</title><rect x="${x(i)}" y="${y}" width="${W}" height="${H}" rx="9"/><text x="${x(i)+W/2}" y="${y+21}" text-anchor="middle">${esc(cut(d.t,17))}</text><text class="sub" x="${x(i)+W/2}" y="${y+38}" text-anchor="middle">${esc(cut(d.s,21))}</text></g>`;});
+  for(let i=0;i<n-1;i++){const cx=x(i)+W+G/2,cy=y+H/2;
+    svg+=`<g class="stone ${UI.stone===i?'on':''}" tabindex="0" role="button" data-stone="${i}" aria-label="Boundary ${i+1}"><polygon points="${cx},${cy-16} ${cx+14},${cy-6} ${cx+9},${cy+14} ${cx-9},${cy+14} ${cx-14},${cy-6}"/><text x="${cx}" y="${cy+5}" text-anchor="middle">${i+1}</text></g>`;}
+  svg+=`<text class="lbl" x="${x(0)+W/2}" y="${y+H+28}" text-anchor="middle">origin</text><text class="lbl" x="${x(n-1)+W/2}" y="${y+H+28}" text-anchor="middle">effect → decides the result</text></svg>`;
+  return svg;
+}
+function wireMap(){
+  const show=i=>{UI.stone=i;$$('#map .stone').forEach(g=>g.classList.toggle('on',+g.dataset.stone===i));
+    const r=ST.arch.routes[UI.route],f=rform(r);const names=['Actor',...(f.hops.length?f.hops:['?','?'])];
+    const d=$('#stoneDetail');if(!d)return;
+    d.innerHTML=`<span class="tag">Boundary ${i+1} · ${esc(names[i])} → ${esc(names[i+1])}</span><p class="muted">Trust changes here. Ask: can something that crosses from <b>${esc(names[i])}</b> into <b>${esc(names[i+1])}</b> make it do what the actor is not allowed to? The planned tasks of this route inherit this description.</p>`;};
+  $$('#map .stone').forEach(g=>{g.addEventListener('click',()=>show(+g.dataset.stone));g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();show(+g.dataset.stone);}});});
+  const n=$$('#map .stone').length;show(Math.min(UI.stone,Math.max(0,n-1)));
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){try{$('#map svg').pauseAnimations();}catch(e){}}
+}
+/* ---------- readiness ---------- */
+function readinessCard(){
+  const a=ST.arch, L=a.limits, gaps=new Set(ST.readiness);
+  const it=k=>S.items[k];
+  const st=(ok,optional)=>`<span class="st ${ok?'ok':optional?'opt':'no'}">${ok?'✓':optional?'·':'!'}</span>`;
+  const row=(key,field,cur,ok,extra='')=>{const p='rd.'+key, v=getF(p,cur);
+    return `<div class="fld" id="fld-${key}">${st(ok)}<div><b>${esc(it(key).label)}</b><p>${esc(it(key).why)}</p>${extra}</div><div class="ctl"><input type="text" ${bind(p)} value="${esc(v)}" placeholder="e.g. ${esc(it(key).example)}" data-enter="saveField" data-field="${field}" data-key="${key}">
+    ${v!==cur?`<button type="button" class="btn primary sm" data-act="saveField" data-field="${field}" data-key="${key}">Save</button>`:''}</div></div>`;};
+  const ir=a.inventory_review;
+  const lim=['requests','duration_seconds','concurrency','tokens','cost_minor_units'], limLabel={requests:'requests',duration_seconds:'seconds',concurrency:'parallel',tokens:'tokens',cost_minor_units:'cost (minor units)'};
+  const limDirty=lim.some(k=>String(getF('lim.'+k,L[k]))!==String(L[k]));
+  const owner=(a.assets[0]||{}).owner||'';
+  return `<div class="card" id="sec-ready"><div class="card-h"><div><span class="eyebrow">02 · Before testing</span><h2>Permission, version, limits</h2><p>These answers make the assessment safe and reproducible. The plan cannot close while any of them is missing.</p></div>
+   <span class="chip ${gaps.size?'unk':'pass'}">${gaps.size?gaps.size+' readiness gaps':'complete'}</span></div><div class="fields">
+   ${row('authorization','authorization',a.authorization_ref,!!a.authorization_ref.trim())}
+   ${row('snapshot','snapshot',a.snapshot_ref,!!a.snapshot_ref.trim())}
+   ${row('evidence-store','evidence-store',a.evidence_store,!!a.evidence_store.trim())}
+   ${row('reviewer','reviewer',ir.reviewer,!!ir.reviewer.trim()&&!!ir.reviewed_at,ir.reviewed_at?`<p class="tiny faint">Reviewed ${when(ir.reviewed_at)}</p>`:'')}
+   ${row('inventory-evidence','inventory-evidence',ir.evidence_ref,!!ir.evidence_ref.trim())}
+   <div class="fld" id="fld-stop">${st(a.stop_conditions.length>0)}<div><b>${esc(it('stop').label)}</b><p>${esc(it('stop').why)}</p></div><div class="stops">
+     ${a.stop_conditions.map((s,i)=>`<div class="s"><span>${esc(s)}</span><button type="button" class="btn ghost sm" data-act="stopDel" data-i="${i}" aria-label="Remove">Remove</button></div>`).join('')}
+     <div class="ctl"><input type="text" ${bind('rd.stop')} value="${val('rd.stop')}" placeholder="e.g. ${esc(it('stop').example)}" data-enter="saveField" data-field="stop" data-key="stop"><button type="button" class="btn sm" data-act="saveField" data-field="stop" data-key="stop">Add</button></div></div></div>
+   <div class="fld" id="fld-limits">${st(!gaps.has('limits'))}<div><b>${esc(it('limits').label)}</b><p>${esc(it('limits').why)}</p></div><div class="ctl"><div class="limits">
+     ${lim.map(k=>`<label>${limLabel[k]}<input type="number" min="0" ${bind('lim.'+k)} value="${val('lim.'+k,L[k])}"></label>`).join('')}</div>
+     ${limDirty?'<button type="button" class="btn primary sm" data-act="saveLimits">Save</button>':''}</div></div>
+   <div class="fld" id="fld-owner">${st(!!owner,true)}<div><b>Asset owner</b><p>Who answers for the system under test (recommended).</p></div><div class="ctl"><input type="text" ${bind('rd.owner')} value="${val('rd.owner',owner)}" placeholder="e.g. Support platform team" data-enter="saveField" data-field="owner" data-key="owner">
+     ${getF('rd.owner',owner)!==owner?'<button type="button" class="btn primary sm" data-act="saveField" data-field="owner" data-key="owner">Save</button>':''}</div></div>
+  </div></div>`;
+}
+/* ---------- capabilities ---------- */
+function capsCard(){
+  const r=ST.arch.routes[UI.route], caps=r.capabilities, ev=r.capability_evidence;
+  const vals=Object.values(caps), miss=missingSources(r);
+  const src=capSource();
+  const tri=k=>{const v=caps[k]||'unknown';return `<span class="tri" role="group" aria-label="${esc(k)}">${[['absent','a','–','absent'],['unknown','u','?','unknown'],['present','p','✓','present']].map(([s,c,l,t])=>`<button type="button" class="${c}" data-act="cap" data-route="${esc(r.id)}" data-k="${esc(k)}" data-v="${s}" aria-pressed="${v===s}" title="${t}">${l}</button>`).join('')}</span>`;};
+  let body='';
+  if(UI.capMode==='interview'){
+    body=`<div class="qs">${S.guide.map((g,i)=>{const st=g.caps.map(k=>caps[k]||'unknown');const s=st.every(x=>x==='present')?'yes':st.every(x=>x==='absent')?'no':st.every(x=>x==='unknown')?'dk':'mixed';
+      return `<div class="q"><div><b>${esc(g.q)}</b><div class="k">${g.caps.map(esc).join(' · ')}${s==='mixed'?' · <span style="color:var(--ochre)">mixed answers</span>':''}</div></div>
+      <div class="seg">${[['yes','Yes','present'],['no','No','absent'],['dk','Not sure','unknown']].map(([c,l,v])=>`<button type="button" class="${c}" data-act="capq" data-route="${esc(r.id)}" data-i="${i}" data-v="${v}" aria-pressed="${s===c}">${l}</button>`).join('')}</div></div>`;}).join('')}</div>
+      <p class="small muted" style="margin-top:10px">These 16 questions cover the most common capabilities. Switch to <b>All capabilities</b> to answer the other ${S.capabilities.length-new Set(S.guide.flatMap(g=>g.caps)).size} one by one.</p>`;
+  }else{
+    const q=UI.capQ.toLowerCase();const groups={};
+    ['Model','Data and memory','Tools and agents','MCP','Platform and pipeline'].forEach(g=>groups[g]=[]);
+    S.capabilities.filter(c=>!q||(c.key+' '+c.label).toLowerCase().includes(q)).forEach(c=>(groups[c.group]=groups[c.group]||[]).push(c));
+    Object.keys(groups).forEach(g=>{if(!groups[g].length)delete groups[g];});
+    body=Object.entries(groups).map(([g,cs])=>`<div class="capgroup"><h4><span>${esc(g)}</span><span class="faint">${cs.filter(c=>caps[c.key]==='present').length} present</span></h4><div class="caps">${cs.map(c=>{const v=caps[c.key]||'unknown',s=ev[c.key]||'';
+      return `<div class="cap">${tri(c.key)}<div><div class="l">${esc(c.label)}</div><div class="meta"><span class="k">${esc(c.key)}</span>${c.cases.length?`<span class="chip" title="${esc(c.cases.join(', '))}">${c.cases.length} ${c.cases.length===1?'case':'cases'}</span>`:'<span class="chip" title="Used by scenarios or as context">context</span>'}</div>
+      ${v!=='unknown'?`<div class="src ${s?'':'miss'}" title="${esc(s)}">${s?'source: '+esc(s):'needs a source'}</div>`:''}</div></div>`;}).join('')}</div></div>`).join('')||'<p class="muted">No capability matches.</p>';
+  }
+  return `<div class="card" id="sec-caps"><div class="card-h"><div><span class="eyebrow">03 · Capabilities${ST.arch.routes.length>1?' · '+esc(r.id):''}</span><h2>What the system can do</h2>
+   <p>Each answer selects or discards tasks. Unsure? Leave it <b>unknown</b>: those tasks stay in the plan as pending and never count as passed.</p></div>
+   <div class="row"><span class="chip pass">${vals.filter(v=>v==='present').length} present</span><span class="chip">${vals.filter(v=>v==='absent').length} absent</span><span class="chip unk">${vals.filter(v=>v==='unknown').length} unknown</span></div></div>
+   <div class="capbar"><div class="seg">${[['interview','Interview (16 questions)'],['all','All capabilities ('+S.capabilities.length+')']].map(([k,l])=>`<button type="button" data-act="capMode" data-v="${k}" aria-pressed="${UI.capMode===k}">${l}</button>`).join('')}</div>
+   ${UI.capMode==='all'?`<input type="search" id="capq" placeholder="Filter capabilities" value="${esc(UI.capQ)}" style="max-width:240px" data-filter="capQ">`:''}</div>
+   <div class="grid2" style="margin-bottom:12px;align-items:end"><label class="f" id="fld-caps-source">Source for your answers<input type="text" ${bind('caps.source')} value="${esc(src)}" placeholder="e.g. architecture doc v2, interview with the owner"><span class="hint">Present and absent answers need one; it is stored with each answer you give.</span></label>
+   ${miss.length?`<div class="note warn"><b>${miss.length} answers need a source.</b> <button type="button" class="btn sm" data-act="capsSource" data-route="${esc(r.id)}" ${src.trim()?'':'disabled'}>Use this source for all of them</button></div>`:'<div class="note ok small">Every present or absent answer has a source.</div>'}</div>
+   ${body}</div>`;
+}
+/* ---------- protocols ---------- */
+const DESIGN_INFO={deterministic:'Same input, same result. One trial per variant is usually enough.',
+  'stochastic-fixed':'Outputs vary between runs: fix the number of trials per variant before running.',
+  'adaptive-exploration':'Exploratory red teaming: every attempt is recorded, including the failed ones.'};
+function protoForm(r,caseId,compact){
+  const f=ns('proto:'+r.id,()=>({case:caseId||'',variants:['original','benign'],min:1,design:'deterministic',rule:'',why:''}));
+  if(caseId&&f.case!==caseId){Object.assign(f,{case:caseId,variants:['original','benign'],min:1,design:'deterministic',rule:'',why:''});}
+  const n='proto:'+r.id, c=S.cases[f.case];
+  const opts=Object.values(S.cases).filter(c=>(c.activity==='TEST'||c.activity==='REDTEAM')&&r.activity_types.includes(c.activity)).map(c=>({c,a:c.module==='SCENARIOS'?'APPLICABLE':applies(c.applies_if,r.capabilities)}));
+  const grp=a=>opts.filter(o=>o.a===a).map(o=>`<option value="${esc(o.c.id)}" ${o.c.id===f.case?'selected':''}>${esc(o.c.id)} · ${esc(o.c.title)}</option>`).join('');
+  const sug=[...new Set(['original','neighbor','benign',...(c?c.variants:[])])].filter(v=>!f.variants.includes(v));
+  return `<div class="stack">
+   ${compact?'':`<label class="f">Case<select ${bind(n+'.case')}><option value="">Choose a test case…</option><optgroup label="Applicable on ${esc(r.id)}">${grp('APPLICABLE')}</optgroup><optgroup label="Pending confirmation (unknown)">${grp('UNKNOWN')}</optgroup></select></label>`}
+   ${c?`<p class="small muted">${esc(c.objective)}</p>`:''}
+   <div class="f"><span class="small muted" style="font-weight:600">Variants that must be run</span><div class="chipsin">${f.variants.map((v,i)=>`<span class="chip">${esc(v)}<button type="button" data-act="varDel" data-ns="${esc(n)}" data-i="${i}" aria-label="Remove">×</button></span>`).join('')}
+    <input type="text" ${bind(n+'.newvar')} value="${val(n+'.newvar')}" placeholder="add a variant + Enter" data-enter="varAdd" data-ns="${esc(n)}"></div>
+    ${sug.length?`<div class="sugg">${sug.slice(0,8).map(v=>`<button type="button" data-act="varAdd" data-ns="${esc(n)}" data-v="${esc(v)}">+ ${esc(v)}</button>`).join('')}</div>`:''}</div>
+   <div class="grid2"><label class="f">Minimum trials per variant<input type="number" min="1" ${bind(n+'.min')} value="${esc(f.min)}"></label>
+    <label class="f">Design<select ${bind(n+'.design')}>${S.designs.map(d=>`<option ${d===f.design?'selected':''}>${d}</option>`).join('')}</select><span class="hint">${esc(DESIGN_INFO[f.design]||'')}</span></label></div>
+   <label class="f">Decision rule<textarea ${bind(n+'.rule')} placeholder="e.g. No chunk from another tenant reaches the context in any variant">${val(n+'.rule')}</textarea></label>
+   <label class="f">Why this depth is enough<input type="text" ${bind(n+'.why')} value="${val(n+'.why')}" placeholder="e.g. Deterministic ACL check"></label>
+   <div><button type="button" class="btn primary" data-act="saveProto" data-route="${esc(r.id)}" ${f.case?'':'disabled'}>Save protocol</button></div></div>`;
+}
+function protocolsCard(){
+  const r=ST.arch.routes[UI.route], ps=r.test_protocols||[];
+  const hasTests=r.activity_types.includes('TEST')||r.activity_types.includes('REDTEAM');
+  return `<div class="card" id="sec-proto"><div class="card-h"><div><span class="eyebrow">04 · Test protocols</span><h2>How deep each test goes</h2>
+   <p>A test can only be decided PASS or FAIL with a protocol frozen in the plan: the variants, the number of trials and the decision rule, fixed before running.</p></div><span class="chip ${ps.length?'teal':''}">${ps.length} defined</span></div>
+   ${!hasTests?'<p class="muted">This route has no TEST or REDTEAM activity selected.</p>':`
+   ${ps.length?`<div class="protos">${ps.map(p=>`<div class="proto"><div><b class="mono">${esc(p.case_id)}</b> ${esc((S.cases[p.case_id]||{}).title||'')}<div class="v">${p.required_variants.map(v=>`<span class="chip teal">${esc(v)}</span>`).join('')}<span class="chip">×${p.min_trials_per_variant}</span><span class="chip">${esc(p.design)}</span></div>
+     <p class="small muted" style="margin-top:4px">${esc(p.decision_rule)}</p></div><div><button type="button" class="btn sm" data-act="editProto" data-route="${esc(r.id)}" data-case="${esc(p.case_id)}">Edit</button></div></div>`).join('')}</div><hr class="sep">`:''}
+   <h3 style="margin-bottom:10px">Add or replace a protocol</h3>${protoForm(r)}`}</div>`;
+}
+/* ---------- freeze ---------- */
+function previewBlock(){
+  const pv=ST.preview||{};
+  return `<div class="preview">${Object.entries(pv).map(([rid,d])=>{const tot=d.APPLICABLE+d.UNKNOWN+d.NOT_APPLICABLE||1;
+    return `<div class="pv"><b class="mono">${esc(rid)}</b><div class="bar"><i style="width:${100*d.APPLICABLE/tot}%;background:var(--teal)"></i><i style="width:${100*d.UNKNOWN/tot}%;background:var(--ochre)"></i></div><span class="c small muted">${d.APPLICABLE} applicable · ${d.UNKNOWN} unknown · ${d.NOT_APPLICABLE} n/a</span></div>`;}).join('')}</div>`;
+}
+function freezeCard(){
+  const p=plan(), w=ST.workspace, blocking=ST.setup_items.filter(i=>i.blocking);
+  let body;
+  if(!p){body=`${blocking.length?`<div class="note warn"><b>${blocking.length} things are still undefined.</b> Defining them first avoids a revision later: ${blocking.map(i=>esc(S.items[i.key].label+(i.route?' ('+i.route+')':''))).join(', ')}.</div>
+     <label class="check"><input type="checkbox" ${bind('freeze.anyway')} ${getF('freeze.anyway',false)?'checked':''}> Freeze anyway (the plan stays at code 2 until they are fixed)</label>`:'<div class="note ok">Everything needed before planning is in place.</div>'}
+     <div><button type="button" class="btn primary" data-act="freeze" ${blocking.length&&!getF('freeze.anyway',false)?'disabled':''}>Freeze the plan</button></div>`;}
+  else if(p.stale){body=`<div class="note warn"><b>The architecture changed after ${esc(w.series)} was frozen.</b> Freeze a revision to apply it. A revision is a new plan: recorded results stay with ${esc(w.series)} and are not transferred.</div>
+     <div class="grid2"><label class="f">Reason<input type="text" ${bind('freeze.reason')} value="${val('freeze.reason')}" placeholder="e.g. readiness fields completed"></label><label class="f">Approver<input type="text" ${bind('freeze.approver')} value="${val('freeze.approver',store.get('reviewer',S.user))}"></label></div>
+     <div><button type="button" class="btn primary" data-act="freeze">Freeze revision</button></div>`;}
+  else body=`<div class="note ok">${esc(w.series)} matches this architecture. Nothing to freeze.</div>`;
+  return `<div class="card" id="sec-freeze"><div class="card-h"><div><span class="eyebrow">05 · Plan</span><h2>${p?'Revise the frozen plan':'Freeze the plan'}</h2><p>Freezing turns this architecture into a fixed list of obligations with a manifest. If it were frozen now:</p></div></div>
+   ${previewBlock()}<hr class="sep"><div class="stack">${body}</div></div>`;
+}
+
+/* ================= plan board ================= */
+const COLS=['FAIL','TODO','UNKNOWN','PASS','EXCLUDED','NOT_APPLICABLE'];
+function todoRank(t){const s=sample(t);if(blockedAccess(t))return 6;if(s&&s.ready)return 0;if(t.staged)return 1;if(s)return 2;if(t.activity==='DESIGN'||t.activity==='CONFIG')return 3;return 4;}
+function cardHint(t){
+  if(t.bucket==='TODO'){
+    if(blockedAccess(t))return `<span class="chip unk">${t.scope!=='in_scope'?'out of scope':'access unknown'}</span>`;
+    if(t.activity==='DESIGN'||t.activity==='CONFIG')return '<span class="chip todo">review</span>';
+    const s=sample(t);if(!s)return '<span class="chip unk">needs protocol</span>';
+    if(s.ready)return '<span class="chip ready">ready to decide</span>';
+    const need=s.rows.reduce((a,r)=>a+r.need,0),got=s.rows.reduce((a,r)=>a+Math.min(r.got.length,r.need),0);
+    return `<span class="chip todo">${got}/${need} trials</span>`;}
+  if(t.bucket==='UNKNOWN')return '<span class="chip unk">confirm capabilities</span>';
+  if(t.bucket==='PASS'||t.bucket==='FAIL')return `<span class="chip">${esc(t.reviewer)}</span>`;
+  return '';
+}
+function miniBar(t){const s=sample(t);if(!s||t.result)return '';const cells=[];
+  s.rows.forEach(r=>{for(let i=0;i<r.need;i++){const x=r.got[i];cells.push(x?(x.result==='FAIL'?'f':x._st?'st':'ok'):'');}});
+  return `<div class="mini">${cells.map(c=>`<i class="${c}"></i>`).join('')}</div>`;}
+function boardView(){
+  if(!plan())return `<div class="empty card">${S.mojo['2']}<h2>No frozen plan yet</h2><p style="margin:8px auto 16px;max-width:60ch">The board appears once the architecture is frozen into a plan. Answer what is pending on the right, then freeze it.</p>
+    ${previewBlock()}<p style="margin-top:16px"><button type="button" class="btn primary" data-act="goto" data-target="sec-freeze">Go to Freeze the plan</button></p></div>`;
+  const all=tasks(), mods=[...new Set(all.map(t=>t.module))].sort(), acts=[...new Set(all.map(t=>t.activity))].sort();
+  const q=UI.q.toLowerCase();
+  const sel=all.filter(t=>(!UI.module||t.module===UI.module)&&(!UI.activity||t.activity===UI.activity)&&(!q||(t.alias+' '+t.title+' '+t.module).toLowerCase().includes(q)));
+  const by={};COLS.forEach(k=>by[k]=[]);sel.forEach(t=>by[t.bucket].push(t));
+  by.TODO.sort((a,b)=>todoRank(a)-todoRank(b)||a.case_id.localeCompare(b.case_id));
+  const cols=COLS.filter(k=>k==='NOT_APPLICABLE'?UI.showNA:k==='EXCLUDED'?by[k].length:true);
+  const c=counts();
+  return `<div class="toolbar"><input type="search" id="boardq" placeholder="Search tasks  ( / )" value="${esc(UI.q)}" data-filter="q" aria-label="Search tasks">
+   <select data-filter="module" aria-label="Module"><option value="">All modules</option>${mods.map(m=>`<option ${m===UI.module?'selected':''}>${esc(m)}</option>`).join('')}</select>
+   <select data-filter="activity" aria-label="Activity"><option value="">All activities</option>${acts.map(m=>`<option ${m===UI.activity?'selected':''}>${esc(m)}</option>`).join('')}</select>
+   <label class="check small"><input type="checkbox" data-act="toggleNA" ${UI.showNA?'checked':''}> Show not applicable (${c.NOT_APPLICABLE})</label>
+   <span class="grow"></span><span class="small muted">${sel.length} of ${all.length} tasks · ${esc(plan().series)}</span></div>
+   ${plan().stale?'<div class="note warn" style="margin-bottom:12px">The architecture changed after this plan was frozen. The board shows the frozen plan; freeze a revision to apply the changes.</div>':''}
+   ${ST.integrity_error?`<div class="note bad" style="margin-bottom:12px"><b>The plan does not verify:</b> ${esc(ST.integrity_error)}</div>`:''}
+   <div class="cols" style="--n:${cols.length}">${cols.map(k=>`<section class="col ${k}" aria-label="${esc(S.state_meta[k][0])}"><div class="col-h"><span>${esc(S.state_meta[k][0])}</span><span class="n">${by[k].length}</span></div>
+     <div class="col-d">${esc(S.state_meta[k][1])}</div><div class="col-b">${colCards(k,by[k])}</div></section>`).join('')}</div>`;
+}
+function colCards(k,list){
+  const lim=UI['lim_'+k]||60;
+  const html=list.slice(0,lim).map(t=>`<button type="button" class="tcard ${t.bucket} ${UI.drawer===t.alias?'sel':''}" data-act="open" data-task="${esc(t.alias)}">
+    <span class="id"><span>${esc(t.alias)}</span><span>${esc(t.activity)}</span></span><span class="t">${esc(t.title)}</span><span class="ft"><span class="chip">${esc(t.module)}</span>${cardHint(t)}</span>${miniBar(t)}</button>`).join('');
+  return (html||'<p class="small faint" style="padding:6px">Nothing here.</p>')+(list.length>lim?`<button type="button" class="more" data-act="more" data-col="${k}">Show ${list.length-lim} more</button>`:'');
+}
+
+/* ================= drawer ================= */
+function openTask(alias,tab){UI.drawer=alias;UI.dtab=tab||'work';renderDrawer();$('#drawer').classList.add('on');$('#scrim').classList.add('on');
+  $$('.tcard').forEach(c=>c.classList.toggle('sel',c.dataset.task===alias));setTimeout(()=>{const x=$('#drawer .x');if(x)x.focus();},60);}
+function closeDrawer(){UI.drawer=null;$('#drawer').classList.remove('on');$('#scrim').classList.remove('on');$$('.tcard.sel').forEach(c=>c.classList.remove('sel'));}
+function renderDrawer(){
+  const d=$('#drawer');if(!UI.drawer){return;}
+  const t=findTask(UI.drawer);if(!t){closeDrawer();return;}
+  const tabs=[['work',t.result?'Result':'Work'],['card','Fieldcard'],['ev','Evidence']];
+  const old=$('#drawer .db'), keep=old&&d.dataset.for===t.alias+'|'+UI.dtab?old.scrollTop:0; d.dataset.for=t.alias+'|'+UI.dtab;
+  d.innerHTML=`<button class="x" type="button" data-act="close" aria-label="Close">×</button><div class="dh"><div class="id"><span>${esc(t.alias)}</span><span class="badge b-${t.bucket}">${esc(S.state_meta[t.bucket][0])}</span><span class="chip">${esc(t.module)}</span><span class="chip">${esc(t.activity)}</span></div>
+   <h2 id="dtitle">${esc(t.title)}</h2><div class="dtabs" role="tablist">${tabs.map(([k,l])=>`<button type="button" role="tab" data-act="dtab" data-v="${k}" aria-selected="${UI.dtab===k}">${l}</button>`).join('')}</div></div>
+   <div class="db">${UI.dtab==='card'?fieldcardTab(t):UI.dtab==='ev'?evidenceTab(t):workTab(t)}</div>`;
+  if(keep)$('#drawer .db').scrollTop=keep;
+  if(UI.dtab==='card'&&!FC[t.case_id])loadFieldcard(t.case_id);
+}
+async function loadFieldcard(id){try{FC[id]=(await api('fieldcard?case='+encodeURIComponent(id))).html;}catch(e){FC[id]=`<p class="muted">${esc(e.message)}</p>`;}if(UI.drawer&&UI.dtab==='card')renderDrawer();}
+function fieldcardTab(t){return FC[t.case_id]?`<div class="fc">${FC[t.case_id]}</div>`:'<p class="muted"><span class="spin"></span> Loading the fieldcard…</p>';}
+function facts(t){const pr=t.test_protocol;
+  return `<div class="facts"><div class="fact"><span>Route</span><b>${esc(t.route_id)}</b></div><div class="fact"><span>Access</span><b>${esc(t.access)}</b></div><div class="fact"><span>Applicability</span><b>${esc(t.applicability)}</b></div>
+  <div class="fact"><span>Controls</span><b>${esc(t.control_ids.join(', ')||'–')}</b></div><div class="fact" style="grid-column:1/-1"><span>Boundary · actor</span><b>${esc(t.boundary)} · ${esc(t.actor)}</b></div>
+  ${pr?`<div class="fact" style="grid-column:1/-1"><span>Protocol (frozen)</span><b>${esc(pr.required_variants.join(', '))} × ${pr.min_trials_per_variant} · ${esc(pr.design)}</b><div class="small muted">${esc(pr.decision_rule)}</div></div>`:''}</div>`;}
+function workTab(t){
+  const r=routeOf(t.route_id)||{capabilities:{}};const c=S.cases[t.case_id]||{applies_if:[]};
+  if(t.bucket==='NOT_APPLICABLE'){const cl=c.applies_if.map(x=>x.filter(k=>r.capabilities[k]==='absent'));
+    return `${facts(t)}<div class="note">Not applicable: every way this case could apply needs a capability marked absent: ${cl.map(x=>x.map(k=>`<code>${esc(k)}</code>`).join(' + ')).join(' or ')}. If that is wrong, change it in Architecture and freeze a revision.</div>`;}
+  if(t.bucket==='EXCLUDED')return `${facts(t)}<div class="note">Excluded: ${esc(JSON.stringify(t.exclusion))}</div>`;
+  if(t.bucket==='UNKNOWN'){const need=[...new Set(c.applies_if.filter(cl=>!cl.some(k=>r.capabilities[k]==='absent')).flat())];
+    return `${facts(t)}<div class="note warn"><b>Pending confirmation.</b> This task applies only if the route has these capabilities. Confirm them (with a source) and freeze a revision; until then it stays pending and never counts as passed.</div>
+    <div class="caps">${need.map(k=>{const v=r.capabilities[k]||'unknown';const info=S.capabilities.find(x=>x.key===k)||{label:k};
+      return `<div class="cap"><span class="tri">${[['absent','a','–'],['unknown','u','?'],['present','p','✓']].map(([s,cl,l])=>`<button type="button" class="${cl}" data-act="cap" data-route="${esc(t.route_id)}" data-k="${esc(k)}" data-v="${s}" aria-pressed="${v===s}">${l}</button>`).join('')}</span><div><div class="l">${esc(info.label)}</div><span class="k">${esc(k)}</span></div></div>`;}).join('')}</div>
+    <p class="small muted">${capSource()?'Answers are recorded with the source <b>'+esc(capSource())+'</b> (change it in Architecture → Capabilities).':'Set a source for your answers in Architecture → Capabilities first.'}</p>`;}
+  if(t.result)return `${facts(t)}${resultBlock(t)}`;
+  if(blockedAccess(t))return `${facts(t)}<div class="note warn"><b>${t.scope!=='in_scope'?'This route is out of scope.':'Access for this route is unknown in the frozen plan.'}</b> Declare how you can see the route in Architecture, then freeze a revision. <button type="button" class="btn sm" data-act="goto" data-target="fld-access">Go to access</button></div>`;
+  if(t.activity==='DESIGN'||t.activity==='CONFIG')return `${facts(t)}${reviewForm(t)}`;
+  if(!t.test_protocol){const rr=routeOf(t.route_id);const has=rr&&(rr.test_protocols||[]).some(p=>p.case_id===t.case_id);
+    return `${facts(t)}<div class="note warn"><b>No protocol in the frozen plan.</b> A test needs its variants, trials and decision rule fixed before running.${has?' A protocol is already saved in the architecture: freeze a revision to apply it.':''}</div>
+    ${has?'<div><button type="button" class="btn primary" data-act="goto" data-target="sec-freeze">Freeze a revision</button></div>':`<div class="form"><h3>Define the protocol for ${esc(t.case_id)}</h3>${protoForm(rr,t.case_id,true)}</div>`}`;}
+  const s=sample(t);
+  return `${facts(t)}
+   <div class="stack-s"><h4>Planned sample</h4><div class="samples">${s.rows.map(r=>`<div class="sample ${r.got.length>=r.need?'done':''}"><b>${esc(r.v)}</b> <span class="small muted">${Math.min(r.got.length,r.need)}/${r.need}</span><div class="dots">${Array.from({length:Math.max(r.need,r.got.length)},(_,i)=>{const x=r.got[i];return `<i class="${x?x.result:''} ${x&&x._st?'st':''}" title="${x?esc(x.trial_id+' '+x.result+(x._st?' (staged)':'')):'not run'}"></i>`;}).join('')}</div></div>`).join('')}</div></div>
+   ${s.staged.length?`<div class="stack-s"><h4>Staged trials (not in the plan until you decide)</h4>${s.staged.map(trialRow).join('')}</div>`:''}
+   ${s.ready?decideForm(t,s):''}
+   ${recordForm(t,s)}
+   ${!s.ready&&s.staged.length?decideForm(t,s):''}`;
+}
+function trialRow(x){return `<div class="trial"><div class="h"><span class="badge b-${x.result==='PASS'?'PASS':x.result==='FAIL'?'FAIL':'UNKNOWN'}">${esc(x.result||x.execution)}</span><b class="mono">${esc(x.trial_id)}</b><span class="chip">${esc(x.variant)}</span><span class="small muted">${x.evidence_ids.length} evidence</span></div>
+  ${x.expected?`<div class="small"><span class="muted">Expected:</span> ${esc(x.expected)}</div>`:''}${x.observed?`<div class="small"><span class="muted">Observed:</span> ${esc(x.observed)}</div>`:''}${x.rationale?`<div class="small"><span class="muted">Rationale:</span> ${esc(x.rationale)}</div>`:''}</div>`;}
+function resultBlock(t){
+  return `<div class="note ${t.result==='FAIL'?'bad':t.result==='PASS'?'ok':'warn'}"><b>${esc(t.result)}</b> · decided by ${esc(t.reviewer)}${t.cleanup_confirmed?' · cleanup confirmed':''}<p style="margin-top:4px">${esc(t.observations)}</p></div>
+  ${t.trials.length?`<div class="stack-s"><h4>Trials</h4>${t.trials.map(trialRow).join('')}</div>`:''}
+  ${t.result==='FAIL'?'<div class="note small">Next: document the finding with <code>templates/finding-v3.json</code>; a retest will be a new plan with the original case, nearby variants and the benign operation.</div>':''}`;}
+/* ---------- evidence slots ---------- */
+function evSlots(n,kinds,required){
+  const f=ns(n);f.ev=f.ev||{};const extra=f.extra||[];const all=[...kinds,...extra];
+  const opt=['configuration','snapshot','metric'].filter(k=>!all.includes(k));
+  return `<div class="evgrid" data-evgrid="${esc(n)}">${all.map(k=>{const e=f.ev[k], note=getF(n+'.note_'+k,''), has=!!(e&&e.sha)||!!note.trim(), req=required.includes(k);
+    return `<div class="ev ${has?'has':''}" data-evslot="${esc(k)}" data-ns="${esc(n)}"><div class="k"><span>${esc(k)}</span><span class="req">${has?'✓ ready':req?'required':'optional'}</span></div><p>${esc(S.kinds[k]||'')}</p>
+     ${e?(e.sha?`<div class="file"><b>${esc(e.name)}</b><span class="faint">${fmtBytes(e.size)}</span><span class="hash" title="SHA-256 ${esc(e.sha)}">sha256 ${esc(e.sha.slice(0,20))}…</span><button type="button" class="btn ghost sm" style="justify-self:start;padding:2px 0;color:var(--fail)" data-act="evRm" data-ns="${esc(n)}" data-kind="${esc(k)}">Remove</button></div>`
+       :'<div class="small muted"><span class="spin"></span> hashing…</div>')
+      :`<button type="button" class="drop" data-act="evPick" data-ns="${esc(n)}" data-kind="${esc(k)}">Drop a file or click to choose</button><textarea ${bind(n+'.note_'+k)} placeholder="…or write a short note">${esc(note)}</textarea>`}</div>`;}).join('')}</div>
+   ${opt.length?`<div class="sugg">${opt.map(k=>`<button type="button" data-act="evExtra" data-ns="${esc(n)}" data-kind="${esc(k)}">+ ${esc(k)}</button>`).join('')}</div>`:''}
+   <p class="tiny faint">Files are hashed (SHA-256) in your browser, hashed again on arrival and copied into the workspace evidence store. You can drop several files on the grid at once; names that contain a kind (e.g. <code>response.json</code>) go to that slot.</p>`;}
+function evPayload(n,kinds){const f=ns(n),ev=f.ev||{},files=[],notes=[];
+  kinds.forEach(k=>{const e=ev[k];if(e&&e.sha)files.push({kind:k,name:e.name,sha256:e.sha,data:e.data});else{const t=String(getF(n+'.note_'+k,'')).trim();if(t)notes.push({kind:k,text:t});}});
+  return {evidence:files,notes};}
+function evHas(n,k){const f=ns(n);return !!(f.ev&&f.ev[k]&&f.ev[k].sha)||!!String(getF(n+'.note_'+k,'')).trim();}
+/* ---------- record ---------- */
+function recordForm(t,s){
+  const n='rec:'+t.alias, pr=t.test_protocol, c=S.cases[t.case_id]||{example_ids:[],technique_ids:[],control_ids:[]};
+  const next=(s.rows.find(r=>r.got.length<r.need)||s.rows[0]).v;
+  const f=ns(n,()=>({variant:next,result:'PASS',execution:'completed',reachability:'reached',src:c.example_ids.length?'example':'own',example:c.example_ids[0]||'',identity:store.get('identity',''),collector:store.get('collector',S.user),classification:'internal'}));
+  const decided=f.execution==='completed'&&(f.result==='PASS'||f.result==='FAIL');
+  const needRat=f.execution!=='completed'||f.result==='INCONCLUSIVE';
+  const kinds=[...S.tech_kinds,...(f.extra||[])];
+  const checks=[['expected',!!String(f.expected||'').trim()],['observed',!!String(f.observed||'').trim()],['identity used',!!String(f.identity||'').trim()],
+    ['input source',f.src==='example'?!!f.example:!!String(f.adaptation||'').trim()],...S.tech_kinds.map(k=>[k,evHas(n,k)])];
+  const missing=decided?checks.filter(x=>!x[1]).length:0;
+  return `<div class="form" id="recform"><h3><span>Record a trial</span><span class="small muted">staged until you decide</span></h3>
+   <div class="row" style="align-items:flex-end;gap:14px"><label class="f" style="min-width:200px;flex:1">Variant<select ${bind(n+'.variant')}>${[...new Set([...pr.required_variants,f.variant])].map(v=>`<option ${v===f.variant?'selected':''}>${esc(v)}</option>`).join('')}</select></label>
+    <div class="f"><span>Execution</span><div class="seg nowrap">${['completed','blocked','error'].map(x=>`<button type="button" data-act="setf" data-path="${esc(n)}.execution" data-val="${x}" aria-pressed="${f.execution===x}">${x}</button>`).join('')}</div></div>
+    ${f.execution==='completed'?`<div class="f"><span>Result of this trial</span><div class="seg nowrap">${['PASS','FAIL','INCONCLUSIVE'].map(x=>`<button type="button" class="r-${x}" data-act="setf" data-path="${esc(n)}.result" data-val="${x}" aria-pressed="${f.result===x}">${x==='INCONCLUSIVE'?'Inconclusive':x}</button>`).join('')}</div></div>`:''}</div>
+   <div class="grid2"><label class="f">Expected (the control holds if…)<textarea ${bind(n+'.expected')} placeholder="e.g. only tenant A documents are retrieved">${val(n+'.expected')}</textarea></label>
+    <label class="f">Observed<textarea ${bind(n+'.observed')} placeholder="e.g. a tenant B document reached the context">${val(n+'.observed')}</textarea></label></div>
+   <div class="grid3"><label class="f">Identity used<input type="text" ${bind(n+'.identity')} value="${val(n+'.identity')}" placeholder="e.g. tenant-a test user"></label>
+    <label class="f">Reachability<select ${bind(n+'.reachability')}>${['reached','blocked_by_control','not_reached','unknown'].map(x=>`<option ${x===f.reachability?'selected':''}>${x}</option>`).join('')}</select></label>
+    ${f.reachability==='blocked_by_control'?`<label class="f">Blocking control<select ${bind(n+'.blocking_control')}><option value="">Choose…</option>${c.control_ids.map(x=>`<option ${x===f.blocking_control?'selected':''}>${esc(x)}</option>`).join('')}</select></label>`:`<label class="f">Technique (optional)<select ${bind(n+'.technique')}><option value="">–</option>${c.technique_ids.map(x=>`<option ${x===f.technique?'selected':''}>${esc(x)}</option>`).join('')}</select></label>`}</div>
+   <div class="f"><span>Where the input came from</span><div class="row"><div class="seg">${[['example','Catalog example'],['own','Own adaptation']].map(([k,l])=>`<button type="button" data-act="setf" data-path="${esc(n)}.src" data-val="${k}" aria-pressed="${f.src===k}" ${k==='example'&&!c.example_ids.length?'disabled':''}>${l}</button>`).join('')}</div>
+    ${f.src==='example'?`<select ${bind(n+'.example')} style="max-width:260px">${c.example_ids.map(x=>`<option ${x===f.example?'selected':''}>${esc(x)}</option>`).join('')}</select>`:''}</div>
+    ${f.src==='own'?`<textarea ${bind(n+'.adaptation')} placeholder="How you adapted the input (provenance), e.g. own query about tenant B invoices">${val(n+'.adaptation')}</textarea>`:''}</div>
+   ${needRat?`<label class="f">Rationale (required: why it was ${f.execution!=='completed'?f.execution:'inconclusive'})<textarea ${bind(n+'.rationale')}>${val(n+'.rationale')}</textarea></label>`:''}
+   <label class="check"><input type="checkbox" ${bind(n+'.baseline_failed')} ${f.baseline_failed?'checked':''}> The benign baseline did <b>not</b> work (the trial cannot count as PASS or FAIL)</label>
+   <div class="stack-s"><h4>Evidence ${decided?'(all six technical kinds are required for PASS or FAIL)':''}</h4>${evSlots(n,kinds,decided?S.tech_kinds:[])}</div>
+   <details><summary class="small muted" style="cursor:pointer">More: collector, classification, trial id, parameters</summary><div class="grid2" style="margin-top:10px">
+    <label class="f">Collector<input type="text" ${bind(n+'.collector')} value="${val(n+'.collector')}"></label><label class="f">Classification<input type="text" ${bind(n+'.classification')} value="${val(n+'.classification')}"></label>
+    <label class="f">Trial id <span class="hint">(automatic if empty)</span><input type="text" ${bind(n+'.trial_id')} value="${val(n+'.trial_id')}"></label><label class="f">Tool or parameters reference<input type="text" ${bind(n+'.parameters')} value="${val(n+'.parameters')}"></label></div></details>
+   <div class="row">${decided?`<div class="checklist">${checks.map(([k,ok])=>`<span class="${ok?'ok':''}">${ok?'✓':'○'} ${esc(k)}</span>`).join('')}</div>`:''}<span class="grow"></span>
+    <button type="button" class="btn primary" data-act="record" data-task="${esc(t.alias)}">${missing?`Stage trial (${missing} missing)`:'Stage trial'}</button></div></div>`;
+}
+function decideForm(t,s){
+  const n='dec:'+t.alias,f=ns(n,()=>({reviewer:store.get('reviewer',S.user),observations:'',cleanup_confirmed:false,inconclusive:false}));
+  const res=f.inconclusive?'INCONCLUSIVE':s.staged.some(x=>x.result==='FAIL')?'FAIL':'PASS';
+  const why=res==='FAIL'?'at least one staged trial failed':res==='PASS'?(s.complete?'the full planned sample passed':'PASS needs the full planned sample first'):'marked inconclusive';
+  return `<div class="form" style="border-color:var(--teal)"><h3><span>Decide ${esc(t.alias)}</span><span class="badge b-${res==='PASS'?'PASS':res==='FAIL'?'FAIL':'UNKNOWN'}">${res}</span></h3>
+   <p class="small muted">Will be decided <b>${res}</b>: ${why}. Deciding writes a new plan record (${esc(ST.workspace.series)}.rNNN) with the staged trials and their evidence.</p>
+   <div class="grid2"><label class="f">Reviewer<input type="text" ${bind(n+'.reviewer')} value="${val(n+'.reviewer')}"></label><label class="f">Observations<input type="text" ${bind(n+'.observations')} value="${val(n+'.observations')}" placeholder="what you concluded and why"></label></div>
+   <label class="check"><input type="checkbox" ${bind(n+'.cleanup_confirmed')} ${f.cleanup_confirmed?'checked':''}> Test data, canaries and state were cleaned up</label>
+   <label class="check"><input type="checkbox" ${bind(n+'.inconclusive')} ${f.inconclusive?'checked':''}> Record it as inconclusive</label>
+   <div><button type="button" class="btn primary" data-act="decide" data-task="${esc(t.alias)}" ${res==='PASS'&&!s.complete?'disabled':''}>Decide ${res}</button></div></div>`;
+}
+function reviewForm(t){
+  const n='rev:'+t.alias,f=ns(n,()=>({result:'PASS',reviewer:store.get('reviewer',S.user),observations:'',collector:store.get('collector',S.user)}));
+  const kinds=['review',...(f.extra||[])];
+  return `<div class="form"><h3><span>Record the ${t.activity==='DESIGN'?'design':'configuration'} review</span></h3>
+   <p class="small muted">Use the Fieldcard tab for what to check. A review needs documentary evidence: a document, minutes, a screenshot or a short note.</p>
+   <div class="f"><span>Result</span><div class="seg">${['PASS','FAIL','INCONCLUSIVE'].map(x=>`<button type="button" class="r-${x}" data-act="setf" data-path="${esc(n)}.result" data-val="${x}" aria-pressed="${f.result===x}">${x==='INCONCLUSIVE'?'Inconclusive':x}</button>`).join('')}</div></div>
+   <div class="grid2"><label class="f">Reviewer<input type="text" ${bind(n+'.reviewer')} value="${val(n+'.reviewer')}"></label><label class="f">Observations<input type="text" ${bind(n+'.observations')} value="${val(n+'.observations')}" placeholder="what you checked and found"></label></div>
+   <div class="stack-s"><h4>Evidence</h4>${evSlots(n,kinds,['review'])}</div>
+   <div class="row"><span class="grow"></span><button type="button" class="btn primary" data-act="review" data-task="${esc(t.alias)}">Record review</button></div></div>`;
+}
+function evidenceTab(t){
+  const ev=(plan().evidence||[]).filter(e=>t.evidence_ids.includes(e.id)), st=(t.staged&&t.staged.evidence)||[];
+  const table=(rows,label)=>rows.length?`<div class="stack-s"><h4>${label}</h4><div class="tw"><table class="t"><thead><tr><th>Kind</th><th>File</th><th>SHA-256</th><th>Size</th><th>Collected</th></tr></thead><tbody>
+    ${rows.map(e=>`<tr><td><span class="chip">${esc(e.kind)}</span></td><td class="mono small">${esc(e.path)}</td><td class="mono small" title="${esc(e.sha256)}">${esc(e.sha256.slice(0,16))}…</td><td>${fmtBytes(e.bytes)}</td><td>${when(e.collected_at)}<div class="tiny faint">${esc(e.collector)}</div></td></tr>`).join('')}</tbody></table></div></div>`:'';
+  return `${ST.integrity_error?`<div class="note bad">${esc(ST.integrity_error)}</div>`:ev.length?'<div class="note ok small">Every recorded file still matches its hash (checked by check-plan on each refresh).</div>':''}
+   ${table(ev,'Recorded in the plan')}${table(st,'Staged (moves into the plan when you decide)')}${!ev.length&&!st.length?'<p class="muted">No evidence yet.</p>':''}
+   <p class="tiny faint">Store: ${esc(ST.workspace.root)}/${esc(ST.workspace.evidence_dir)}/</p>`;
+}
+
+/* ================= activity ================= */
+function logView(){
+  const w=ST.workspace,p=plan(),h=[...w.history].reverse();
+  const icon=a=>/decide|review/.test(a)?(/FAIL/.test(a)?'🔴':'🟢'):/^plan/.test(a)?'🧊':/record/.test(a)?'🧪':/report/.test(a)?'📄':'✏️';
+  return `<div class="grid2" style="align-items:start"><div class="card"><div class="card-h"><div><span class="eyebrow">Audit trail</span><h2>What happened</h2><p>Every change made here or in the terminal is logged in merestone.json.</p></div></div>
+   <ul class="timeline">${h.map(x=>`<li><span class="w">${when(x.at)}</span><span><span aria-hidden="true">${icon(x.action)}</span> <span title="${esc(x.action)}">${esc(x.action.length>120?x.action.slice(0,117)+'…':x.action)}</span>${x.file?` <span class="faint mono tiny">${esc(x.file)}</span>`:''}</span></li>`).join('')||'<li>Nothing yet.</li>'}</ul></div>
+   <div class="stack" style="gap:16px"><div class="card"><span class="eyebrow">Plan</span>${p?`<h3 style="margin:4px 0 8px">${esc(w.series)} <span class="mono small faint">${esc(p.plan_id.slice(0,8))}</span></h3>
+     <p class="small">Frozen ${when(p.created_at)} · current record <code>${esc(p.record)}</code></p><p class="small" style="margin-top:6px">${ST.integrity_error?`<span style="color:var(--fail)">Does not verify: ${esc(ST.integrity_error)}</span>`:ST.check&&ST.check.integrity_verified?'✓ Verifies against its manifest and the evidence store':'Not verified'}</p>`:'<p class="muted small" style="margin-top:6px">No plan yet.</p>'}</div>
+    <div class="card"><div class="row" style="justify-content:space-between"><span class="eyebrow">Reports</span>${p?'<button type="button" class="btn sm" data-act="export">New report</button>':''}</div>${reportList()}</div>
+    <div class="card"><span class="eyebrow">Workspace</span><p class="mono small" style="margin-top:6px;word-break:break-all">${esc(w.root)}</p>
+     <p class="small muted" style="margin-top:8px">The interface and the CLI share these files: you can switch between them at any time. Turn on <b>Show terminal commands</b> in the pending list to learn the equivalents.</p></div></div></div>`;
+}
+function reportList(){const rs=ST.reports||[];
+  return rs.length?`<div class="stack-s" style="margin-top:8px">${rs.slice(0,12).map(r=>`<div class="row" style="justify-content:space-between;border-top:1px solid var(--line2);padding-top:6px"><span class="mono small" style="word-break:break-all">${esc(r.name)}</span><span class="row"><a class="btn sm" href="/reports/${encodeURIComponent(r.name)}" target="_blank" rel="noopener">Open</a><a class="btn sm ghost" href="/reports/${encodeURIComponent(r.name)}?download=1">Download</a></span></div>`).join('')}</div>`:'<p class="small muted" style="margin-top:6px">No reports yet.</p>';}
+
+/* ================= rail: status + pending ================= */
+function pending(){
+  const L=[], w=ST.workspace, p=plan(), cli=s=>s;
+  if(!w)return L;
+  if(!p){
+    ST.setup_items.forEach(i=>L.push({lv:i.blocking?'block':'warn',t:S.items[i.key].label+(i.route?' ('+i.route+')':''),d:S.items[i.key].why,go:['arch',fieldFor(i.key)],route:i.route,cli:i.command}));
+    if(!ST.setup_items.some(i=>i.blocking))L.push({lv:'go',t:'Freeze the plan',d:'Turn the architecture into a fixed list of obligations.',go:['arch','sec-freeze'],cli:'merestone plan'});
+    return L;}
+  if(ST.integrity_error)L.push({lv:'block',t:'The plan does not verify',d:ST.integrity_error,go:['log',null],cli:'merestone doctor'});
+  if(p.stale)L.push({lv:'warn',t:'Freeze a revision',d:'The architecture changed after '+w.series+' was frozen.',go:['arch','sec-freeze'],cli:'merestone plan --reason "..." --approver "..."'});
+  const gaps=ST.check?ST.check.readiness_gaps:[];
+  gaps.forEach(g=>{const cap=g.includes(':evidence:');L.push({lv:'block',t:cap?'Source missing: '+g.split(':evidence:')[1]:(S.gap_label[g]||g),d:'Readiness gap in the frozen plan: fix it, then freeze a revision.',go:['arch',cap?'fld-caps-source':fieldFor(gapKey(g))],cli:cap?'merestone caps NAME=STATE --source "..."':'merestone status'});});
+  p.routes.filter(r=>r.access==='unknown'||r.access==='none').forEach(r=>L.push({lv:'block',t:'Access unknown on '+r.id,d:'Tasks cannot complete while access is unknown.',go:['arch','fld-access'],cli:'merestone set access gray-box --route '+r.id}));
+  const ts=tasks();
+  ts.filter(t=>{const s=sample(t);return s&&s.ready&&!t.result;}).forEach(t=>L.push({lv:'go',t:'Decide '+t.alias,d:t.title+': staged trials are ready.',task:t.alias,cli:`merestone decide ${t.alias} --reviewer "..." --observations "..." --cleanup-confirmed`}));
+  ts.filter(t=>t.staged&&!t.result&&!(sample(t)||{}).ready).forEach(t=>L.push({lv:'info',t:'Finish the sample of '+t.alias,d:'Staged trials wait for the rest of the planned sample.',task:t.alias,cli:'merestone show '+t.alias}));
+  const unk=ts.filter(t=>t.bucket==='UNKNOWN').length;
+  if(unk)L.push({lv:'warn',t:unk+' tasks pending confirmation',d:'They depend on capabilities nobody has verified.',go:['arch','sec-caps'],cli:'merestone caps'});
+  const todo=ts.filter(t=>t.bucket==='TODO'&&!blockedAccess(t));
+  const np=todo.filter(t=>(t.activity==='TEST'||t.activity==='REDTEAM')&&!t.test_protocol);
+  if(np.length)L.push({lv:'warn',t:np.length+' tests without a protocol',d:'e.g. '+np[0].alias+'. Needed to decide PASS or FAIL.',task:np[0].alias,cli:'merestone protocol '+np[0].case_id+' --variants ... --rule ... --why ...'});
+  const rv=todo.filter(t=>t.activity==='DESIGN'||t.activity==='CONFIG');
+  if(rv.length)L.push({lv:'info',t:rv.length+(rv.length===1?' review':' reviews')+' to do',d:'Next: '+rv[0].alias+' · '+rv[0].title,task:rv[0].alias,cli:'merestone show '+rv[0].alias});
+  const rt=todo.filter(t=>t.test_protocol&&!t.staged);
+  if(rt.length)L.push({lv:'info',t:rt.length+(rt.length===1?' test':' tests')+' ready to run',d:'Next: '+rt[0].alias+' · '+rt[0].title,task:rt[0].alias,cli:'merestone show '+rt[0].alias});
+  ts.filter(t=>t.result==='FAIL').forEach(t=>L.push({lv:'info',t:'Document the finding for '+t.alias,d:'Use templates/finding-v3.json; include it in the report with --findings.',task:t.alias,cli:'python governance.py check-finding ...'}));
+  if(code()!==2)L.push({lv:'go',t:'Export the final report',d:'Everything selected is resolved.',exp:true,cli:'merestone report --format both'});
+  else L.push({lv:'info',t:'Share progress',d:'Export the report for people who do not use the terminal.',exp:true,cli:'merestone report --format html --open'});
+  return L;
+}
+function gapKey(g){return({authorization_ref:'authorization',snapshot_ref:'snapshot',evidence_store:'evidence-store','inventory_review.reviewer':'reviewer','inventory_review.reviewed_at':'reviewer','inventory_review.evidence_ref':'inventory-evidence',stop_conditions:'stop',limits:'limits',core_design_missing:'activities'})[g]||g;}
+function fieldFor(k){return({access:'fld-access',actor:'fld-actor',boundary:'fld-boundary',activities:'fld-activities','caps-source':'fld-caps-source'})[k]||'fld-'+k;}
+function renderRail(){
+  const r=$('#rail');
+  if(!ST.workspace){r.innerHTML=`<div class="mood">${S.mojo['2']}<div><b>Hello.</b><p>Create or open a workspace to begin. Everything stays on this computer.</p></div></div><div class="sync"></div>`;renderSync();return;}
+  const p=plan(), c=code(), n=counts(), L=pending();
+  const app=tasks().filter(t=>t.applicability==='APPLICABLE'&&!t.exclusion).length||1, dec=n.PASS+n.FAIL;
+  const shown=UI.allPend?L:L.slice(0,7);
+  r.innerHTML=`<div class="mood">${S.mojo[p?String(c):'2']}<div><div class="code c${p?c:2}">${p?c:'–'}</div><b>${esc(p?S.code_meta[c][0]:'No plan yet')}</b><p>${esc(p?S.code_meta[c][1]:'Define what is pending, then freeze the plan. A new plan always starts at code 2: it is your to-do list.')}</p></div></div>
+   ${p?`<div class="stats">${[['Applic.',app,''],['PASS',n.PASS,'var(--pass)'],['FAIL',n.FAIL,'var(--fail)'],['To do',n.TODO,'var(--todo)'],['Unknown',n.UNKNOWN,'var(--unk)']].map(([l,v,col])=>`<div class="stat"><b style="color:${col||'inherit'}">${v}</b><span>${l}</span></div>`).join('')}</div>
+   <div class="progress" title="${dec} of ${app} applicable decided"><i style="width:${100*n.PASS/app}%;background:var(--pass)"></i><i style="width:${100*n.FAIL/app}%;background:var(--fail)"></i></div><div class="tiny faint" style="margin-top:3px">${dec} of ${app} applicable obligations decided</div>`:''}
+   <div class="pend-h"><h4>Pending</h4><span class="tiny faint">${L.length} items</span></div>
+   ${L.length?`<ul class="pend">${shown.map((x,i)=>`<li class="${x.lv}"><div><b>${esc(x.t)}</b><p>${esc(x.d)}</p></div><div class="cli">$ ${esc(x.cli)}</div><div class="act"><button type="button" class="btn sm" data-act="pend" data-i="${i}">${x.task?'Open':x.exp?'Export':'Go'}</button></div></li>`).join('')}</ul>
+   ${L.length>7?`<button type="button" class="btn ghost sm" data-act="allPend" style="margin-top:6px">${UI.allPend?'Show fewer':'Show all '+L.length}</button>`:''}`:'<div class="allclear">Nothing pending.</div>'}
+   <label class="check small" style="margin-top:14px"><input type="checkbox" data-act="cliToggle" ${document.body.classList.contains('show-cli')?'checked':''}> Show terminal commands</label>
+   <div class="sync"></div>`;
+  renderSync();UI._pend=shown;
+}
+
+/* ================= export modal & help ================= */
+function openModal(html){const m=$('#modal');m.innerHTML=`<div class="scrim on" data-act="closeModal" style="position:absolute"></div><div class="box">${html}<button class="x" type="button" data-act="closeModal" aria-label="Close">×</button></div>`;m.classList.add('on');setTimeout(()=>{const b=m.querySelector('.box button, .box input');if(b)b.focus();},30);}
+function closeModal(){$('#modal').classList.remove('on');$('#modal').innerHTML='';}
+function exportModal(){
+  const lay=getF('exp.layout','board'),fmt=getF('exp.format','html');
+  openModal(`<div class="mh"><span class="eyebrow">Report</span><h2>Export the report</h2><p class="small muted" style="margin-top:4px">Written into the workspace reports/ folder. The HTML is one self-contained file: no internet needed to open or share it.</p></div>
+   <div class="mb"><div class="layouts">${[['board','Board','Task columns and a side panel. Best during the assessment.'],['document','Document','Top to bottom and printable. Best to send to stakeholders.']].map(([k,l,d])=>`<button type="button" class="lay" data-act="expSet" data-k="layout" data-v="${k}" aria-pressed="${lay===k}"><div class="pic ${k==='board'?'board':'doc'}">${k==='board'?'<i></i><i></i><i></i><i></i>':'<i></i><i></i><i></i>'}</div><b>${l}</b><div class="small muted">${d}</div></button>`).join('')}</div>
+   <div class="row"><span class="small muted" style="font-weight:600">Format</span><div class="seg">${[['html','HTML'],['md','Markdown'],['both','Both']].map(([k,l])=>`<button type="button" data-act="expSet" data-k="format" data-v="${k}" aria-pressed="${fmt===k}">${l}</button>`).join('')}</div>
+    <span class="grow"></span><button type="button" class="btn primary" data-act="doExport">Generate and open</button></div>
+   <p class="tiny faint">Terminal equivalent: <code>merestone report --format ${fmt}${fmt!=='md'?' --layout '+lay:''}</code></p>
+   <hr class="sep" style="margin:4px 0"><div><h4>Previous reports</h4>${reportList()}</div></div>`);
+}
+function helpModal(){openModal(`<div class="mh"><h2>Keyboard shortcuts</h2></div><div class="mb"><div class="shortcuts">
+  ${[['1 · 2 · 3','Architecture · Plan · Activity'],['/','Search tasks'],['E','Export the report'],['T','Switch theme (system, light, dark)'],['P','Show or hide the pending list (narrow screens)'],['Esc','Close the panel or dialog'],['?','This help']].map(([k,d])=>`<span>${k.split(' · ').map(x=>`<span class="kbd">${x}</span>`).join(' ')}</span><span>${d}</span>`).join('')}</div>
+  <p class="small muted">Merestone runs on this computer only. Every change goes through the same rules as the terminal commands, and check-plan remains the source of truth.</p></div>`);}
+
+/* ================= actions ================= */
+function gotoTarget(view,id){if(view&&UI.view!==view){UI.view=view;store.set('view',view);}closeDrawer();closeModal();document.body.classList.remove('rail-open');render();
+  if(id)setTimeout(()=>{const el=document.getElementById(id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});const f=el.closest('.fld')||el;f.classList.remove('flash');void f.offsetWidth;f.classList.add('flash');const i=el.querySelector('input,textarea,button');if(i)i.focus({preventScroll:true});},50);
+  else window.scrollTo({top:0});}
+const A={
+  view:el=>{UI.view=el.dataset.v;store.set('view',UI.view);closeDrawer();render();window.scrollTo({top:0});},
+  theme:()=>{UI.theme={system:'light',light:'dark',dark:'system'}[UI.theme];store.set('theme',UI.theme);applyTheme();renderTop();},
+  help:()=>helpModal(), export:()=>{if(plan())exportModal();}, closeModal:()=>closeModal(),
+  rail:()=>{if(matchMedia('(max-width:1100px)').matches)document.body.classList.toggle('rail-open');else $('#rail').scrollTo({top:0,behavior:'smooth'});},
+  close:()=>{closeDrawer();document.body.classList.remove('rail-open');},
+  setf:el=>{setF(el.dataset.path,el.dataset.val);render();},
+  create:async()=>{const r=await act('new',{folder:getF('new.folder','my-assessment'),name:getF('new.name',''),profile:getF('new.profile','rag')},'Workspace created');if(r){UI.view='arch';render();}},
+  open:async el=>{if(el.dataset.task){openTask(el.dataset.task);return;}const r=await act('open',{folder:el.dataset.folder||getF('open.folder','')},'Workspace opened');if(r){UI.view='arch';render();}},
+  route:el=>{UI.route=+el.dataset.i;UI.stone=0;render();},
+  rset:el=>{const r=routeOf(el.dataset.route);rform(r)[el.dataset.k]=el.dataset.val;render();},
+  ract:el=>{const f=rform(routeOf(el.dataset.route)),v=el.dataset.val;f.activities=f.activities.includes(v)?f.activities.filter(x=>x!==v):[...f.activities,v].sort((a,b)=>['DESIGN','CONFIG','TEST','REDTEAM'].indexOf(a)-['DESIGN','CONFIG','TEST','REDTEAM'].indexOf(b));render();},
+  hopAdd:el=>{const f=rform(routeOf(el.dataset.route));f.hops.push('');const n='route:'+el.dataset.route;render();setTimeout(()=>{const i=document.getElementById('b-'+n+'.hop'+(f.hops.length-1));if(i)i.focus();},20);},
+  hopDel:el=>{const f=rform(routeOf(el.dataset.route));f.hops.splice(+el.dataset.i,1);render();},
+  saveRoute:async el=>{const r=routeOf(el.dataset.route),f=rform(r),id=r.id,calls=[];
+    if(!f.activities.length){toast('Choose at least one activity.','','err');return;}
+    if((f.actor||'')!==(vague(r.actor)?'':r.actor)&&f.actor.trim())calls.push(['actor',f.actor]);
+    const b=f.hops.map(s=>s.trim()).filter(Boolean).join(' -> ');if(b&&b!==hops(r.boundary).join(' -> '))calls.push(['boundary',b]);
+    if(f.access!==r.access)calls.push(['access',f.access]);if(f.activities.join()!==r.activity_types.join())calls.push(['activities',f.activities.join(',')]);if(f.scope!==r.scope)calls.push(['scope',f.scope]);
+    busy(1);try{for(const [k,v] of calls)await api('set',{field:k,value:v,route:id});delete F['route:'+id];await refresh();toast('Route '+id+' saved.',calls.map(c=>c[0]).join(', '),'ok');}
+    catch(e){toast(e.message,e.hint,'err');await refresh();}finally{busy(-1);}},
+  saveField:async el=>{const key=el.dataset.key,field=el.dataset.field,v=String(getF('rd.'+key,'')).trim();if(!v){toast('Write a value first.','','err');return;}
+    if(key==='reviewer')store.set('reviewer',v);
+    const r=await act('set',{field,value:v});if(r){delete F.rd[key];render();}},
+  saveLimits:async()=>{const L=ST.arch.limits,m={requests:'requests',duration_seconds:'duration',concurrency:'concurrency',tokens:'tokens',cost_minor_units:'cost'};
+    const value=Object.entries(m).map(([k,c])=>`${c}=${parseInt(getF('lim.'+k,L[k]),10)||0}`);
+    if(value.slice(0,3).some(x=>x.endsWith('=0')))toast('Requests, seconds and parallel requests must be above zero to close the plan.','','warn');
+    const r=await act('set',{field:'limits',value});if(r){delete F.lim;render();}},
+  stopDel:async el=>act('stop-remove',{index:+el.dataset.i}),
+  capMode:el=>{UI.capMode=el.dataset.v;store.set('capMode',UI.capMode);render();},
+  cap:async el=>{const src=capSource();if(src)store.set('capsource',src);
+    await act('caps',{assign:{[el.dataset.k]:el.dataset.v},source:el.dataset.v==='unknown'?'':src,route:el.dataset.route});},
+  capq:async el=>{const g=S.guide[+el.dataset.i],src=capSource();if(src)store.set('capsource',src);
+    const assign={};g.caps.forEach(k=>assign[k]=el.dataset.v);await act('caps',{assign,source:el.dataset.v==='unknown'?'':src,route:el.dataset.route});},
+  capsSource:async el=>{const r=routeOf(el.dataset.route),src=String(getF('caps.source','')).trim();if(!src)return;store.set('capsource',src);const assign={};missingSources(r).forEach(k=>assign[k]=r.capabilities[k]);
+    await act('caps',{assign,source:src,route:r.id},'Source recorded for '+Object.keys(assign).length+' answers');},
+  varAdd:el=>{const n=el.dataset.ns,f=ns(n),v=String(el.dataset.v||getF(n+'.newvar','')).trim();if(v&&!f.variants.includes(v))f.variants.push(v);f.newvar='';render();},
+  varDel:el=>{ns(el.dataset.ns).variants.splice(+el.dataset.i,1);render();},
+  editProto:el=>{const r=routeOf(el.dataset.route),p=(r.test_protocols||[]).find(x=>x.case_id===el.dataset.case);
+    F['proto:'+r.id]={case:p.case_id,variants:[...p.required_variants],min:p.min_trials_per_variant,design:p.design,rule:p.decision_rule,why:p.justification};render();
+    setTimeout(()=>{const x=document.getElementById('b-proto:'+r.id+'.rule');if(x){x.scrollIntoView({block:'center',behavior:'smooth'});}},30);},
+  saveProto:async el=>{const id=el.dataset.route,f=ns('proto:'+id);
+    if(!f.variants.length){toast('Add at least one variant.','','err');return;}if(!String(f.rule||'').trim()||!String(f.why||'').trim()){toast('Write the decision rule and why this depth is enough.','','err');return;}
+    const r=await act('protocol',{case:f.case,variants:f.variants.join(','),min:+f.min||1,design:f.design,rule:f.rule,why:f.why,route:id});
+    if(r){delete F['proto:'+id];if(plan())toast('Protocol saved in the architecture.','Freeze a revision to bring it into the plan.','warn');render();}},
+  freeze:async()=>{const p=plan();if(p&&!String(getF('freeze.reason','')).trim()){toast('Write the reason for the revision.','','err');return;}
+    const r=await act('plan',{reason:getF('freeze.reason',''),approver:getF('freeze.approver',store.get('reviewer',S.user)),anyway:!!getF('freeze.anyway',false)});
+    if(r&&plan()&&!plan().stale){delete F.freeze;UI.view='plan';store.set('view','plan');render();window.scrollTo({top:0});}},
+  toggleNA:()=>{UI.showNA=!UI.showNA;render();},
+  more:el=>{UI['lim_'+el.dataset.col]=(UI['lim_'+el.dataset.col]||60)+120;render();},
+  dtab:el=>{UI.dtab=el.dataset.v;renderDrawer();},
+  goto:el=>{const id=el.dataset.target;gotoTarget(id&&id.startsWith('sec-')||id&&id.startsWith('fld-')?'arch':null,id);},
+  pend:el=>{const x=UI._pend[+el.dataset.i];if(!x)return;document.body.classList.remove('rail-open');
+    if(x.route){const i=ST.arch.routes.findIndex(r=>r.id===x.route);if(i>=0)UI.route=i;}
+    if(x.task){if(UI.view!=='plan'){UI.view='plan';store.set('view','plan');render();}openTask(x.task);}else if(x.exp)exportModal();else gotoTarget(x.go[0],x.go[1]);},
+  allPend:()=>{UI.allPend=!UI.allPend;renderRail();},
+  cliToggle:el=>{document.body.classList.toggle('show-cli',el.checked);store.set('cli',el.checked);},
+  evPick:el=>{const p=$('#filepick');p.onchange=()=>{if(p.files[0])addFile(el.dataset.ns,el.dataset.kind,p.files[0]);p.value='';};p.click();},
+  evRm:el=>{const f=ns(el.dataset.ns);if(f.ev)delete f.ev[el.dataset.kind];render();},
+  evExtra:el=>{const f=ns(el.dataset.ns);f.extra=[...(f.extra||[]),el.dataset.kind];render();},
+  record:async el=>{const t=findTask(el.dataset.task),n='rec:'+t.alias,f=ns(n);const kinds=[...S.tech_kinds,...(f.extra||[])];
+    const body={task:t.alias,variant:f.variant,result:f.result,execution:f.execution,expected:f.expected,observed:f.observed,identity:f.identity,reachability:f.reachability,
+      blocking_control:f.reachability==='blocked_by_control'?f.blocking_control:'',technique:f.reachability==='blocked_by_control'?'':f.technique,
+      example:f.src==='example'?f.example:'',adaptation:f.src==='own'?f.adaptation:'',baseline_failed:!!f.baseline_failed,rationale:f.rationale,parameters:f.parameters,
+      collector:f.collector,classification:f.classification,trial_id:f.trial_id,...evPayload(n,kinds)};
+    if(f.identity)store.set('identity',f.identity);if(f.collector)store.set('collector',f.collector);
+    const r=await act('record',body);
+    if(r){const keep={identity:f.identity,expected:f.expected,src:f.src,example:f.example,adaptation:f.adaptation,collector:f.collector,classification:f.classification,reachability:'reached'};
+      delete F[n];const t2=findTask(t.alias);const s=t2&&sample(t2);if(s){const nx=(s.rows.find(x=>x.got.length<x.need)||s.rows[0]).v;F[n]={variant:nx,result:'PASS',execution:'completed',...keep};}render();}},
+  decide:async el=>{const t=findTask(el.dataset.task),n='dec:'+t.alias,f=ns(n);
+    if(!f.cleanup_confirmed){toast('Confirm that test data and state were cleaned up.','','err');return;}if(!String(f.observations||'').trim()||!String(f.reviewer||'').trim()){toast('Reviewer and observations are required.','','err');return;}
+    store.set('reviewer',f.reviewer);const r=await act('decide',{task:t.alias,reviewer:f.reviewer,observations:f.observations,cleanup_confirmed:true,inconclusive:!!f.inconclusive});if(r){delete F[n];delete F['rec:'+t.alias];render();}},
+  review:async el=>{const t=findTask(el.dataset.task),n='rev:'+t.alias,f=ns(n);const kinds=['review',...(f.extra||[])];
+    if(!evHas(n,'review')){toast('Add the review evidence: a file or a short note.','','err');return;}if(!String(f.observations||'').trim()||!String(f.reviewer||'').trim()){toast('Reviewer and observations are required.','','err');return;}
+    store.set('reviewer',f.reviewer);const r=await act('review',{task:t.alias,result:f.result,reviewer:f.reviewer,observations:f.observations,collector:f.collector,...evPayload(n,kinds)});if(r){delete F[n];render();}},
+  expSet:el=>{setF('exp.'+el.dataset.k,el.dataset.v);exportModal();},
+  doExport:async()=>{const fmt=getF('exp.format','html'),lay=getF('exp.layout','board');const win=fmt!=='md'?window.open('','_blank'):null;
+    const r=await act('report',{format:fmt,layout:lay},'Report written');
+    if(!r){if(win)win.close();return;}
+    const html=(r.files||[]).find(x=>x.endsWith('.html')),md=(r.files||[]).find(x=>x.endsWith('.md'));
+    const target=html||md;if(win&&target)win.location.href='/reports/'+encodeURIComponent(target);else if(target)window.open('/reports/'+encodeURIComponent(target),'_blank','noopener');
+    exportModal();},
+};
+
+/* ================= files: hashing and drag & drop ================= */
+const K=new Uint32Array([0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2]);
+function sha256js(buf){ // fallback when crypto.subtle is unavailable
+  const b=new Uint8Array(buf),l=b.length,n=((l+9+63)>>6)<<6,m=new Uint8Array(n);m.set(b);m[l]=0x80;const dv=new DataView(m.buffer);dv.setUint32(n-4,(l*8)>>>0);dv.setUint32(n-8,Math.floor(l/0x20000000));
+  const H=new Uint32Array([0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19]),w=new Uint32Array(64),r=(x,k)=>(x>>>k)|(x<<(32-k));
+  for(let o=0;o<n;o+=64){for(let i=0;i<16;i++)w[i]=dv.getUint32(o+i*4);for(let i=16;i<64;i++){const s0=r(w[i-15],7)^r(w[i-15],18)^(w[i-15]>>>3),s1=r(w[i-2],17)^r(w[i-2],19)^(w[i-2]>>>10);w[i]=(w[i-16]+s0+w[i-7]+s1)>>>0;}
+    let [a,bb,c,d,e,f,g,h]=H;for(let i=0;i<64;i++){const t1=(h+(r(e,6)^r(e,11)^r(e,25))+((e&f)^(~e&g))+K[i]+w[i])>>>0,t2=((r(a,2)^r(a,13)^r(a,22))+((a&bb)^(a&c)^(bb&c)))>>>0;h=g;g=f;f=e;e=(d+t1)>>>0;d=c;c=bb;bb=a;a=(t1+t2)>>>0;}
+    H[0]+=a;H[1]+=bb;H[2]+=c;H[3]+=d;H[4]+=e;H[5]+=f;H[6]+=g;H[7]+=h;}
+  return [...H].map(x=>x.toString(16).padStart(8,'0')).join('');}
+async function sha256(buf){if(window.crypto&&crypto.subtle){const d=await crypto.subtle.digest('SHA-256',buf);return [...new Uint8Array(d)].map(x=>x.toString(16).padStart(2,'0')).join('');}return sha256js(buf);}
+function b64(buf){const b=new Uint8Array(buf);let s='';for(let i=0;i<b.length;i+=0x8000)s+=String.fromCharCode.apply(null,b.subarray(i,i+0x8000));return btoa(s);}
+async function addFile(n,kind,file){
+  if(file.size>40*1024*1024){toast(file.name+' is larger than 40 MB.','Store large captures elsewhere and record a short note or an extract that points to them.','err');return;}
+  const f=ns(n);f.ev=f.ev||{};f.ev[kind]={name:file.name,size:file.size};render();
+  try{const buf=await file.arrayBuffer();const sha=await sha256(buf);f.ev[kind]={name:file.name,size:file.size,sha,data:b64(buf)};}
+  catch(e){delete f.ev[kind];toast('Could not read '+file.name,e.message,'err');}
+  render();
+}
+function guessKind(name,free,all){const low=name.toLowerCase();return all.find(k=>low.includes(k)&&free.includes(k))||free[0];}
+document.addEventListener('dragover',e=>{e.preventDefault();const s=e.target.closest&&e.target.closest('.ev, .evgrid');$$('.drag').forEach(x=>{if(x!==s)x.classList.remove('drag');});if(s)s.classList.add('drag');});
+document.addEventListener('dragleave',e=>{if(e.target.classList&&e.target.classList.contains('drag'))e.target.classList.remove('drag');});
+document.addEventListener('drop',e=>{e.preventDefault();$$('.drag').forEach(x=>x.classList.remove('drag'));
+  const files=[...(e.dataTransfer&&e.dataTransfer.files||[])];if(!files.length)return;
+  const slot=e.target.closest&&e.target.closest('.ev'), grid=e.target.closest&&e.target.closest('.evgrid');
+  if(slot&&files.length===1){addFile(slot.dataset.ns,slot.dataset.evslot,files[0]);return;}
+  if(!grid&&!slot){toast('Drop evidence files on the evidence area of a trial or review.','','warn');return;}
+  const n=(grid||slot.closest('.evgrid')).dataset.evgrid,f=ns(n);f.ev=f.ev||{};
+  const all=$$('.ev',grid||slot.closest('.evgrid')).map(x=>x.dataset.evslot);
+  for(const file of files){const free=all.filter(k=>!(f.ev[k])&&!String(getF(n+'.note_'+k,'')).trim());if(!free.length){toast('Every evidence slot is filled.','','warn');break;}
+    const k=guessKind(file.name,free,all);f.ev[k]={name:file.name,size:file.size};addFile(n,k,file);}
+});
+
+/* ================= events ================= */
+document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(!el||el.disabled)return;const fn=A[el.dataset.act];if(!fn)return;
+  if(el.tagName==='INPUT'&&el.type==='checkbox'){fn(el,e);return;}e.preventDefault();fn(el,e);});
+document.addEventListener('input',e=>{const el=e.target;
+  if(el.dataset.bind){setF(el.dataset.bind,el.type==='checkbox'?el.checked:el.value);
+    const m=el.dataset.bind.match(/^(route:[^.]+)\.hop(\d+)$/);if(m){F[m[1]].hops[+m[2]]=el.value;}
+    if(el.tagName==='SELECT'||el.type==='checkbox'||/\.(variant|reachability|case|design)$/.test(el.dataset.bind)||m||/^(rd|lim|freeze|route:[^.]+)\./.test(el.dataset.bind)||/\.note_/.test(el.dataset.bind)||/^(rec|dec|rev):/.test(el.dataset.bind))schedule();
+    return;}
+  if(el.dataset.filter){UI[el.dataset.filter]=el.value;schedule();}
+});
+document.addEventListener('change',e=>{const el=e.target;if(el.dataset.filter){UI[el.dataset.filter]=el.value;render();}});
+let tm=null;function schedule(){clearTimeout(tm);tm=setTimeout(render,120);}
+document.addEventListener('keydown',e=>{
+  const el=e.target, typing=el.matches&&el.matches('input,textarea,select');
+  if(e.key==='Enter'&&el.dataset&&el.dataset.enter&&!e.shiftKey){e.preventDefault();const fn=A[el.dataset.enter];if(fn)fn(el);return;}
+  if(e.key==='Enter'&&el.dataset&&el.dataset.save==='name'){e.preventDefault();el.blur();return;}
+  if(e.key==='Escape'){if($('#modal').classList.contains('on'))closeModal();else if(UI.drawer)closeDrawer();else document.body.classList.remove('rail-open');return;}
+  if(typing||e.ctrlKey||e.metaKey||e.altKey)return;
+  if(e.key==='/'&&ST&&ST.workspace){e.preventDefault();if(UI.view!=='plan'){UI.view='plan';render();}const q=$('#boardq');if(q)q.focus();}
+  else if(['1','2','3'].includes(e.key)&&ST&&ST.workspace){A.view({dataset:{v:['arch','plan','log'][+e.key-1]}});}
+  else if(e.key==='e'||e.key==='E')A.export();else if(e.key==='t'||e.key==='T')A.theme();else if(e.key==='?')helpModal();else if(e.key==='p'||e.key==='P')A.rail();
+});
+document.addEventListener('focusout',async e=>{const el=e.target;if(el.dataset&&el.dataset.save==='name'){const v=el.value.trim();if(v&&v!==ST.arch.system_name){const r=await act('set',{field:'name',value:v},'System name saved');if(r)delete F.sys;}}});
+function applyTheme(){const h=document.documentElement;if(UI.theme==='system')h.removeAttribute('data-theme');else h.dataset.theme=UI.theme;}
+
+/* ================= start ================= */
+(async function(){
+  applyTheme();if(store.get('cli',false))document.body.classList.add('show-cli');
+  try{S=await api('static');await refresh();}catch(e){$('#main').innerHTML=`<div class="empty"><h2>Could not load the workspace</h2><p>${esc(e.message)}</p><p class="small">${esc(e.hint||'')}</p></div>`;return;}
+  setInterval(async()=>{if(document.hidden||UI.busy)return;try{const {rev}=await api('rev');if(ST&&rev!==ST.rev)await refresh();}catch(e){}},2500);
+  setInterval(()=>{if(UI.view==='log'&&!document.hidden&&!UI.busy)renderMain();},60000);
+})();
+</script>
+</body>
+</html>

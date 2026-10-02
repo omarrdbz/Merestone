@@ -4,7 +4,7 @@ The check distinguishes implementation, catalog consistency and evaluation of a 
 
 ## Implementation results
 
-- **70 tests passed**: planning, evidence, protocols, import, tracking, reporting, the JSON/schema utilities, the guided CLI (`merestone.py`) and the HTML report. [Full output](test-results.txt).
+- **81 tests passed**: planning, evidence, protocols, import, tracking, reporting, the JSON/schema utilities, the guided CLI (`merestone.py`), the HTML report and the local web interface (`merestone ui`: session key, Host and Origin checks, hash re-verification and the same rules as the CLI). [Full output](test-results.txt).
 - **75 cases, 31 controls, 85 techniques, 129 example inputs and 6 scenarios** with verified references and relations.
 - Selection distinguishes RAG without tools and MCP stdio without LLM/OAuth. It accepts the same case on two assets and rejects deleted tasks/modified frozen fields.
 - PASS requires verifiable evidence, baseline, reachability, identity, effect, cleanup and a predefined sample/variants. Byte corruption, paths outside the store, hidden FAIL, changed snapshots and an earlier block confused with later resistance are detected.

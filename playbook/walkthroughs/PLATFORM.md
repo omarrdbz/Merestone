@@ -1,6 +1,6 @@
 # PLATFORM — Platform and supply chain: walkthrough
 
-Merestone-original walkthrough. It applies each technique of the family against an authorized fixture with a reserved canary. Keep authorization, limits and telemetry per the field guide, and record every adaptation.
+This walkthrough applies each technique of the family against an authorized fixture with a reserved canary. Keep authorization, limits and telemetry per the field guide, and record every adaptation.
 
 ## API-01 — API properties and role
 

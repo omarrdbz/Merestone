@@ -440,6 +440,7 @@ def show_status_arch(ws):
     if items:
         show_checklist(arch, items)
         out(S.bold('\nNext:') + ' run  merestone setup  (or the commands above), then freeze the plan with  merestone plan')
+        out(S.dim('      Or do it all in the browser: merestone ui'))
     else:
         out(S.green('\nEverything needed before planning is in place.') + S.bold('  Next:') + ' merestone plan')
     return 2
@@ -539,6 +540,7 @@ def cmd_status(a):
         for i, (what, cmd) in enumerate(steps[:6], 1): out(f'  {i}. {what}\n     {S.teal(cmd)}')
     stale_note(ws)
     out(S.dim('\n' + r['note']))
+    out(S.dim('Prefer to work visually? merestone ui opens this workspace in your browser (local only).'))
     return r['exit_code']
 
 
@@ -781,6 +783,16 @@ def cmd_report(a):
     return r['exit_code']
 
 
+# ---------- local web interface ----------
+def cmd_ui(a):
+    try: root = ws_from(a).root
+    except UserError:
+        if a.workspace: raise
+        root = None
+    import ui_server
+    return ui_server.serve(sys.modules[__name__], root, port=a.port, open_browser=not a.no_browser)
+
+
 # ---------- utilities ----------
 def cmd_demo(a):
     from adapters import local_pilots
@@ -838,6 +850,7 @@ Quick start
   merestone tasks / show <TASK>                   browse what to test and how
   merestone record ... / decide ... / review ...  record results; hashes are computed for you
   merestone report --format html --open           visual dashboard to share (or Markdown by default)
+  merestone ui                                    the same workflow in your browser (local only, no network)
 
 Run "merestone <command> -h" for details. Exit codes: 0 complete without FAIL,
 1 complete with FAIL, 2 incomplete or unverified (always the case for a new plan).
@@ -902,6 +915,11 @@ def build_parser():
     q.add_argument('--findings', nargs='*', default=[], metavar='FINDING.json',
                    help='validated finding records (templates/finding-v3.json) to include in the report')
     q.add_argument('--retest-bundle', metavar='BUNDLE.json', help='retest plans needed to verify closed findings (JSON list of plan, manifest, evidence_root)')
+    q = cmd('ui', cmd_ui, 'Open the local web interface: architecture editor, plan board, trial recording with drag-and-drop evidence, reports.',
+            'Runs on 127.0.0.1 only and sends nothing to the network. Every change goes through the same rules as the commands.\n'
+            'Examples:\n  merestone ui\n  merestone ui --port 8765 --no-browser\n  merestone -w my-eval ui')
+    q.add_argument('--port', type=int, default=0, help='local port (default: a free one)')
+    q.add_argument('--no-browser', action='store_true', help='print the link instead of opening the browser')
     q = cmd('demo', cmd_demo, 'Run the local pilots: watch a FAIL become a PASS.'); q.add_argument('--out', help='output folder (must not exist)')
     cmd('doctor', cmd_doctor, 'Check Python, the catalog and the current workspace.')
     q = cmd('list', cmd_list, 'List catalog cases.'); q.add_argument('--module'); q.add_argument('--activity')

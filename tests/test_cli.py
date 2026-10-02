@@ -283,6 +283,13 @@ class CliTests(unittest.TestCase):
         for frag in ('<h3>Title</h3>', '<ul><li>one <code>x</code></li><li>two</li></ul>', '<ol><li>a</li><li>b</li></ol>', '<pre>&lt;b&gt;raw&lt;/b&gt;</pre>', 'See doc.'):
             self.assertIn(frag, h)
 
+    def test_fieldcards_carry_no_provenance_boilerplate(self):
+        lib = op.library()
+        for c in lib['cases']:
+            text = op.render_case(c, lib)
+            for phrase in ('not a transcription', 'not literal payloads', 'Merestone-original'):
+                self.assertNotIn(phrase, text, c['id'])
+
     def test_fieldcard_and_doctor(self):
         code, out, _ = run('fieldcard', 'AI-002'); self.assertEqual(code, 0); self.assertIn('Indirect injection', out)
         self.assertEqual(run('doctor')[0], 0)

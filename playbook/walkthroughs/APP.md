@@ -1,6 +1,6 @@
 # APP — Application and platform: walkthrough
 
-Merestone-original walkthrough. It applies each technique of the family against an authorized fixture with a reserved canary. Keep authorization, limits and telemetry per the field guide, and record every adaptation.
+This walkthrough applies each technique of the family against an authorized fixture with a reserved canary. Keep authorization, limits and telemetry per the field guide, and record every adaptation.
 
 ## APP-01 — IDOR and model-controlled identity
 
