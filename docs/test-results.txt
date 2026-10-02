@@ -4,6 +4,7 @@ test_demo (test_cli.CliTests) ... ok
 test_documentary_assessment_reaches_code_0_with_cli_only (test_cli.CliTests) ... ok
 test_fail_is_decided_even_with_partial_sample (test_cli.CliTests) ... ok
 test_fieldcard_and_doctor (test_cli.CliTests) ... ok
+test_fieldcards_carry_no_provenance_boilerplate (test_cli.CliTests) ... ok
 test_guide_maps_to_real_capabilities (test_cli.CliTests) ... ok
 test_guided_new_sets_states_and_sources (test_cli.CliTests) ... ok
 test_html_document_layout (test_cli.CliTests) ... ok
@@ -80,6 +81,6 @@ test_start_screen_creates_and_opens_workspaces (test_ui.UiServerTests) ... ok
 test_static_data_and_fieldcards (test_ui.UiServerTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 80 tests in 75.862s
+Ran 81 tests in 78.211s
 
 OK

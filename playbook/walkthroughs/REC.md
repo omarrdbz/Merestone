@@ -1,6 +1,6 @@
 # REC — Reconnaissance: walkthrough
 
-Merestone-original walkthrough. It applies each technique of the family against an authorized fixture with a reserved canary. Keep authorization, limits and telemetry per the field guide, and record every adaptation.
+This walkthrough applies each technique of the family against an authorized fixture with a reserved canary. Keep authorization, limits and telemetry per the field guide, and record every adaptation.
 
 ## REC-01 — Reconnaissance and surface map
 

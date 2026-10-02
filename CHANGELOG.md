@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Fieldcards and walkthroughs no longer repeat a provenance disclaimer under every technique (rendering only; the catalog and its hash are unchanged, so existing plans stay valid).
 - `merestone ui`: local web interface (`ui_server.py`, `ui/app.html`; standard library only, 127.0.0.1, no network). Architecture editor with the route drawn as boundary stones, readiness fields, capabilities as switches or a 16-question interview, test protocols, freeze and revision; plan board by state with fieldcards; trial, decision and review forms with drag-and-drop evidence hashed in the browser and re-hashed on arrival; always-visible status light and pending list (with optional terminal equivalents); report export in either layout; activity log; light and dark themes; keyboard shortcuts. Every write goes through the CLI command functions. Session key and strict cookie, Host and Origin checks, custom API header, nonce-based CSP. 10 tests.
 - `merestone report --format html|both [--open]`: self-contained, read-only HTML dashboard (`report_html.py`) to share with people who do not use the terminal: exit code with Mojo, readiness, coverage by module, task board by state with a details panel (protocol, trials, hashed evidence, fieldcard), search and module filter, light/dark and print styles; strict CSP and escaping, no external resources. `--layout document` gives a top-to-bottom, print-friendly alternative with a field of boundary stones per module.
 
