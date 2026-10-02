@@ -75,7 +75,8 @@ Fieldcards are regenerated from the catalog. Plans, reports and pilots require a
 | `record <TASK> ...` | Stages one trial. Evidence files (`--evidence KIND=FILE`) or short notes (`--note KIND="..."`) are copied into `evidence/` and hashed (SHA-256, size, timestamp, collector). |
 | `decide <TASK> ...` | Builds the import event from the staged trials and commits it as a new plan record (`plan-NNN.rMMM.json`). PASS requires the full planned sample; any FAIL trial makes the task FAIL. |
 | `review <TASK> ...` | Records a DESIGN/CONFIG decision with documentary evidence of kind `review`. |
-| `report`, `demo`, `doctor`, `fieldcard`, `list` | Report into `reports/`, the local pilots with a narrated summary, environment checks, and catalog browsing. |
+| `report [--format md\|html\|both] [--layout board\|document] [--open]` | Writes the report into `reports/`. `html` is a self-contained, read-only view in one of two layouts: `board` (default, a dashboard with task columns and a details panel) or `document` (top to bottom: verdict, a field of boundary stones per module, what needs attention, then every obligation; prints with all details expanded). Both are self-contained (no network, strict Content-Security-Policy, all text escaped) and show the exit code, readiness, coverage by module, every task by state and, per task, protocol, trials, hashed evidence and the fieldcard. It presents what `check-plan` computed and never re-decides anything. |
+| `demo`, `doctor`, `fieldcard`, `list` | The local pilots with a narrated summary, environment checks, and catalog browsing. |
 
 Records are append-only: the frozen plan is never rewritten, each decision produces a new record and the workspace `history` logs every action. Keep a copy of `manifests/` outside the workspace (or create it with `--manifest-dir`) so the approved manifest stays under separate control.
 

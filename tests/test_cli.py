@@ -227,6 +227,62 @@ class CliTests(unittest.TestCase):
         finally: os.chdir(cwd)
         self.assertEqual(code, 2); self.assertIn('cd child-eval', err)
 
+    def _mixed_ws(self):
+        ws = ready_ws(self.d, present=('retrieval', 'llm_generation', 'multi_tenant'), activities='DESIGN,TEST', protocols=[('AI-006', 'original,benign')])
+        run('-w', ws, 'plan')
+        run('-w', ws, 'record', 'AI-006', '--variant', 'original', '--result', 'FAIL', '--expected', 'A only', '--observed', 'B leaked',
+            '--identity', 'tenant-a', '--adaptation', 'own query', *notes())
+        run('-w', ws, 'decide', 'AI-006', '--reviewer', 'R', '--observations', 'leak <script>alert(1)</script>', '--cleanup-confirmed')
+        run('-w', ws, 'review', 'CORE-001', '--result', 'PASS', '--note', 'review=scope agreed', '--reviewer', 'R', '--observations', 'ok')
+        return ws
+
+    def test_html_report_is_complete_safe_and_offline(self):
+        ws = self._mixed_ws()
+        code, out, err = run('-w', ws, 'report', '--format', 'html')
+        self.assertEqual(code, 2, err)
+        page = next((ws / 'reports').glob('*.html')).read_text(encoding='utf-8')
+        plan = ms.Workspace(ws).plan()
+        for t in plan['tasks']: self.assertIn(ms.alias(t), page)
+        self.assertIn('class="code c2"', page); self.assertIn("Content-Security-Policy", page)
+        self.assertNotIn('<script>alert(1)</script>', page); self.assertIn('&lt;script&gt;alert(1)&lt;/script&gt;', page)
+        import re
+        self.assertFalse(re.search(r'(src|href)=["\']?https?:', page), 'report must not load external resources')
+        self.assertIn('Objective and risk', page)                     # fieldcards embedded
+        failed = page.split('<h3>Failed')[1].split('</section>')[0]
+        self.assertIn('AI-006@ROUTE-1', failed)
+        passed = page.split('<h3>Passed')[1].split('</section>')[0]
+        self.assertIn('CORE-001@ROUTE-1', passed)
+
+    def test_html_document_layout(self):
+        import re
+        ws = self._mixed_ws()
+        code, out, err = run('-w', ws, 'report', '--format', 'html', '--layout', 'document')
+        self.assertEqual(code, 2, err)
+        page = next((ws / 'reports').glob('*.html')).read_text(encoding='utf-8')
+        plan = ms.Workspace(ws).plan()
+        for t in plan['tasks']: self.assertIn(ms.alias(t), page)
+        self.assertIn("Content-Security-Policy", page)
+        self.assertNotIn('<script>alert(1)</script>', page); self.assertIn('&lt;script&gt;alert(1)&lt;/script&gt;', page)
+        self.assertFalse(re.search(r'(src|href)=["\']?https?:', page), 'report must not load external resources')
+        anchors = set(re.findall(r'<details class="row" id="([^"]+)"', page))
+        self.assertEqual(len(anchors), len(plan['tasks']))
+        links = set(re.findall(r'href="#([^"]+)"', page))
+        self.assertTrue(links and links <= anchors, 'every in-page link must target a task row')
+        attention = page.split('What needs attention')[1].split('All obligations')[0]
+        self.assertIn('AI-006@ROUTE-1', attention); self.assertIn('Objective and risk', attention)
+        self.assertNotIn('CORE-001@ROUTE-1', attention)
+
+    def test_report_both_formats(self):
+        ws = self._mixed_ws()
+        self.assertEqual(run('-w', ws, 'report', '--format', 'both')[0], 2)
+        self.assertEqual({p.suffix for p in (ws / 'reports').iterdir()}, {'.md', '.html'})
+
+    def test_markdown_subset_renderer(self):
+        import report_html as rh
+        h = rh.md('# Title\n\n- one `x`\n- two\n\n1. a\n2. b\n\n````text\n<b>raw</b>\n````\nSee [doc](../x.md).')
+        for frag in ('<h3>Title</h3>', '<ul><li>one <code>x</code></li><li>two</li></ul>', '<ol><li>a</li><li>b</li></ol>', '<pre>&lt;b&gt;raw&lt;/b&gt;</pre>', 'See doc.'):
+            self.assertIn(frag, h)
+
     def test_fieldcard_and_doctor(self):
         code, out, _ = run('fieldcard', 'AI-002'); self.assertEqual(code, 0); self.assertIn('Indirect injection', out)
         self.assertEqual(run('doctor')[0], 0)

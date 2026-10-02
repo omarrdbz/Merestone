@@ -27,7 +27,7 @@ merestone tasks --state todo                               # readable task IDs s
 merestone show AI-006@ROUTE-1                              # fieldcard, protocol and how to record it
 merestone record AI-006@ROUTE-1 --variant original ...     # evidence is copied and hashed for you
 merestone decide AI-006@ROUTE-1 --reviewer "..." --observations "..." --cleanup-confirmed
-merestone report
+merestone report --format html --open                      # visual dashboard to share; works offline (--layout document for a printable report)
 ```
 
 **Install the `merestone` command once** (from this folder, Python 3.10+; no dependencies are downloaded):

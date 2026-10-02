@@ -562,7 +562,8 @@ def next_steps(ws, plan, r):
     if reviews: steps.append((f'{len(reviews)} design/config reviews pending, e.g. {alias(reviews[0])}', f'merestone show {alias(reviews[0])}'))
     tests = [t for t in todo if t['activity'] in ('TEST', 'REDTEAM') and t['test_protocol']]
     if tests: steps.append((f'{len(tests)} tests ready to run, e.g. {alias(tests[0])}', f'merestone show {alias(tests[0])}'))
-    if r['exit_code'] in (0, 1): steps.append(('Write the report', 'merestone report'))
+    if r['exit_code'] in (0, 1): steps.append(('Write the final report', 'merestone report --format both'))
+    else: steps.append(('Share progress with people who do not use the terminal', 'merestone report --format html --open'))
     return steps
 
 
@@ -635,7 +636,7 @@ def collect(ws, task, trial_id, specs, notes, a):
         items.append((k.strip(), src.name, src.read_bytes()))
     for s in notes or []:
         if '=' not in s: raise UserError(f'"{s}" is not KIND=TEXT.', 'Example: --note identity="signed in as tenant-a"')
-        k, _, txt = s.partition('='); items.append((k.strip(), k.strip() + '-note.txt', txt.encode('utf-8')))
+        k, _, txt = s.partition('='); items.append((k.strip(), 'note.txt', txt.encode('utf-8')))
     seen = set()
     for kind, name, data in items:
         if kind not in EVIDENCE_KINDS: raise UserError(f'Unknown evidence kind "{kind}".', 'Kinds: ' + ', '.join(EVIDENCE_KINDS))
@@ -758,11 +759,25 @@ def cmd_report(a):
     findings = [op.read(f) for f in a.findings]
     for f in findings: gov.check_finding(f, plan, man, ws.evidence_root, gov.load_retests(a.retest_bundle))
     stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
-    rel = f"reports/report-{ws.cfg['series']}-{stamp}.md"; dest = ws.p(rel)
-    if dest.exists(): raise UserError('A report with this timestamp exists; try again in a second.')
-    dest.parent.mkdir(parents=True, exist_ok=True); dest.write_text(op.report_markdown(plan, r, findings), encoding='utf-8')
-    ws.log('report', rel)
-    out(S.green(f'Report written: {dest}') + '   exit code ' + code_label(r['exit_code']))
+    formats = ['md', 'html'] if a.format == 'both' else [a.format]
+    written = []
+    for fmt in formats:
+        rel = f"reports/report-{ws.cfg['series']}-{stamp}.{fmt}"; dest = ws.p(rel)
+        if dest.exists(): raise UserError('A report with this timestamp exists; try again in a second.')
+        if fmt == 'md': body = op.report_markdown(plan, r, findings)
+        else:
+            import report_html
+            body = report_html.render_html(plan, r, findings, layout=a.layout)
+        dest.parent.mkdir(parents=True, exist_ok=True); dest.write_text(body, encoding='utf-8')
+        ws.log('report ' + fmt, rel); written.append(dest)
+        out(S.green(f'Report written: {dest}'))
+    out('Exit code ' + code_label(r['exit_code']))
+    html_out = [d for d in written if d.suffix == '.html']
+    if html_out:
+        out(S.dim('Self-contained HTML: open it in any browser or share the file; it needs no internet access.'))
+        if a.open:
+            import webbrowser
+            webbrowser.open(html_out[0].resolve().as_uri())
     return r['exit_code']
 
 
@@ -822,7 +837,7 @@ Quick start
   merestone plan                                  freeze the plan
   merestone tasks / show <TASK>                   browse what to test and how
   merestone record ... / decide ... / review ...  record results; hashes are computed for you
-  merestone report                                write the coverage report
+  merestone report --format html --open           visual dashboard to share (or Markdown by default)
 
 Run "merestone <command> -h" for details. Exit codes: 0 complete without FAIL,
 1 complete with FAIL, 2 incomplete or unverified (always the case for a new plan).
@@ -878,7 +893,15 @@ def build_parser():
     q = cmd('review', cmd_review, 'Record a DESIGN/CONFIG review with documentary evidence.', 'Example:\n  merestone review CORE-001@ROUTE-1 --result PASS --evidence review=scope.pdf --reviewer "Jane" --observations "Scope and rules agreed"')
     q.add_argument('task'); q.add_argument('--result', required=True, choices=['PASS', 'FAIL', 'INCONCLUSIVE', 'pass', 'fail', 'inconclusive'])
     q.add_argument('--reviewer', required=True); q.add_argument('--observations', required=True); ev_opts(q)
-    q = cmd('report', cmd_report, 'Write the coverage report into reports/.'); q.add_argument('--findings', nargs='*', default=[]); q.add_argument('--retest-bundle')
+    q = cmd('report', cmd_report, 'Write the coverage report into reports/ (Markdown, a shareable HTML dashboard, or both).',
+            'Examples:\n  merestone report\n  merestone report --format html --open\n  merestone report --format html --layout document --open\n  merestone report --format both --findings findings/FND-001.json')
+    q.add_argument('--format', choices=['md', 'html', 'both'], default='md', help='md (default), html (visual dashboard) or both')
+    q.add_argument('--layout', choices=['board', 'document'], default='board',
+                   help='HTML design: board (dashboard with task columns, default) or document (top-to-bottom report, print-friendly)')
+    q.add_argument('--open', action='store_true', help='open the HTML report in the default browser')
+    q.add_argument('--findings', nargs='*', default=[], metavar='FINDING.json',
+                   help='validated finding records (templates/finding-v3.json) to include in the report')
+    q.add_argument('--retest-bundle', metavar='BUNDLE.json', help='retest plans needed to verify closed findings (JSON list of plan, manifest, evidence_root)')
     q = cmd('demo', cmd_demo, 'Run the local pilots: watch a FAIL become a PASS.'); q.add_argument('--out', help='output folder (must not exist)')
     cmd('doctor', cmd_doctor, 'Check Python, the catalog and the current workspace.')
     q = cmd('list', cmd_list, 'List catalog cases.'); q.add_argument('--module'); q.add_argument('--activity')

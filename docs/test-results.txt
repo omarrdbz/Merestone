@@ -6,12 +6,16 @@ test_fail_is_decided_even_with_partial_sample (test_cli.CliTests) ... ok
 test_fieldcard_and_doctor (test_cli.CliTests) ... ok
 test_guide_maps_to_real_capabilities (test_cli.CliTests) ... ok
 test_guided_new_sets_states_and_sources (test_cli.CliTests) ... ok
+test_html_document_layout (test_cli.CliTests) ... ok
+test_html_report_is_complete_safe_and_offline (test_cli.CliTests) ... ok
 test_input_provenance_required (test_cli.CliTests) ... ok
+test_markdown_subset_renderer (test_cli.CliTests) ... ok
 test_missing_workspace_points_to_child (test_cli.CliTests) ... ok
 test_new_never_overwrites (test_cli.CliTests) ... ok
 test_new_refuses_inside_framework (test_cli.CliTests) ... ok
 test_quickstart_without_command (test_cli.CliTests) ... ok
 test_record_lists_missing_evidence_kinds (test_cli.CliTests) ... ok
+test_report_both_formats (test_cli.CliTests) ... ok
 test_revision_requires_reason_and_keeps_history (test_cli.CliTests) ... ok
 test_setup_skips_on_enter (test_cli.CliTests) ... ok
 test_setup_wizard_answers_everything_then_plan_freezes (test_cli.CliTests) ... ok
@@ -54,7 +58,6 @@ test_fail_cannot_be_hidden (test_operational.OperationalTests) ... ok
 test_incomplete_evidence_never_green (test_operational.OperationalTests) ... ok
 test_markdown_contains_evidence_oracles_originals (test_operational.OperationalTests) ... ok
 test_mcp_stdio_without_llm_oauth (test_operational.OperationalTests) ... ok
-test_no_overwrite (test_operational.OperationalTests) ... ERROR: Existing output/manifest; do not overwrite the log
 ok
 test_path_traversal_rejected (test_operational.OperationalTests) ... ok
 test_profile_drafts_not_green (test_operational.OperationalTests) ... ok
@@ -67,6 +70,6 @@ test_unknown_is_not_absent (test_operational.OperationalTests) ... ok
 test_unreached_input_not_pass (test_operational.OperationalTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 66 tests in 46.150s
+Ran 70 tests in 57.926s
 
 OK
