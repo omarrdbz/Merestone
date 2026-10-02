@@ -30,6 +30,14 @@ merestone decide AI-006@ROUTE-1 --reviewer "..." --observations "..." --cleanup-
 merestone report --format html --open                      # visual dashboard to share; works offline (--layout document for a printable report)
 ```
 
+### Visual interface (local web app)
+
+```console
+merestone ui                                               # opens the browser on 127.0.0.1; Ctrl+C stops it
+```
+
+The same workflow without the terminal: an architecture editor (the route drawn as boundary stones, readiness fields, capabilities as switches or a 16-question interview, test protocols, freezing and revisions), a plan board with each task's fieldcard, trial and review forms where evidence files are dropped in and hashed (SHA-256) automatically, an always-visible status light and pending list, and report export (board or document). It runs only on this computer with the standard library, sends nothing to the network, and every change goes through the same commands and checks as the CLI, so both can be used on the same workspace at the same time. Light and dark themes. Without a workspace it offers to create or open one. Options: `--port`, `--no-browser`.
+
 **Install the `merestone` command once** (from this folder, Python 3.10+; no dependencies are downloaded):
 
 ```console

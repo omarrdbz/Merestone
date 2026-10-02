@@ -68,8 +68,18 @@ test_technical_fail_and_pass (test_operational.OperationalTests) ... ok
 test_unknown_cannot_be_completed (test_operational.OperationalTests) ... ok
 test_unknown_is_not_absent (test_operational.OperationalTests) ... ok
 test_unreached_input_not_pass (test_operational.OperationalTests) ... ok
+test_api_rejects_cross_site_and_foreign_hosts (test_ui.UiServerTests) ... ok
+test_app_page_loads_nothing_from_the_network (test_ui.UiServerTests) ... ok
+test_architecture_edits_and_freeze_rules (test_ui.UiServerTests) ... ok
+test_cli_exposes_the_ui_command (test_ui.UiServerTests) ... ok
+test_full_flow_through_the_interface (test_ui.UiServerTests) ... ok
+test_page_requires_the_session_key_and_sets_a_strict_cookie (test_ui.UiServerTests) ... ok
+test_rev_changes_when_the_terminal_writes (test_ui.UiServerTests) ... ok
+test_server_binds_to_loopback_only (test_ui.UiServerTests) ... ok
+test_start_screen_creates_and_opens_workspaces (test_ui.UiServerTests) ... ok
+test_static_data_and_fieldcards (test_ui.UiServerTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 70 tests in 57.926s
+Ran 80 tests in 75.862s
 
 OK

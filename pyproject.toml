@@ -17,5 +17,5 @@ merestone = "merestone:main"
 [tool.setuptools]
 # Install in editable mode (pip install -e .): the CLI reads the catalog, schemas and
 # templates from this folder, so a regular (non-editable) install is not supported.
-py-modules = ["merestone", "operational", "governance", "jsonutil", "fieldguide"]
+py-modules = ["merestone", "operational", "governance", "jsonutil", "fieldguide", "report_html", "ui_server"]
 packages = ["adapters"]
