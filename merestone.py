@@ -910,7 +910,7 @@ def build_parser():
             'Examples:\n  merestone report\n  merestone report --format html --open\n  merestone report --format html --layout document --open\n  merestone report --format both --findings findings/FND-001.json')
     q.add_argument('--format', choices=['md', 'html', 'both'], default='md', help='md (default), html (visual dashboard) or both')
     q.add_argument('--layout', choices=['board', 'document'], default='board',
-                   help='HTML design: board (dashboard with task columns, default) or document (top-to-bottom report, print-friendly)')
+                   help='HTML design: board (dashboard with tasks grouped by state, default) or document (top-to-bottom report, print-friendly)')
     q.add_argument('--open', action='store_true', help='open the HTML report in the default browser')
     q.add_argument('--findings', nargs='*', default=[], metavar='FINDING.json',
                    help='validated finding records (templates/finding-v3.json) to include in the report')
