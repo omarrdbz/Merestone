@@ -14,6 +14,32 @@ The library contains 75 cases (8 common design reviews, 6 configuration reviews 
 4. [Apply techniques step by step in the walkthroughs](playbook/walkthroughs/).
 5. [Record findings, correct and retest](playbook/method/findings-and-regression.md).
 
+### Quick start (guided CLI)
+
+```console
+merestone demo                                             # watch a FAIL become a PASS in a minute
+merestone new ../assessments/my-eval --profile rag --guided   # workspace + 16 plain-language questions
+cd ../assessments/my-eval
+merestone setup                                            # permission, version, limits, access... one question at a time
+merestone status                                           # what is missing and the exact command to fix it
+merestone plan                                             # freeze the plan
+merestone tasks --state todo                               # readable task IDs such as AI-006@ROUTE-1
+merestone show AI-006@ROUTE-1                              # fieldcard, protocol and how to record it
+merestone record AI-006@ROUTE-1 --variant original ...     # evidence is copied and hashed for you
+merestone decide AI-006@ROUTE-1 --reviewer "..." --observations "..." --cleanup-confirmed
+merestone report
+```
+
+**Install the `merestone` command once** (from this folder, Python 3.10+; no dependencies are downloaded):
+
+```console
+python -m pip install -e .
+```
+
+After that, `merestone` works from any folder. If Python is installed for all users (for example `C:\Python312` on Windows) and pip reports a permission or `.deleteme` error, install it for your user instead: `python -m pip install --user -e .`. If pip then warns that its `Scripts` folder is not on `PATH`, either add that folder to `PATH` or use `python -m merestone ...`, which works from any folder. Keep assessment workspaces **outside** this folder: they hold evidence and must never be committed (`merestone new` refuses to create them here). Without installing, run `python <framework>/merestone.py ...`, or add this folder to `PATH` to use the `merestone` / `merestone.cmd` launchers. The guided CLI writes the same records and applies the same checks as the commands below. See [tools and contracts](docs/IMPLEMENTATION.md#guided-cli-merestonepy).
+
+### Engine commands
+
 ```console
 python fieldguide.py validate-library
 python fieldguide.py init --profile rag --out runs/architecture.json

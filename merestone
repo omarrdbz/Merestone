@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+# Launcher: add this folder to PATH to run "merestone" from any assessment workspace.
+exec python3 "$(dirname "$0")/merestone.py" "$@"
