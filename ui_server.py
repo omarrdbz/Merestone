@@ -174,7 +174,9 @@ class App:
         ms = self.ms
         if not self.root:
             near = sorted(str(c.name) for c in self.start_dir.iterdir() if c.is_dir() and (c / ms.WS_FILE).is_file()) if self.start_dir.is_dir() else []
-            return {'workspace': None, 'start_dir': str(self.start_dir), 'nearby': near, 'rev': 'none'}
+            framework = Path(__file__).resolve().parent
+            default_folder = str(framework.parent / 'assessments' / 'my-assessment') if self.start_dir.is_relative_to(framework) else 'my-assessment'
+            return {'workspace': None, 'start_dir': str(self.start_dir), 'default_folder': default_folder, 'nearby': near, 'rev': 'none'}
         with self.lock:
             ws = self.ws(); arch = ws.arch()
             items = []

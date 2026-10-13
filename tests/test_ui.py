@@ -184,6 +184,20 @@ class UiServerTests(unittest.TestCase):
         self.assertEqual(self.api('open', {'folder': str(self.d)})[0], 400)
         self.assertEqual(self.api('open', {'folder': 'harbor'})[0], 200)
 
+    def test_start_screen_default_avoids_the_framework_folder(self):
+        # Opening the UI from the README's working directory must suggest a
+        # usable path without relaxing the CLI's evidence-isolation rule.
+        app = ui_server.App(ms, start_dir=ROOT / 'ui')
+        st = app.state()
+        suggested = Path(st['default_folder'])
+        self.assertTrue(suggested.is_absolute())
+        self.assertFalse(suggested.is_relative_to(ROOT))
+        self.assertEqual(st['start_dir'], str(ROOT / 'ui'))
+
+    def test_start_screen_keeps_relative_default_outside_framework(self):
+        st = ui_server.App(ms, start_dir=self.d).state()
+        self.assertEqual(st['default_folder'], 'my-assessment')
+
     def test_static_data_and_fieldcards(self):
         ws = ready_ws(self.d); self.start(ws)
         _, s = self.api('static')

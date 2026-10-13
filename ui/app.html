@@ -6,15 +6,17 @@
 <meta name="referrer" content="no-referrer">
 <title>Merestone</title>
 <style>
-:root{--bg:#FFFFFF;--side:#F7F7F5;--surface:#FFFFFF;--surface2:#F7F7F5;--ink:#1A1F1D;--muted:#5E6662;--faint:#9AA19D;--line:#E4E6E2;--line2:#EFF0EE;
+:root{--bg:#FFFFFF;--side:#F7F7F5;--surface:#FFFFFF;--surface2:#F7F7F5;--ink:#1A1F1D;--muted:#5E6662;--faint:#6F7873;--line:#E4E6E2;--line2:#EFF0EE;
 --accent:#0F6A62;--accent-ink:#FFFFFF;--accent-s:#EAF3F1;--sel:#F2F5F4;--stone:#A8701C;
 --fail:#C2453C;--pass:#2F8150;--unk:#B0791E;--todo:#9AA19D;--ex:#6F6A86;--na:#B7BDB9;
 --f:-apple-system,"Segoe UI",system-ui,Roboto,"Helvetica Neue",sans-serif;--mono:ui-monospace,"SF Mono","Cascadia Mono",Menlo,Consolas,monospace;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#121615;--side:#0E1211;--surface:#121615;--surface2:#181D1C;--ink:#E3E8E6;--muted:#9AA5A0;--faint:#68726E;--line:#262D2B;--line2:#1C2221;
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#121615;--side:#0E1211;--surface:#121615;--surface2:#181D1C;--ink:#E3E8E6;--muted:#9AA5A0;--faint:#8F9B95;--line:#262D2B;--line2:#1C2221;
 --accent:#5CC2B3;--accent-ink:#0E1211;--accent-s:#16302B;--sel:#18211F;--stone:#D9A050;--fail:#E3786F;--pass:#6BBF8A;--unk:#D7A04F;--todo:#68726E;--ex:#ADA7C9;--na:#4A5350;color-scheme:dark}}
-:root[data-theme=dark]{--bg:#121615;--side:#0E1211;--surface:#121615;--surface2:#181D1C;--ink:#E3E8E6;--muted:#9AA5A0;--faint:#68726E;--line:#262D2B;--line2:#1C2221;
+:root[data-theme=dark]{--bg:#121615;--side:#0E1211;--surface:#121615;--surface2:#181D1C;--ink:#E3E8E6;--muted:#9AA5A0;--faint:#8F9B95;--line:#262D2B;--line2:#1C2221;
 --accent:#5CC2B3;--accent-ink:#0E1211;--accent-s:#16302B;--sel:#18211F;--stone:#D9A050;--fail:#E3786F;--pass:#6BBF8A;--unk:#D7A04F;--todo:#68726E;--ex:#ADA7C9;--na:#4A5350;color-scheme:dark}
 *{box-sizing:border-box}
+/* Shared report mark supplied by the server uses these three palette names. */
+.brand .mark{--teal:var(--accent);--sand:var(--surface2);--ochre:var(--stone)}
 html,body{margin:0;background:var(--bg);color:var(--ink);font:13.5px/1.5 var(--f);-webkit-font-smoothing:antialiased}
 code,.mono{font-family:var(--mono);font-size:12.5px}
 a{color:var(--accent)}
@@ -24,6 +26,7 @@ p{margin:0}
 button,input,select,textarea{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.sr:focus{position:fixed;top:8px;left:8px;width:auto;height:auto;clip:auto;padding:10px;background:var(--surface);z-index:100}
 .muted{color:var(--muted)}.faint{color:var(--faint)}.small{font-size:12.5px}.tiny{font-size:11.5px}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.grow{flex:1}.stack{display:grid;gap:14px}.stack-s{display:grid;gap:6px}
 
@@ -169,7 +172,7 @@ hr.sep{border:0;border-top:1px solid var(--line2);margin:16px 0}
 .capbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
 .capgroup{margin-top:16px}.capgroup h4{margin-bottom:4px;display:flex;justify-content:space-between;padding-bottom:6px;border-bottom:1px solid var(--line)}
 .capgroup h4 span:last-child{font-weight:400;color:var(--faint)}
-.caps{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));column-gap:28px}
+.caps{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(340px,100%),1fr));column-gap:28px}
 .cap{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line2)}
 .cap .k{font:11.5px var(--mono);color:var(--faint)}.cap .l{font-size:13px;line-height:1.3}
 .cap .meta{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
@@ -297,7 +300,7 @@ table.t td{padding:7px 8px 7px 0;border-bottom:1px solid var(--line2);vertical-a
 .shortcuts{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:13px}
 .spin{width:12px;height:12px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;display:inline-block;animation:sp .7s linear infinite;vertical-align:-1px}
 @keyframes sp{to{transform:rotate(360deg)}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.packet{display:none}}
 </style>
 </head>
 <body>
@@ -362,7 +365,7 @@ async function act(action,body,okTitle){
   finally{busy(-1);}
 }
 async function refresh(){ST=await api('state');UI.lastSync=Date.now();render();}
-function busy(d){UI.busy+=d;const s=$('.sync');if(s)s.classList.toggle('busy',UI.busy>0);}
+function busy(d){UI.busy+=d;renderSync();}
 function setOffline(v){if(UI.offline!==v){UI.offline=v;renderSync();}}
 
 /* ================= toasts ================= */
@@ -391,13 +394,28 @@ function counts(){const c={FAIL:0,TODO:0,UNKNOWN:0,PASS:0,EXCLUDED:0,NOT_APPLICA
 function missingSources(r){return Object.entries(r.capabilities).filter(([k,v])=>v!=='unknown'&&!String(r.capability_evidence[k]||'').trim()).map(([k])=>k);}
 function hops(boundary){return vague(boundary)?[]:String(boundary).split(/\s*(?:->|→|=>)\s*/).map(s=>s.trim()).filter(Boolean);}
 function blockedAccess(t){return t.access==='unknown'||t.access==='none'||t.scope!=='in_scope';}
+const accessLabel=t=>t.scope!=='in_scope'?'Out of scope':t.access==='none'?'No access':'Access unknown';
+function unsavedArchitecture(){
+  if(!ST||!ST.arch)return [];
+  const a=ST.arch, pending=[];
+  a.routes.forEach(r=>{if(routeDirty(r))pending.push({label:'Route '+r.id,target:'sec-route',route:r.id});});
+  const values={authorization:a.authorization_ref,snapshot:a.snapshot_ref,'evidence-store':a.evidence_store,reviewer:a.inventory_review.reviewer,'inventory-evidence':a.inventory_review.evidence_ref,owner:(a.assets[0]||{}).owner||'',stop:''};
+  Object.entries(values).forEach(([k,v])=>{if(String(getF('rd.'+k,v))!==String(v))pending.push({label:S.items[k]?.label||'Asset owner',target:'fld-'+k});});
+  if(Object.keys(a.limits).some(k=>String(getF('lim.'+k,a.limits[k]))!==String(a.limits[k])))pending.push({label:'Load limits',target:'fld-limits'});
+  a.routes.forEach(r=>{const f=F['proto:'+r.id];if(!f||!f.case)return;
+    const p=(r.test_protocols||[]).find(p=>p.case_id===f.case);
+    if(!p||f.variants.join()!==p.required_variants.join()||+f.min!==p.min_trials_per_variant||f.design!==p.design||f.rule!==p.decision_rule||f.why!==p.justification)pending.push({label:'Protocol '+f.case,target:'sec-proto',route:r.id});});
+  return pending;
+}
 
 /* ================= render: frame ================= */
 function render(){
-  const a=document.activeElement, key=a&&(a.dataset&&a.dataset.bind?'[data-bind="'+a.dataset.bind+'"]':a.id?'#'+a.id:null);
+  const a=document.activeElement, binding=a?.dataset?.bind, id=a?.id;
+  const attrs=a?.dataset&&(a.dataset.act||a.dataset.filter)?{...a.dataset}:null;
   let sel=null;try{sel=a&&'selectionStart' in a?[a.selectionStart,a.selectionEnd]:null;}catch(e){}
   renderSide();renderMain();renderDrawer();
-  if(key){const b=document.querySelector(key.replace(/@/g,'\\@'));if(b&&b!==document.activeElement){b.focus({preventScroll:true});try{if(sel)b.setSelectionRange(sel[0],sel[1]);}catch(e){}}}
+  const b=binding?$$('[data-bind]').find(x=>x.dataset.bind===binding):id?document.getElementById(id):attrs?$$('[data-act], [data-filter]').find(x=>Object.entries(attrs).every(([k,v])=>x.dataset[k]===v)):null;
+  if(b&&b!==document.activeElement){b.focus({preventScroll:true});try{if(sel)b.setSelectionRange(sel[0],sel[1]);}catch(e){}}
 }
 const STATUS_LBL={FAIL:'Failed',TODO:'To do',UNKNOWN:'Unknown',PASS:'Passed',EXCLUDED:'Excluded',NOT_APPLICABLE:'Not applicable'};
 function renderSide(){
@@ -413,7 +431,7 @@ function renderSide(){
   $('#side').innerHTML=brand+`<div class="wsn"><b>${esc(ST.arch.system_name)}</b>${esc(w.name)} · ${esc(w.series||'no plan yet')}</div>
    <nav class="nav" aria-label="Views">${navs.map(([k,l,cnt])=>`<button type="button" data-act="view" data-v="${k}" ${UI.view===k?'aria-current="page"':''}>${l}<span class="n">${cnt}</span></button>`).join('')}</nav>
    <div class="pend-h"><span>Pending</span><span>${L.length}</span></div>
-   ${L.length?`<ul class="pend">${shown.map((x,i)=>`<li class="${x.lv}" data-act="pend" data-i="${i}" title="${esc(x.d)}"><i></i><div>${esc(x.t)}</div><div class="cli">$ ${esc(x.cli)}</div></li>`).join('')}</ul>
+   ${L.length?`<ul class="pend">${shown.map((x,i)=>`<li class="${x.lv}" role="button" tabindex="0" data-act="pend" data-i="${i}" title="${esc(x.d)}"><i></i><div>${esc(x.t)}</div><div class="cli">$ ${esc(x.cli)}</div></li>`).join('')}</ul>
    ${L.length>5?`<button type="button" class="more-p" data-act="allPend">${UI.allPend?'Show fewer':'Show all '+L.length}</button>`:''}`:'<p class="allclear">Nothing pending.</p>'}
    <div class="status"><div class="code c${p?c:2}"><i></i>${p?`Exit code ${c} · ${esc(S.code_meta[c][0].replace('Complete, ','').replace('Incomplete or unverified','Incomplete'))}`:'No plan yet'}</div>
    ${p?`${dec} of ${app} applicable decided<div class="progress"><i style="width:${100*n.PASS/app}%;background:var(--pass)"></i><i style="width:${100*n.FAIL/app}%;background:var(--fail)"></i></div>`:'<span>Freeze the plan to start testing.</span>'}
@@ -423,7 +441,7 @@ function renderSide(){
 }
 function renderSync(){
   const s=$('.sync');if(!s)return;
-  s.innerHTML=UI.offline?'<i style="background:var(--fail)"></i> Server stopped. Run merestone ui again.':`<i></i> In sync with the terminal`;
+  s.classList.toggle('busy',UI.busy>0);s.setAttribute('role','status');s.innerHTML=UI.offline?'<i style="background:var(--fail)"></i> Server stopped. Run merestone ui again.':UI.busy?'<i></i> Saving…':`<i></i> In sync with the terminal`;
 }
 function renderMain(){
   const m=$('#main');
@@ -440,9 +458,9 @@ const PROFILE_INFO={chat:'Chat assistant built on a language model',rag:'Assista
 function welcome(){
   const nb=ST.nearby||[];
   return `<div class="welcome"><div><h1>Start an assessment</h1>
-  <p class="muted" style="max-width:70ch">A workspace keeps the architecture, the frozen plan, the hashed evidence and the reports of one assessment. It holds evidence, so keep it outside the framework folder and never commit it.</p></div></div>
+  <p class="muted" style="max-width:70ch">A workspace keeps the architecture, the frozen plan, the hashed evidence and the reports of one assessment. It holds evidence, so keep it outside the framework folder and never commit it.</p></div>
   <div class="grid2"><div class="stack"><h2>Create a workspace</h2>
-    <label class="f">Folder<input type="text" ${bind('new.folder')} value="${val('new.folder','my-assessment')}" placeholder="my-assessment"><span class="hint">Created inside ${esc(ST.start_dir)} unless you write a full path.</span></label>
+    <label class="f">Folder<input type="text" ${bind('new.folder')} value="${val('new.folder',ST.default_folder||'my-assessment')}" placeholder="my-assessment"><span class="hint">Created inside ${esc(ST.start_dir)} unless you write a full path.</span></label>
     <label class="f">System name<input type="text" ${bind('new.name')} value="${val('new.name')}" placeholder="e.g. Harbor Desk support assistant"></label>
     <div class="stack-s"><span class="small muted" style="font-weight:600">Starting profile (a draft you will correct)</span><div class="opts">${S.profiles.map(p=>`<button type="button" class="opt" data-act="setf" data-path="new.profile" data-val="${p}" aria-pressed="${getF('new.profile','rag')===p}"><b>${p}</b><span>${esc(PROFILE_INFO[p]||'')}</span></button>`).join('')}</div></div>
     <div><button class="btn primary" type="button" data-act="create">Create workspace</button></div></div>
@@ -457,7 +475,7 @@ function welcome(){
 function archView(){
   const a=ST.arch, w=ST.workspace, p=plan();
   const decided=tasks().filter(t=>t.result).length;
-  return `${p?`<div class="note ${p.stale?'warn':''}" style="margin-bottom:16px">${p.stale?'<b>architecture.json differs from the frozen plan.</b> ':''}The plan <b>${esc(w.series)}</b> is frozen. Changes here are saved right away and take effect when you freeze a revision (reason and approver)${decided?`; the ${decided} decided results stay in ${esc(w.series)} and are <b>not carried over</b> to the revision`:''}.</div>`:''}
+  return `${p?`<div class="note ${p.stale?'warn':''}" style="margin-bottom:16px">${p.stale?'<b>architecture.json differs from the frozen plan.</b> ':''}The plan <b>${esc(w.series)}</b> is frozen. Save route, readiness and protocol edits with their Save buttons. Capability answers save immediately. Saved changes take effect when you freeze a revision (reason and approver)${decided?`; the ${decided} decided results stay in ${esc(w.series)} and are <b>not carried over</b> to the revision`:''}.</div>`:''}
   <div class="card"><div class="ahead"><div><span class="eyebrow">${esc(a.assessment_id)} · profile ${esc(w.profile||'')} · framework ${esc(S.framework_version)}</span>
     <h1><input class="inl" type="text" ${bind('sys.name')} value="${val('sys.name',a.system_name)}" aria-label="System name" data-save="name"></h1></div>
     <div class="row">${ST.setup_items.length?`<span class="chip unk">${ST.setup_items.length} to define before planning</span>`:'<span class="chip pass">Ready to plan</span>'}</div></div>
@@ -496,10 +514,10 @@ function routeCard(){
     <button type="button" class="btn sm" data-act="hopAdd" data-route="${esc(id)}">+ add</button></div>
     <span class="hint small faint">e.g. app → document index → model → tool. Trust changes between each pair.</span></div></div>
    <div id="fld-access"><span class="small muted" style="font-weight:600">How much you can see on this route</span><div class="opts" style="margin-top:5px">${S.access.map(x=>`<button type="button" class="opt" data-act="rset" data-route="${esc(id)}" data-k="access" data-val="${x}" aria-pressed="${f.access===x}"><b>${x}</b><span>${acc[x]}</span></button>`).join('')}</div>
-    ${f.access==='unknown'||f.access==='none'?'<p class="small" style="color:var(--fail);margin-top:4px">Tasks cannot be completed while access is unknown.</p>':''}</div>
+    ${f.access==='unknown'||f.access==='none'?'<p class="small" style="color:var(--fail);margin-top:4px">Tasks cannot be completed while access is unknown or unavailable.</p>':''}</div>
    <div id="fld-activities"><span class="small muted" style="font-weight:600">What this assessment includes</span><div class="opts" style="margin-top:5px">${Object.entries(S.activities).map(([k,d])=>`<button type="button" class="opt" data-act="ract" data-route="${esc(id)}" data-val="${k}" aria-pressed="${f.activities.includes(k)}"><b>${k}</b><span>${esc(d)}</span></button>`).join('')}</div>
-    ${!f.activities.includes('DESIGN')?'<p class="small" style="color:var(--ochre);margin-top:4px">Without DESIGN on at least one route the plan can never close green.</p>':''}</div>
-   <div class="row"><span class="small muted" style="font-weight:600">Scope</span><div class="seg">${['in_scope','out_of_scope'].map(x=>`<button type="button" data-act="rset" data-route="${esc(id)}" data-k="scope" data-val="${x}" aria-pressed="${f.scope===x}">${x.replace('_',' ')}</button>`).join('')}</div></div>
+    ${!f.activities.includes('DESIGN')?'<p class="small" style="color:var(--unk);margin-top:4px">Include DESIGN on at least one route to complete the assessment.</p>':''}</div>
+   <div id="fld-scope" class="stack-s"><div class="row"><span id="scope-label" class="small muted" style="font-weight:600">Assessment scope</span><div class="seg" role="group" aria-labelledby="scope-label">${['in_scope','out_of_scope'].map(x=>`<button type="button" data-act="rset" data-route="${esc(id)}" data-k="scope" data-val="${x}" aria-pressed="${f.scope===x}">${x==='in_scope'?'In scope':'Out of scope'}</button>`).join('')}</div></div><p class="small muted">${f.scope==='in_scope'?'This route is included in the assessment.':'Tasks on this route cannot be completed. Changing scope does not count as passing or remove pending obligations.'} Save the route to apply this choice.</p></div>
   </div></div>`;
 }
 function mapSvg(f){
@@ -532,7 +550,7 @@ function readinessCard(){
   const it=k=>S.items[k];
   const st=(ok,optional)=>`<span class="st ${ok?'ok':optional?'opt':'no'}">${ok?'✓':optional?'·':'!'}</span>`;
   const row=(key,field,cur,ok,extra='')=>{const p='rd.'+key, v=getF(p,cur);
-    return `<div class="fld" id="fld-${key}">${st(ok)}<div><b>${esc(it(key).label)}</b><p>${esc(it(key).why)}</p>${extra}</div><div class="ctl"><input type="text" ${bind(p)} value="${esc(v)}" placeholder="e.g. ${esc(it(key).example)}" data-enter="saveField" data-field="${field}" data-key="${key}">
+    return `<div class="fld" id="fld-${key}">${st(ok)}<div><b>${esc(it(key).label)}</b><p>${esc(it(key).why)}</p>${extra}</div><div class="ctl"><input type="text" aria-label="${esc(it(key).label)}" ${bind(p)} value="${esc(v)}" placeholder="e.g. ${esc(it(key).example)}" data-enter="saveField" data-field="${field}" data-key="${key}">
     ${v!==cur?`<button type="button" class="btn primary sm" data-act="saveField" data-field="${field}" data-key="${key}">Save</button>`:''}</div></div>`;};
   const ir=a.inventory_review;
   const lim=['requests','duration_seconds','concurrency','tokens','cost_minor_units'], limLabel={requests:'requests',duration_seconds:'seconds',concurrency:'parallel',tokens:'tokens',cost_minor_units:'cost (minor units)'};
@@ -547,11 +565,11 @@ function readinessCard(){
    ${row('inventory-evidence','inventory-evidence',ir.evidence_ref,!!ir.evidence_ref.trim())}
    <div class="fld" id="fld-stop">${st(a.stop_conditions.length>0)}<div><b>${esc(it('stop').label)}</b><p>${esc(it('stop').why)}</p></div><div class="stops">
      ${a.stop_conditions.map((s,i)=>`<div class="s"><span>${esc(s)}</span><button type="button" class="btn ghost sm" data-act="stopDel" data-i="${i}" aria-label="Remove">Remove</button></div>`).join('')}
-     <div class="ctl"><input type="text" ${bind('rd.stop')} value="${val('rd.stop')}" placeholder="e.g. ${esc(it('stop').example)}" data-enter="saveField" data-field="stop" data-key="stop"><button type="button" class="btn sm" data-act="saveField" data-field="stop" data-key="stop">Add</button></div></div></div>
+     <div class="ctl"><input type="text" aria-label="New stop condition" ${bind('rd.stop')} value="${val('rd.stop')}" placeholder="e.g. ${esc(it('stop').example)}" data-enter="saveField" data-field="stop" data-key="stop"><button type="button" class="btn sm" data-act="saveField" data-field="stop" data-key="stop">Add</button></div></div></div>
    <div class="fld" id="fld-limits">${st(!gaps.has('limits'))}<div><b>${esc(it('limits').label)}</b><p>${esc(it('limits').why)}</p></div><div class="ctl"><div class="limits">
      ${lim.map(k=>`<label>${limLabel[k]}<input type="number" min="0" ${bind('lim.'+k)} value="${val('lim.'+k,L[k])}"></label>`).join('')}</div>
      ${limDirty?'<button type="button" class="btn primary sm" data-act="saveLimits">Save</button>':''}</div></div>
-   <div class="fld" id="fld-owner">${st(!!owner,true)}<div><b>Asset owner</b><p>Who answers for the system under test (recommended).</p></div><div class="ctl"><input type="text" ${bind('rd.owner')} value="${val('rd.owner',owner)}" placeholder="e.g. Support platform team" data-enter="saveField" data-field="owner" data-key="owner">
+   <div class="fld" id="fld-owner">${st(!!owner,true)}<div><b>Asset owner</b><p>Who answers for the system under test (recommended).</p></div><div class="ctl"><input type="text" aria-label="Asset owner" ${bind('rd.owner')} value="${val('rd.owner',owner)}" placeholder="e.g. Support platform team" data-enter="saveField" data-field="owner" data-key="owner">
      ${getF('rd.owner',owner)!==owner?'<button type="button" class="btn primary sm" data-act="saveField" data-field="owner" data-key="owner">Save</button>':''}</div></div>
   </div></div>`;
 }
@@ -564,7 +582,7 @@ function capsCard(){
   let body='';
   if(UI.capMode==='interview'){
     body=`<div class="qs">${S.guide.map((g,i)=>{const st=g.caps.map(k=>caps[k]||'unknown');const s=st.every(x=>x==='present')?'yes':st.every(x=>x==='absent')?'no':st.every(x=>x==='unknown')?'dk':'mixed';
-      return `<div class="q"><div><b>${esc(g.q)}</b><div class="k">${g.caps.map(esc).join(' · ')}${s==='mixed'?' · <span style="color:var(--ochre)">mixed answers</span>':''}</div></div>
+      return `<div class="q"><div><b>${esc(g.q)}</b><div class="k">${g.caps.map(esc).join(' · ')}${s==='mixed'?' · <span style="color:var(--unk)">mixed answers</span>':''}</div></div>
       <div class="seg">${[['yes','Yes','present'],['no','No','absent'],['dk','Not sure','unknown']].map(([c,l,v])=>`<button type="button" class="${c}" data-act="capq" data-route="${esc(r.id)}" data-i="${i}" data-v="${v}" aria-pressed="${s===c}">${l}</button>`).join('')}</div></div>`;}).join('')}</div>
       <p class="small muted" style="margin-top:10px">These 16 questions cover the most common capabilities. Switch to <b>All capabilities</b> to answer the other ${S.capabilities.length-new Set(S.guide.flatMap(g=>g.caps)).size} one by one.</p>`;
   }else{
@@ -580,7 +598,7 @@ function capsCard(){
    <p>Each answer selects or discards tasks. Unsure? Leave it <b>unknown</b>: those tasks stay in the plan as pending and never count as passed.</p></div>
    <div class="row"><span class="chip pass">${vals.filter(v=>v==='present').length} present</span><span class="chip">${vals.filter(v=>v==='absent').length} absent</span><span class="chip unk">${vals.filter(v=>v==='unknown').length} unknown</span></div></div>
    <div class="capbar"><div class="seg">${[['interview','Interview (16 questions)'],['all','All capabilities ('+S.capabilities.length+')']].map(([k,l])=>`<button type="button" data-act="capMode" data-v="${k}" aria-pressed="${UI.capMode===k}">${l}</button>`).join('')}</div>
-   ${UI.capMode==='all'?`<input type="search" id="capq" placeholder="Filter capabilities" value="${esc(UI.capQ)}" style="max-width:240px" data-filter="capQ">`:''}</div>
+   ${UI.capMode==='all'?`<input type="search" aria-label="Filter capabilities" id="capq" placeholder="Filter capabilities" value="${esc(UI.capQ)}" style="max-width:240px" data-filter="capQ">`:''}</div>
    <div class="grid2" style="margin-bottom:12px;align-items:end"><label class="f" id="fld-caps-source">Source for your answers<input type="text" ${bind('caps.source')} value="${esc(src)}" placeholder="e.g. architecture doc v2, interview with the owner"><span class="hint">Present and absent answers need one; it is stored with each answer you give.</span></label>
    ${miss.length?`<div class="note warn"><b>${miss.length} answers need a source.</b> <button type="button" class="btn sm" data-act="capsSource" data-route="${esc(r.id)}" ${src.trim()?'':'disabled'}>Use this source for all of them</button></div>`:'<div class="note ok small">Every present or absent answer has a source.</div>'}</div>
    ${body}</div>`;
@@ -600,7 +618,7 @@ function protoForm(r,caseId,compact){
    ${compact?'':`<label class="f">Case<select ${bind(n+'.case')}><option value="">Choose a test case…</option><optgroup label="Applicable on ${esc(r.id)}">${grp('APPLICABLE')}</optgroup><optgroup label="Pending confirmation (unknown)">${grp('UNKNOWN')}</optgroup></select></label>`}
    ${c?`<p class="small muted">${esc(c.objective)}</p>`:''}
    <div class="f"><span class="small muted" style="font-weight:600">Variants that must be run</span><div class="chipsin">${f.variants.map((v,i)=>`<span class="chip">${esc(v)}<button type="button" data-act="varDel" data-ns="${esc(n)}" data-i="${i}" aria-label="Remove">×</button></span>`).join('')}
-    <input type="text" ${bind(n+'.newvar')} value="${val(n+'.newvar')}" placeholder="add a variant + Enter" data-enter="varAdd" data-ns="${esc(n)}"></div>
+    <input type="text" aria-label="New variant" ${bind(n+'.newvar')} value="${val(n+'.newvar')}" placeholder="add a variant + Enter" data-enter="varAdd" data-ns="${esc(n)}"></div>
     ${sug.length?`<div class="sugg">${sug.slice(0,8).map(v=>`<button type="button" data-act="varAdd" data-ns="${esc(n)}" data-v="${esc(v)}">+ ${esc(v)}</button>`).join('')}</div>`:''}</div>
    <div class="grid2"><label class="f">Minimum trials per variant<input type="number" min="1" ${bind(n+'.min')} value="${esc(f.min)}"></label>
     <label class="f">Design<select ${bind(n+'.design')}>${S.designs.map(d=>`<option ${d===f.design?'selected':''}>${d}</option>`).join('')}</select><span class="hint">${esc(DESIGN_INFO[f.design]||'')}</span></label></div>
@@ -622,20 +640,20 @@ function protocolsCard(){
 function previewBlock(){
   const pv=ST.preview||{};
   return `<div class="preview">${Object.entries(pv).map(([rid,d])=>{const tot=d.APPLICABLE+d.UNKNOWN+d.NOT_APPLICABLE||1;
-    return `<div class="pv"><b class="mono">${esc(rid)}</b><div class="bar"><i style="width:${100*d.APPLICABLE/tot}%;background:var(--teal)"></i><i style="width:${100*d.UNKNOWN/tot}%;background:var(--ochre)"></i></div><span class="c small muted">${d.APPLICABLE} applicable · ${d.UNKNOWN} unknown · ${d.NOT_APPLICABLE} n/a</span></div>`;}).join('')}</div>`;
+    return `<div class="pv"><b class="mono">${esc(rid)}</b><div class="bar"><i style="width:${100*d.APPLICABLE/tot}%;background:var(--accent)"></i><i style="width:${100*d.UNKNOWN/tot}%;background:var(--unk)"></i></div><span class="c small muted">${d.APPLICABLE} applicable · ${d.UNKNOWN} unknown · ${d.NOT_APPLICABLE} n/a</span></div>`;}).join('')}</div>`;
 }
 function freezeCard(){
-  const p=plan(), w=ST.workspace, blocking=ST.setup_items.filter(i=>i.blocking);
+  const p=plan(), w=ST.workspace, blocking=ST.setup_items.filter(i=>i.blocking), dirty=unsavedArchitecture();
   let body;
   if(!p){body=`${blocking.length?`<div class="note warn"><b>${blocking.length} things are still undefined.</b> Defining them first avoids a revision later: ${blocking.map(i=>esc(S.items[i.key].label+(i.route?' ('+i.route+')':''))).join(', ')}.</div>
-     <label class="check"><input type="checkbox" ${bind('freeze.anyway')} ${getF('freeze.anyway',false)?'checked':''}> Freeze anyway (the plan stays at code 2 until they are fixed)</label>`:'<div class="note ok">Everything needed before planning is in place.</div>'}
+     <label class="check"><input type="checkbox" ${bind('freeze.anyway')} ${getF('freeze.anyway',false)?'checked':''}> Freeze anyway (the plan stays at code 2 until they are fixed)</label>`:'<div class="note ok">Saved readiness fields are complete.</div>'}
      <div><button type="button" class="btn primary" data-act="freeze" ${blocking.length&&!getF('freeze.anyway',false)?'disabled':''}>Freeze the plan</button></div>`;}
   else if(p.stale){body=`<div class="note warn"><b>The architecture changed after ${esc(w.series)} was frozen.</b> Freeze a revision to apply it. A revision is a new plan: recorded results stay with ${esc(w.series)} and are not transferred.</div>
      <div class="grid2"><label class="f">Reason<input type="text" ${bind('freeze.reason')} value="${val('freeze.reason')}" placeholder="e.g. readiness fields completed"></label><label class="f">Approver<input type="text" ${bind('freeze.approver')} value="${val('freeze.approver',store.get('reviewer',S.user))}"></label></div>
      <div><button type="button" class="btn primary" data-act="freeze">Freeze revision</button></div>`;}
   else body=`<div class="note ok">${esc(w.series)} matches this architecture. Nothing to freeze.</div>`;
   return `<div class="card" id="sec-freeze"><div class="card-h"><div><span class="eyebrow">05 · Plan</span><h2>${p?'Revise the frozen plan':'Freeze the plan'}</h2><p>Freezing turns this architecture into a fixed list of obligations with a manifest. If it were frozen now:</p></div></div>
-   ${previewBlock()}<hr class="sep"><div class="stack">${body}</div></div>`;
+   ${previewBlock()}<hr class="sep"><div class="stack">${dirty.length?`<div class="note warn"><b>Unsaved changes:</b> ${dirty.map(x=>esc(x.label)).join(', ')}. Save these before freezing; the preview uses saved values.</div>`:''}${body}</div></div>`;
 }
 
 /* ================= plan board ================= */
@@ -643,7 +661,7 @@ const COLS=['FAIL','TODO','UNKNOWN','PASS','EXCLUDED','NOT_APPLICABLE'];
 function todoRank(t){const s=sample(t);if(blockedAccess(t))return 6;if(s&&s.ready)return 0;if(t.staged)return 1;if(s)return 2;if(t.activity==='DESIGN'||t.activity==='CONFIG')return 3;return 4;}
 function cardHint(t){
   if(t.bucket==='TODO'){
-    if(blockedAccess(t))return `<span class="chip unk">${t.scope!=='in_scope'?'out of scope':'access unknown'}</span>`;
+    if(blockedAccess(t))return `<span class="chip unk">${accessLabel(t)}</span>`;
     if(t.activity==='DESIGN'||t.activity==='CONFIG')return '<span class="chip todo">review</span>';
     const s=sample(t);if(!s)return '<span class="chip unk">needs protocol</span>';
     if(s.ready)return '<span class="chip ready">ready to decide</span>';
@@ -660,9 +678,10 @@ function boardView(){
   if(!plan())return `<div class="empty"><h1>No frozen plan yet</h1><p class="muted" style="margin:6px 0 18px">The plan appears once the architecture is frozen. Resolve what is pending in the sidebar, then freeze it.</p>
     ${previewBlock()}<p style="margin-top:18px"><button type="button" class="btn primary" data-act="goto" data-target="sec-freeze">Go to Freeze the plan</button></p></div>`;
   const all=tasks(), mods=[...new Set(all.map(t=>t.module))].sort(), acts=[...new Set(all.map(t=>t.activity))].sort();
-  const q=UI.q.toLowerCase(), c=counts(), p=plan();
+  const q=UI.q.trim().toLowerCase(), p=plan();
   const sel=all.filter(t=>(!UI.module||t.module===UI.module)&&(!UI.activity||t.activity===UI.activity)&&(!q||(t.alias+' '+t.title+' '+t.module).toLowerCase().includes(q)));
-  const tabs=[['all','All',all.length-c.NOT_APPLICABLE],['FAIL','Failed',c.FAIL],['TODO','To do',c.TODO],['UNKNOWN','Unknown',c.UNKNOWN],['PASS','Passed',c.PASS]].concat(c.EXCLUDED?[['EXCLUDED','Excluded',c.EXCLUDED]]:[]).concat([['NOT_APPLICABLE','Not applicable',c.NOT_APPLICABLE]]);
+  const c=Object.fromEntries(COLS.map(k=>[k,sel.filter(t=>t.bucket===k).length]));
+  const tabs=[['all','Selected',sel.filter(t=>t.bucket!=='NOT_APPLICABLE').length],['FAIL','Failed',c.FAIL],['TODO','To do',c.TODO],['UNKNOWN','Unknown',c.UNKNOWN],['PASS','Passed',c.PASS]].concat(c.EXCLUDED||UI.ltab==='EXCLUDED'?[['EXCLUDED','Excluded',c.EXCLUDED]]:[]).concat([['NOT_APPLICABLE','Not applicable',c.NOT_APPLICABLE]]);
   const shown=sel.filter(t=>UI.ltab==='all'?t.bucket!=='NOT_APPLICABLE':t.bucket===UI.ltab);
   const order={FAIL:0,TODO:1,UNKNOWN:2,PASS:3,EXCLUDED:4,NOT_APPLICABLE:5};
   shown.sort((a,b)=>order[a.bucket]-order[b.bucket]||(a.bucket==='TODO'?todoRank(a)-todoRank(b):0)||a.case_id.localeCompare(b.case_id));
@@ -670,7 +689,7 @@ function boardView(){
   shown.slice(0,lim).forEach(t=>{
     if(UI.ltab==='all'&&t.bucket!==cur){cur=t.bucket;rows+=`<tr class="grp"><td colspan="6">${STATUS_LBL[cur]}<span>${shown.filter(x=>x.bucket===cur).length}</span></td></tr>`;}
     const h=rowHint(t);
-    rows+=`<tr class="t ${t.bucket} ${UI.drawer===t.alias?'sel':''}" data-act="open" data-task="${esc(t.alias)}"><td><i class="d"></i></td><td class="id">${esc(t.alias)}</td><td class="tt">${esc(t.title)}</td><td class="m">${esc(t.module)}</td><td class="m">${esc(t.activity.charAt(0)+t.activity.slice(1).toLowerCase())}</td><td class="r ${h[1]}">${h[0]}${miniBar(t)}</td></tr>`;});
+    rows+=`<tr class="t ${t.bucket} ${UI.drawer===t.alias?'sel':''}" tabindex="0" aria-label="Open ${esc(t.alias)}: ${esc(t.title)}" data-act="open" data-task="${esc(t.alias)}"><td><i class="d"></i></td><td class="id">${esc(t.alias)}</td><td class="tt">${esc(t.title)}</td><td class="m">${esc(t.module)}</td><td class="m">${esc(t.activity.charAt(0)+t.activity.slice(1).toLowerCase())}</td><td class="r ${h[1]}">${h[0]}${miniBar(t)}</td></tr>`;});
   return `<div class="ph"><div><h1>Plan</h1><p>${esc(p.series)} · ${all.length} obligations · frozen ${when(p.created_at)}${ST.integrity_error?'':' · verifies against its manifest'}</p></div>
     <div class="filters"><select data-filter="module" aria-label="Module"><option value="">All modules</option>${mods.map(m=>`<option ${m===UI.module?'selected':''}>${esc(m)}</option>`).join('')}</select>
     <select data-filter="activity" aria-label="Activity"><option value="">All activities</option>${acts.map(m=>`<option ${m===UI.activity?'selected':''}>${esc(m)}</option>`).join('')}</select>
@@ -683,7 +702,7 @@ function boardView(){
 }
 function rowHint(t){
   if(t.bucket==='TODO'){
-    if(blockedAccess(t))return [t.scope!=='in_scope'?'out of scope':'access unknown','warn'];
+    if(blockedAccess(t))return [accessLabel(t),'warn'];
     if(t.activity==='DESIGN'||t.activity==='CONFIG')return ['review',''];
     const s=sample(t);if(!s)return ['needs protocol','warn'];
     if(s.ready)return ['ready to decide','ready'];
@@ -696,17 +715,18 @@ function rowHint(t){
 /* ================= drawer ================= */
 function openTask(alias,tab){if(UI.drawer!==alias)UI.dtab=tab||'work';else if(tab)UI.dtab=tab;UI.drawer=alias;$('#app').classList.add('has-detail');renderDrawer();
   if(matchMedia('(max-width:1180px)').matches)$('#scrim').classList.add('on');
-  $$('.lst tr.t').forEach(c=>c.classList.toggle('sel',c.dataset.task===alias));}
-function closeDrawer(){UI.drawer=null;$('#app').classList.remove('has-detail');$('#scrim').classList.remove('on');$('#drawer').innerHTML='';$$('.lst tr.sel').forEach(c=>c.classList.remove('sel'));}
+  $$('.lst tr.t').forEach(c=>c.classList.toggle('sel',c.dataset.task===alias));$('#drawer .x')?.focus();}
+function closeDrawer(){const alias=UI.drawer,restore=$('#drawer').contains(document.activeElement);UI.drawer=null;$('#app').classList.remove('has-detail');$('#scrim').classList.remove('on');$('#drawer').innerHTML='';$$('.lst tr.sel').forEach(c=>c.classList.remove('sel'));if(restore)$$('.lst tr.t').find(c=>c.dataset.task===alias)?.focus();}
 function renderDrawer(){
-  const d=$('#drawer');if(!UI.drawer){$('#app').classList.remove('has-detail');return;}$('#app').classList.add('has-detail');
+  const d=$('#drawer'),focusedTab=d.contains(document.activeElement)&&document.activeElement.dataset.act==='dtab';if(!UI.drawer){$('#app').classList.remove('has-detail');return;}$('#app').classList.add('has-detail');
   const t=findTask(UI.drawer);if(!t){closeDrawer();return;}
   const tabs=[['work',t.result?'Result':'Work'],['card','Fieldcard'],['ev','Evidence']];
   const old=$('#drawer .db'), keep=old&&d.dataset.for===t.alias+'|'+UI.dtab?old.scrollTop:0; d.dataset.for=t.alias+'|'+UI.dtab;
   d.innerHTML=`<button class="x" type="button" data-act="close" aria-label="Close">×</button><div class="dh"><div class="id"><span>${esc(t.alias)}</span><span class="badge b-${t.bucket}">${esc(S.state_meta[t.bucket][0])}</span><span class="chip">${esc(t.module)}</span><span class="chip">${esc(t.activity.charAt(0)+t.activity.slice(1).toLowerCase())}</span></div>
-   <h2 id="dtitle">${esc(t.title)}</h2><div class="dtabs" role="tablist">${tabs.map(([k,l])=>`<button type="button" role="tab" data-act="dtab" data-v="${k}" aria-selected="${UI.dtab===k}">${l}</button>`).join('')}</div></div>
-   <div class="db">${UI.dtab==='card'?fieldcardTab(t):UI.dtab==='ev'?evidenceTab(t):workTab(t)}</div>`;
+   <h2 id="dtitle">${esc(t.title)}</h2><div class="dtabs" role="tablist">${tabs.map(([k,l])=>`<button type="button" role="tab" id="dtab-${k}" aria-controls="task-panel" tabindex="${UI.dtab===k?0:-1}" data-act="dtab" data-v="${k}" aria-selected="${UI.dtab===k}">${l}</button>`).join('')}</div></div>
+   <div class="db" id="task-panel" role="tabpanel" aria-labelledby="dtab-${UI.dtab}">${UI.dtab==='card'?fieldcardTab(t):UI.dtab==='ev'?evidenceTab(t):workTab(t)}</div>`;
   if(keep)$('#drawer .db').scrollTop=keep;
+  if(focusedTab)$('#dtab-'+UI.dtab)?.focus();
   if(UI.dtab==='card'&&!FC[t.case_id])loadFieldcard(t.case_id);
 }
 async function loadFieldcard(id){try{FC[id]=(await api('fieldcard?case='+encodeURIComponent(id))).html;}catch(e){FC[id]=`<p class="muted">${esc(e.message)}</p>`;}if(UI.drawer&&UI.dtab==='card')renderDrawer();}
@@ -723,10 +743,10 @@ function workTab(t){
   if(t.bucket==='UNKNOWN'){const need=[...new Set(c.applies_if.filter(cl=>!cl.some(k=>r.capabilities[k]==='absent')).flat())];
     return `${facts(t)}<div class="note warn"><b>Pending confirmation.</b> This task applies only if the route has these capabilities. Confirm them (with a source) and freeze a revision; until then it stays pending and never counts as passed.</div>
     <div class="caps">${need.map(k=>{const v=r.capabilities[k]||'unknown';const info=S.capabilities.find(x=>x.key===k)||{label:k};
-      return `<div class="cap"><span class="tri">${[['absent','a','–'],['unknown','u','?'],['present','p','✓']].map(([s,cl,l])=>`<button type="button" class="${cl}" data-act="cap" data-route="${esc(t.route_id)}" data-k="${esc(k)}" data-v="${s}" aria-pressed="${v===s}">${l}</button>`).join('')}</span><div><div class="l">${esc(info.label)}</div><span class="k">${esc(k)}</span></div></div>`;}).join('')}</div>
+      return `<div class="cap"><span class="tri">${[['absent','a','–'],['unknown','u','?'],['present','p','✓']].map(([s,cl,l])=>`<button type="button" class="${cl}" data-act="cap" data-route="${esc(t.route_id)}" data-k="${esc(k)}" data-v="${s}" aria-pressed="${v===s}" aria-label="${s}">${l}</button>`).join('')}</span><div><div class="l">${esc(info.label)}</div><span class="k">${esc(k)}</span></div></div>`;}).join('')}</div>
     <p class="small muted">${capSource()?'Answers are recorded with the source <b>'+esc(capSource())+'</b> (change it in Architecture → Capabilities).':'Set a source for your answers in Architecture → Capabilities first.'}</p>`;}
   if(t.result)return `${facts(t)}${resultBlock(t)}`;
-  if(blockedAccess(t))return `${facts(t)}<div class="note warn"><b>${t.scope!=='in_scope'?'This route is out of scope.':'Access for this route is unknown in the frozen plan.'}</b> Declare how you can see the route in Architecture, then freeze a revision. <button type="button" class="btn sm" data-act="goto" data-target="fld-access">Go to access</button></div>`;
+  if(blockedAccess(t)){const scope=t.scope!=='in_scope';return `${facts(t)}<div class="note warn"><b>${accessLabel(t)} in the frozen plan.</b> ${scope?'Review the authorized scope before including this route.':'Declare the access available for this route.'} Save the route in Architecture, then freeze a revision. <button type="button" class="btn sm" data-act="goto" data-route="${esc(t.route_id)}" data-target="${scope?'fld-scope':'fld-access'}">${scope?'Review scope':'Review access'}</button></div>`;}
   if(t.activity==='DESIGN'||t.activity==='CONFIG')return `${facts(t)}${reviewForm(t)}`;
   if(!t.test_protocol){const rr=routeOf(t.route_id);const has=rr&&(rr.test_protocols||[]).some(p=>p.case_id===t.case_id);
     return `${facts(t)}<div class="note warn"><b>No protocol in the frozen plan.</b> A test needs its variants, trials and decision rule fixed before running.${has?' A protocol is already saved in the architecture: freeze a revision to apply it.':''}</div>
@@ -755,7 +775,7 @@ function evSlots(n,kinds,required){
     return `<div class="ev ${has?'has':''}" data-evslot="${esc(k)}" data-ns="${esc(n)}" title="${esc(S.kinds[k]||'')}"><div class="k">${esc(k)}<span class="req ${req?'':'o'}">${has?'ready':req?'required':'optional'}</span></div><div class="body">
      ${e?(e.sha?`<div class="file"><b>${esc(e.name)}</b><span class="faint">${fmtBytes(e.size)}</span><span class="hash" title="SHA-256 ${esc(e.sha)}">${esc(e.sha.slice(0,20))}…</span><button type="button" data-act="evRm" data-ns="${esc(n)}" data-kind="${esc(k)}">Remove</button></div>`
        :'<div class="small muted"><span class="spin"></span> hashing…</div>')
-      :`<button type="button" class="drop" data-act="evPick" data-ns="${esc(n)}" data-kind="${esc(k)}">Choose a file</button><textarea ${bind(n+'.note_'+k)} placeholder="${esc(S.kinds[k]||'')} Or write a short note.">${esc(note)}</textarea>`}</div></div>`;}).join('')}</div>
+      :`<button type="button" class="drop" data-act="evPick" data-ns="${esc(n)}" data-kind="${esc(k)}">Choose a file</button><textarea aria-label="${esc(k)} evidence note" ${bind(n+'.note_'+k)} placeholder="${esc(S.kinds[k]||'')} Or write a short note.">${esc(note)}</textarea>`}</div></div>`;}).join('')}</div>
    <p class="tiny faint">Files are hashed (SHA-256) in your browser, hashed again on arrival and copied into the workspace evidence store. Names that contain a kind (e.g. response.json) go to that row.</p>`;}
 function evPayload(n,kinds){const f=ns(n),ev=f.ev||{},files=[],notes=[];
   kinds.forEach(k=>{const e=ev[k];if(e&&e.sha)files.push({kind:k,name:e.name,sha256:e.sha,data:e.data});else{const t=String(getF(n+'.note_'+k,'')).trim();if(t)notes.push({kind:k,text:t});}});
@@ -779,10 +799,10 @@ function recordForm(t,s){
    <div class="grid2"><label class="f">Expected (the control holds if…)<textarea ${bind(n+'.expected')} placeholder="e.g. only tenant A documents are retrieved">${val(n+'.expected')}</textarea></label>
     <label class="f">Observed<textarea ${bind(n+'.observed')} placeholder="e.g. a tenant B document reached the context">${val(n+'.observed')}</textarea></label></div>
    <div class="grid3"><label class="f">Identity used<input type="text" ${bind(n+'.identity')} value="${val(n+'.identity')}" placeholder="e.g. tenant-a test user"></label>
-    <label class="f">Reachability<select ${bind(n+'.reachability')}>${['reached','blocked_by_control','not_reached','unknown'].map(x=>`<option ${x===f.reachability?'selected':''}>${x}</option>`).join('')}</select></label>
+    <label class="f">Reachability<select ${bind(n+'.reachability')}>${['reached','blocked_by_control','not_reached','unknown'].map(x=>`<option value="${x}" ${x===f.reachability?'selected':''}>${x.replace(/_/g,' ')}</option>`).join('')}</select></label>
     ${f.reachability==='blocked_by_control'?`<label class="f">Blocking control<select ${bind(n+'.blocking_control')}><option value="">Choose…</option>${c.control_ids.map(x=>`<option ${x===f.blocking_control?'selected':''}>${esc(x)}</option>`).join('')}</select></label>`:`<label class="f">Technique (optional)<select ${bind(n+'.technique')}><option value="">–</option>${c.technique_ids.map(x=>`<option ${x===f.technique?'selected':''}>${esc(x)}</option>`).join('')}</select></label>`}</div>
    <div class="f"><span>Where the input came from</span><div class="row"><div class="seg">${[['example','Catalog example'],['own','Own adaptation']].map(([k,l])=>`<button type="button" data-act="setf" data-path="${esc(n)}.src" data-val="${k}" aria-pressed="${f.src===k}" ${k==='example'&&!c.example_ids.length?'disabled':''}>${l}</button>`).join('')}</div>
-    ${f.src==='example'?`<select ${bind(n+'.example')} style="max-width:260px">${c.example_ids.map(x=>`<option ${x===f.example?'selected':''}>${esc(x)}</option>`).join('')}</select>`:''}</div>
+    ${f.src==='example'?`<select aria-label="Catalog example" ${bind(n+'.example')} style="max-width:260px">${c.example_ids.map(x=>`<option ${x===f.example?'selected':''}>${esc(x)}</option>`).join('')}</select>`:''}</div>
     ${f.src==='own'?`<textarea ${bind(n+'.adaptation')} placeholder="How you adapted the input (provenance), e.g. own query about tenant B invoices">${val(n+'.adaptation')}</textarea>`:''}</div>
    ${needRat?`<label class="f">Rationale (required: why it was ${f.execution!=='completed'?f.execution:'inconclusive'})<textarea ${bind(n+'.rationale')}>${val(n+'.rationale')}</textarea></label>`:''}
    <label class="check"><input type="checkbox" ${bind(n+'.baseline_failed')} ${f.baseline_failed?'checked':''}> <span>The benign baseline did <b>not</b> work (the trial cannot count as PASS or FAIL)</span></label>
@@ -871,8 +891,9 @@ function pending(){
 function gapKey(g){return({authorization_ref:'authorization',snapshot_ref:'snapshot',evidence_store:'evidence-store','inventory_review.reviewer':'reviewer','inventory_review.reviewed_at':'reviewer','inventory_review.evidence_ref':'inventory-evidence',stop_conditions:'stop',limits:'limits',core_design_missing:'activities'})[g]||g;}
 function fieldFor(k){return({access:'fld-access',actor:'fld-actor',boundary:'fld-boundary',activities:'fld-activities','caps-source':'fld-caps-source'})[k]||'fld-'+k;}
 /* ================= export modal & help ================= */
-function openModal(html){const m=$('#modal');m.innerHTML=`<div class="scrim on" data-act="closeModal" style="position:absolute"></div><div class="box">${html}<button class="x" type="button" data-act="closeModal" aria-label="Close">×</button></div>`;m.classList.add('on');setTimeout(()=>{const b=m.querySelector('.box button, .box input');if(b)b.focus();},30);}
-function closeModal(){$('#modal').classList.remove('on');$('#modal').innerHTML='';}
+let modalReturn=null;
+function openModal(html){const m=$('#modal');if(!m.classList.contains('on'))modalReturn=document.activeElement;m.innerHTML=`<div class="scrim on" data-act="closeModal" style="position:absolute"></div><div class="box">${html}<button class="x" type="button" data-act="closeModal" aria-label="Close">×</button></div>`;m.classList.add('on');const title=m.querySelector('h2');if(title){title.id='modal-title';m.setAttribute('aria-labelledby',title.id);}$('#app').inert=true;setTimeout(()=>{const b=m.querySelector('.box button, .box input');if(b)b.focus();},30);}
+function closeModal(){const m=$('#modal'),wasOpen=m.classList.contains('on');m.classList.remove('on');m.innerHTML='';$('#app').inert=false;if(wasOpen&&modalReturn?.isConnected)modalReturn.focus();}
 function exportModal(){
   const lay=getF('exp.layout','board'),fmt=getF('exp.format','html');
   openModal(`<div class="mh"><span class="eyebrow">Report</span><h2>Export the report</h2><p class="small muted" style="margin-top:4px">Written into the workspace reports/ folder. The HTML is one self-contained file: no internet needed to open or share it.</p></div>
@@ -889,15 +910,15 @@ function helpModal(){openModal(`<div class="mh"><h2>Keyboard shortcuts</h2></div
 /* ================= actions ================= */
 function gotoTarget(view,id){if(view&&UI.view!==view){UI.view=view;store.set('view',view);}closeDrawer();closeModal();document.body.classList.remove('side-open');$('#scrim').classList.remove('on');render();
   if(id)setTimeout(()=>{const el=document.getElementById(id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});const f=el.closest('.fld')||el;f.classList.remove('flash');void f.offsetWidth;f.classList.add('flash');const i=el.querySelector('input,textarea,button');if(i)i.focus({preventScroll:true});},50);
-  else window.scrollTo({top:0});}
+  else $('#main').scrollTo({top:0});}
 const A={
-  view:el=>{document.body.classList.remove('side-open');$('#scrim').classList.remove('on');UI.view=el.dataset.v;store.set('view',UI.view);closeDrawer();render();window.scrollTo({top:0});},
+  view:el=>{document.body.classList.remove('side-open');$('#scrim').classList.remove('on');UI.view=el.dataset.v;store.set('view',UI.view);closeDrawer();render();$('#main').scrollTo({top:0});$('#main').focus({preventScroll:true});},
   theme:()=>{UI.theme={system:'light',light:'dark',dark:'system'}[UI.theme];store.set('theme',UI.theme);applyTheme();renderSide();},
   help:()=>helpModal(), export:()=>{if(plan())exportModal();}, closeModal:()=>closeModal(),
   rail:()=>{const o=document.body.classList.toggle('side-open');$('#scrim').classList.toggle('on',o||(!!UI.drawer&&matchMedia('(max-width:1180px)').matches));},
   close:()=>{closeDrawer();document.body.classList.remove('side-open');$('#scrim').classList.remove('on');},
   setf:el=>{setF(el.dataset.path,el.dataset.val);render();},
-  create:async()=>{const r=await act('new',{folder:getF('new.folder','my-assessment'),name:getF('new.name',''),profile:getF('new.profile','rag')},'Workspace created');if(r){UI.view='arch';render();}},
+  create:async()=>{const r=await act('new',{folder:getF('new.folder',ST.default_folder||'my-assessment'),name:getF('new.name',''),profile:getF('new.profile','rag')},'Workspace created');if(r){UI.view='arch';render();}},
   open:async el=>{if(el.dataset.task){openTask(el.dataset.task);return;}const r=await act('open',{folder:el.dataset.folder||getF('open.folder','')},'Workspace opened');if(r){UI.view='arch';render();}},
   route:el=>{UI.route=+el.dataset.i;UI.stone=0;render();},
   rset:el=>{const r=routeOf(el.dataset.route);rform(r)[el.dataset.k]=el.dataset.val;render();},
@@ -905,6 +926,7 @@ const A={
   hopAdd:el=>{const f=rform(routeOf(el.dataset.route));f.hops.push('');const n='route:'+el.dataset.route;render();setTimeout(()=>{const i=document.getElementById('b-'+n+'.hop'+(f.hops.length-1));if(i)i.focus();},20);},
   hopDel:el=>{const f=rform(routeOf(el.dataset.route));f.hops.splice(+el.dataset.i,1);render();},
   saveRoute:async el=>{const r=routeOf(el.dataset.route),f=rform(r),id=r.id,calls=[];
+    if((rbase(r).actor&&!f.actor.trim())||(hops(r.boundary).length&&!f.hops.length)||f.hops.some(h=>!h.trim())){toast('Describe the actor and every component before saving.','Remove empty components or give them a name.','err');return;}
     if(!f.activities.length){toast('Choose at least one activity.','','err');return;}
     if((f.actor||'')!==(vague(r.actor)?'':r.actor)&&f.actor.trim())calls.push(['actor',f.actor]);
     const b=f.hops.map(s=>s.trim()).filter(Boolean).join(' -> ');if(b&&b!==hops(r.boundary).join(' -> '))calls.push(['boundary',b]);
@@ -935,13 +957,13 @@ const A={
     if(!f.variants.length){toast('Add at least one variant.','','err');return;}if(!String(f.rule||'').trim()||!String(f.why||'').trim()){toast('Write the decision rule and why this depth is enough.','','err');return;}
     const r=await act('protocol',{case:f.case,variants:f.variants.join(','),min:+f.min||1,design:f.design,rule:f.rule,why:f.why,route:id});
     if(r){delete F['proto:'+id];if(plan())toast('Protocol saved in the architecture.','Freeze a revision to bring it into the plan.','warn');render();}},
-  freeze:async()=>{const p=plan();if(p&&!String(getF('freeze.reason','')).trim()){toast('Write the reason for the revision.','','err');return;}
+  freeze:async()=>{const dirty=unsavedArchitecture();if(dirty.length){const first=dirty[0];if(first.route)UI.route=ST.arch.routes.findIndex(r=>r.id===first.route);toast('Save your architecture edits before freezing.',dirty.map(x=>x.label).join(', '),'warn');gotoTarget('arch',first.target);return;}const p=plan();if(p&&!String(getF('freeze.reason','')).trim()){toast('Write the reason for the revision.','','err');return;}
     const r=await act('plan',{reason:getF('freeze.reason',''),approver:getF('freeze.approver',store.get('reviewer',S.user)),anyway:!!getF('freeze.anyway',false)});
-    if(r&&plan()&&!plan().stale){delete F.freeze;UI.view='plan';store.set('view','plan');render();window.scrollTo({top:0});}},
+    if(r&&plan()&&!plan().stale){delete F.freeze;UI.view='plan';store.set('view','plan');render();$('#main').scrollTo({top:0});}},
   ltab:el=>{UI.ltab=el.dataset.v;render();},
   more:()=>{UI.lim=(UI.lim||120)+200;render();},
   dtab:el=>{UI.dtab=el.dataset.v;renderDrawer();},
-  goto:el=>{const id=el.dataset.target;gotoTarget(id&&id.startsWith('sec-')||id&&id.startsWith('fld-')?'arch':null,id);},
+  goto:el=>{if(el.dataset.route){const i=ST.arch.routes.findIndex(r=>r.id===el.dataset.route);if(i>=0)UI.route=i;}const id=el.dataset.target;gotoTarget(id&&id.startsWith('sec-')||id&&id.startsWith('fld-')?'arch':null,id);},
   pend:el=>{const x=UI._pend[+el.dataset.i];if(!x)return;document.body.classList.remove('side-open');$('#scrim').classList.remove('on');
     if(x.route){const i=ST.arch.routes.findIndex(r=>r.id===x.route);if(i>=0)UI.route=i;}
     if(x.task){if(UI.view!=='plan'){UI.view='plan';store.set('view','plan');render();}openTask(x.task);}else if(x.exp)exportModal();else gotoTarget(x.go[0],x.go[1]);},
@@ -987,9 +1009,9 @@ async function sha256(buf){if(window.crypto&&crypto.subtle){const d=await crypto
 function b64(buf){const b=new Uint8Array(buf);let s='';for(let i=0;i<b.length;i+=0x8000)s+=String.fromCharCode.apply(null,b.subarray(i,i+0x8000));return btoa(s);}
 async function addFile(n,kind,file){
   if(file.size>40*1024*1024){toast(file.name+' is larger than 40 MB.','Store large captures elsewhere and record a short note or an extract that points to them.','err');return;}
-  const f=ns(n);f.ev=f.ev||{};f.ev[kind]={name:file.name,size:file.size};render();
-  try{const buf=await file.arrayBuffer();const sha=await sha256(buf);f.ev[kind]={name:file.name,size:file.size,sha,data:b64(buf)};}
-  catch(e){delete f.ev[kind];toast('Could not read '+file.name,e.message,'err');}
+  const f=ns(n);f.ev=f.ev||{};const pending={name:file.name,size:file.size};f.ev[kind]=pending;render();
+  try{const buf=await file.arrayBuffer();const sha=await sha256(buf);if(f.ev[kind]===pending)f.ev[kind]={name:file.name,size:file.size,sha,data:b64(buf)};}
+  catch(e){if(f.ev[kind]===pending)delete f.ev[kind];toast('Could not read '+file.name,e.message,'err');}
   render();
 }
 function guessKind(name,free,all){const low=name.toLowerCase();return all.find(k=>low.includes(k)&&free.includes(k))||free[0];}
@@ -1003,16 +1025,25 @@ document.addEventListener('drop',e=>{e.preventDefault();$$('.drag').forEach(x=>x
   const n=(grid||slot.closest('.evgrid')).dataset.evgrid,f=ns(n);f.ev=f.ev||{};
   const all=$$('.ev',grid||slot.closest('.evgrid')).map(x=>x.dataset.evslot);
   for(const file of files){const free=all.filter(k=>!(f.ev[k])&&!String(getF(n+'.note_'+k,'')).trim());if(!free.length){toast('Every evidence slot is filled.','','warn');break;}
-    const k=guessKind(file.name,free,all);f.ev[k]={name:file.name,size:file.size};addFile(n,k,file);}
+    const k=guessKind(file.name,free,all);addFile(n,k,file);}
 });
 
 /* ================= events ================= */
-document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(!el||el.disabled)return;const fn=A[el.dataset.act];if(!fn)return;
-  if(el.tagName==='INPUT'&&el.type==='checkbox'){fn(el,e);return;}e.preventDefault();fn(el,e);});
+const MUTATIONS=new Set(['create','open','saveRoute','saveField','saveLimits','stopDel','cap','capq','capsSource','saveProto','freeze','record','decide','review','doExport']);
+let writing=false;
+async function dispatch(el,e){
+  const fn=A[el.dataset.act];if(!fn||el.disabled)return;
+  const writes=MUTATIONS.has(el.dataset.act)&&!(el.dataset.act==='open'&&el.dataset.task);
+  if(writes&&writing){toast('A save is already in progress.','Wait for it to finish, then try again.','warn');return;}
+  if(writes)writing=true;
+  try{await fn(el,e);}catch(err){toast(err.message,err.hint,'err');}finally{if(writes)writing=false;}
+}
+document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(!el||el.disabled)return;
+  if(!(el.tagName==='INPUT'&&el.type==='checkbox'))e.preventDefault();dispatch(el,e);});
 document.addEventListener('input',e=>{const el=e.target;
   if(el.dataset.bind){setF(el.dataset.bind,el.type==='checkbox'?el.checked:el.value);
     const m=el.dataset.bind.match(/^(route:[^.]+)\.hop(\d+)$/);if(m){F[m[1]].hops[+m[2]]=el.value;}
-    if(el.tagName==='SELECT'||el.type==='checkbox'||/\.(variant|reachability|case|design)$/.test(el.dataset.bind)||m||/^(rd|lim|freeze|route:[^.]+)\./.test(el.dataset.bind)||/\.note_/.test(el.dataset.bind)||/^(rec|dec|rev):/.test(el.dataset.bind))schedule();
+    if(el.tagName==='SELECT'||el.type==='checkbox'||/\.(variant|reachability|case|design)$/.test(el.dataset.bind)||m||/^(rd|lim|freeze|route:[^.]+|proto:[^.]+)\./.test(el.dataset.bind)||/\.note_/.test(el.dataset.bind)||/^(rec|dec|rev):/.test(el.dataset.bind))schedule();
     return;}
   if(el.dataset.filter){UI[el.dataset.filter]=el.value;schedule();}
 });
@@ -1020,9 +1051,16 @@ document.addEventListener('change',e=>{const el=e.target;if(el.dataset.filter){U
 let tm=null;function schedule(){clearTimeout(tm);tm=setTimeout(render,120);}
 document.addEventListener('keydown',e=>{
   const el=e.target, typing=el.matches&&el.matches('input,textarea,select');
-  if(e.key==='Enter'&&el.dataset&&el.dataset.enter&&!e.shiftKey){e.preventDefault();const fn=A[el.dataset.enter];if(fn)fn(el);return;}
+  if($('#modal').classList.contains('on')){
+    if(e.key==='Escape'){e.preventDefault();closeModal();return;}
+    if(e.key==='Tab'){const items=$$('#modal .box button:not([disabled]), #modal .box input, #modal .box a[href]');const first=items[0],last=items[items.length-1];if(e.shiftKey&&el===first){e.preventDefault();last?.focus();}else if(!e.shiftKey&&el===last){e.preventDefault();first?.focus();}}
+    return;
+  }
+  if((e.key==='Enter'||e.key===' ')&&el.matches('li[data-act],tr[data-act]')){e.preventDefault();dispatch(el,e);return;}
+  if(e.key==='Enter'&&el.dataset&&el.dataset.enter&&!e.shiftKey){e.preventDefault();dispatch({dataset:{...el.dataset,act:el.dataset.enter}},e);return;}
   if(e.key==='Enter'&&el.dataset&&el.dataset.save==='name'){e.preventDefault();el.blur();return;}
   if(e.key==='Escape'){if($('#modal').classList.contains('on'))closeModal();else if(UI.drawer)closeDrawer();else document.body.classList.remove('side-open');$('#scrim').classList.remove('on');return;}
+  if(el.dataset?.act==='dtab'&&['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const tabs=['work','card','ev'],i=tabs.indexOf(UI.dtab);UI.dtab=e.key==='Home'?tabs[0]:e.key==='End'?tabs[2]:tabs[(i+(e.key==='ArrowRight'?1:2))%3];renderDrawer();return;}
   if(typing||e.ctrlKey||e.metaKey||e.altKey)return;
   if(e.key==='/'&&ST&&ST.workspace){e.preventDefault();if(UI.view!=='plan'){UI.view='plan';render();}const q=$('#boardq');if(q)q.focus();}
   else if(['1','2','3'].includes(e.key)&&ST&&ST.workspace){A.view({dataset:{v:['arch','plan','log'][+e.key-1]}});}

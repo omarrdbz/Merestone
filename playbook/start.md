@@ -69,6 +69,8 @@ python fieldguide.py report runs/plan.json --manifest runs/plan.json.manifest.js
 
 In a guided-CLI workspace the same check and report are `merestone status` and `merestone report`. For people who do not use the terminal, `merestone report --format html` writes a self-contained, read-only dashboard (`--layout document` for a top-to-bottom, print-friendly version); `--format both` writes Markdown and HTML together. `merestone ui` opens the same workflow as a local web interface (architecture editor, plan board, trial recording with drag-and-drop evidence and report export) that runs only on your computer.
 
+In the UI, save route, readiness and protocol edits before freezing. Capability answers save immediately. Scope changes affect a frozen plan only after a revision; marking a route out of scope does not count as passing its tasks. See the [UI guide](../docs/UI-GUIDE.md) for the complete save, revision and evidence workflow.
+
 Code 0: selected obligations resolved without FAIL and references verified. Code 1: there are FAILs and nothing pending. Code 2: missing readiness/evidence/verification, pending items/exclusions exist or the record is inconsistent. A code 0 does not certify the system: it depends on the scope, the frozen catalog and technical judgment. Without an external manifest or a verifiable store, no green closure is issued.
 
 ## 5. Consolidate, correct and retest
