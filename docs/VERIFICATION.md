@@ -4,7 +4,7 @@ The check distinguishes implementation, catalog consistency and evaluation of a 
 
 ## Implementation results
 
-The [2026-10-13 UI audit](UX-AUDIT.md) adds current regression coverage: **83 Python tests and 13 client tests passed**, with browser checks of scope, saving, planning, filters, keyboard navigation and responsive layout. The results below and their linked output describe the original 0.3.0 verification.
+The [2026-10-13 UI audit](UX-AUDIT.md) adds current regression coverage: **91 Python tests and 29 client tests passed** after its second pass on the route editor, with browser checks of routes, trust boundaries, previews, scope, saving, planning, revisions, filters, keyboard navigation and responsive layout. The results below and their linked output describe the original 0.3.0 verification.
 
 - **81 tests passed**: planning, evidence, protocols, import, tracking, reporting, the JSON/schema utilities, the guided CLI (`merestone.py`), the HTML report and the local web interface (`merestone ui`: session key, Host and Origin checks, hash re-verification and the same rules as the CLI). [Full output](test-results.txt).
 - **75 cases, 31 controls, 85 techniques, 129 example inputs and 6 scenarios** with verified references and relations.

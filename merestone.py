@@ -281,13 +281,229 @@ def cmd_set(a):
                 bad = set(acts) - set(op.ACTIVITIES)
                 if bad: raise UserError('Unknown activity: ' + ', '.join(sorted(bad)), 'Use DESIGN, CONFIG, TEST, REDTEAM')
                 r['activity_types'] = list(dict.fromkeys(acts))
+            elif f == 'boundary':
+                hops = path_hops(v)
+                if not hops: raise UserError('Name at least one component of the path.', 'Example: merestone set boundary "app -> document search -> model -> answer"')
+                r['boundary'] = ' -> '.join(hops)
+                for m in prune_trust(r): out(S.yellow(f'Trust boundary mark removed (no longer a step of {r["id"]}): ') + f"{m['from']} -> {m['to']}")
             else: r[f] = v
+    elif f in ('permissions', 'check'):
+        for r in routes_of(arch, a.route):
+            if f == 'check': set_route_check(arch, r, v)
+            elif v.strip(): r['actor_permissions'] = v.strip()
+            else: r.pop('actor_permissions', None)
     else:
         raise UserError(f'Unknown field "{f}".', 'Fields: ' + ', '.join(SET_FIELDS))
     ws.save_arch(arch); ws.log(f'set {f}', 'architecture.json')
     out(S.green(f'Set {f}.')); stale_note(ws)
     return 0
-SET_FIELDS = ['name', 'authorization', 'snapshot', 'reviewer', 'reviewed-at', 'inventory-evidence', 'evidence-store', 'stop', 'limits', 'owner', 'access', 'scope', 'boundary', 'actor', 'activities']
+SET_FIELDS = ['name', 'authorization', 'snapshot', 'reviewer', 'reviewed-at', 'inventory-evidence', 'evidence-store', 'stop', 'limits', 'owner', 'access', 'scope', 'boundary', 'actor', 'permissions', 'check', 'activities']
+
+
+# ---------- routes: the concrete flows being assessed ----------
+# A route is one flow: who starts it (actor, with its own permissions), the components it passes through
+# (stored in the historical "boundary" field as "a -> b -> c") and the result it produces. Trust boundaries are
+# the handoffs where permissions, identity, authority or trust in the data change; they are marked explicitly
+# (optional "trust_boundaries"), never inferred from the path. Planning ignores these descriptive fields, so
+# architectures without them keep producing exactly the same obligations.
+TRUST_CHANGES = ('permissions', 'identity', 'authority', 'data_trust')
+THREAT_PLACEHOLDER = 'Complete actor, access, boundary, effect and control'
+ROUTE_ID = re.compile(r'^[A-Z0-9][A-Z0-9_-]{0,31}$')
+PATH_SPLIT = re.compile(r'\s*(?:->|→|=>)\s*')
+
+
+def path_hops(path):
+    """Components of a path, in order; empty while it is still a placeholder."""
+    if not str(path).strip() or PLACEHOLDER in str(path).lower(): return []
+    parts = [x.strip() for x in PATH_SPLIT.split(str(path).strip())]
+    if any(not x for x in parts): raise UserError('Every component of the path needs a name.', 'Example: "app -> document search -> model -> answer"')
+    return parts
+
+
+def handoffs(route):
+    """Consecutive (from, to) steps of a route. The actor is the first node and is written "actor"."""
+    nodes = ['actor'] + path_hops(route['boundary'])
+    return list(zip(nodes, nodes[1:])) if len(nodes) > 1 else []
+
+
+def parse_trust(item):
+    """A trust boundary mark from the CLI ("FROM -> TO: change, change | note") or the UI (a dict)."""
+    if isinstance(item, dict):
+        frm, to, note = (str(item.get(k) or '').strip() for k in ('from', 'to', 'note'))
+        changes = item.get('changes') or []
+        changes = changes.split(',') if isinstance(changes, str) else [str(c) for c in changes]
+    else:
+        text, _, note = str(item).partition('|'); pair, sep, ch = text.rpartition(':'); parts = PATH_SPLIT.split(pair.strip())
+        if not sep or len(parts) != 2 or not all(p.strip() for p in parts):
+            raise UserError(f'Bad trust boundary "{item}".', 'Use: "FROM -> TO: identity, permissions | optional note", e.g. "document search -> model: data_trust"')
+        frm, to = parts[0].strip(), parts[1].strip(); changes = ch.split(','); note = note.strip()
+    changes = {c.strip().lower().replace('-', '_').replace(' ', '_') for c in changes if c.strip()}
+    bad = sorted(changes - set(TRUST_CHANGES))
+    if bad: raise UserError('Unknown trust change: ' + ', '.join(bad), 'Use: ' + ', '.join(TRUST_CHANGES))
+    if not changes: raise UserError(f'Say what changes between {frm} and {to}.', 'Use one or more of: ' + ', '.join(TRUST_CHANGES))
+    entry = {'from': frm, 'to': to, 'changes': [c for c in TRUST_CHANGES if c in changes]}
+    if note: entry['note'] = note
+    return entry
+
+
+def set_trust(route, entries):
+    """Replace the trust boundary marks of a route; every mark must be a step of its current path."""
+    steps = handoffs(route); merged = {}
+    for e in entries:
+        key = (e['from'], e['to'])
+        if key not in steps:
+            raise UserError(f'"{key[0]} -> {key[1]}" is not a step of {route["id"]}.',
+                            'Steps: ' + (', '.join(f'{x} -> {y}' for x, y in steps) or 'describe the path first'))
+        if key in merged:
+            old = merged[key]; old['changes'] = [c for c in TRUST_CHANGES if c in set(old['changes']) | set(e['changes'])]
+            if e.get('note') and not old.get('note'): old['note'] = e['note']
+        else: merged[key] = dict(e)
+    marks = [merged[k] for k in dict.fromkeys(steps) if k in merged]
+    if marks: route['trust_boundaries'] = marks
+    else: route.pop('trust_boundaries', None)
+
+
+def prune_trust(route):
+    """After a path change, drop the marks that are no longer a step of the route; return them."""
+    steps = set(handoffs(route)); keep, dropped = [], []
+    for m in route.get('trust_boundaries', []): (keep if (m['from'], m['to']) in steps else dropped).append(m)
+    if keep: route['trust_boundaries'] = keep
+    else: route.pop('trust_boundaries', None)
+    return dropped
+
+
+def route_check(arch, route):
+    """What this route verifies: the hypothesis of its first threat (empty while it is the template text)."""
+    th = next((t for t in arch['threats'] if route['threat_ids'] and t['id'] == route['threat_ids'][0]), None)
+    h = (th or {}).get('hypothesis', '')
+    return '' if h.strip() == THREAT_PLACEHOLDER or PLACEHOLDER in h.lower() else h
+
+
+def next_id(existing, fmt):
+    n = 1
+    while fmt.format(n) in existing: n += 1
+    return fmt.format(n)
+
+
+def set_route_check(arch, route, text):
+    """Write the check into the route's own threat; a threat shared with other routes is split first."""
+    text = text.strip() or THREAT_PLACEHOLDER; tid = route['threat_ids'][0]
+    th = next(t for t in arch['threats'] if t['id'] == tid)
+    if th['hypothesis'] == text: return
+    if any(tid in r['threat_ids'] for r in arch['routes'] if r is not route):
+        new = {'id': next_id({t['id'] for t in arch['threats']}, 'TH-{:03d}'), 'hypothesis': text, 'risk': th['risk']}
+        arch['threats'].append(new); route['threat_ids'][0] = new['id']
+    else: th['hypothesis'] = text
+
+
+def frozen_route_ids(ws):
+    return {r['id'] for r in ws.plan()['architecture']['routes']} if ws.has_plan() else set()
+
+
+def apply_route_edits(arch, r, a):
+    """Apply every requested change to one route in memory; raise before anything is written."""
+    g = lambda k: getattr(a, k, None)
+    changed = []
+    if g('actor') is not None:
+        if not str(g('actor')).strip(): raise UserError('The actor cannot be empty.', 'Example: --actor "authenticated user of customer A"')
+        if r['actor'] != str(g('actor')).strip(): r['actor'] = str(g('actor')).strip(); changed.append('actor')
+    if g('permissions') is not None:
+        v = str(g('permissions')).strip()
+        if v != r.get('actor_permissions', ''):
+            if v: r['actor_permissions'] = v
+            else: r.pop('actor_permissions', None)
+            changed.append('permissions')
+    if g('path') is not None:
+        hops = path_hops(g('path'))
+        if not hops: raise UserError('Name at least one component of the path.', 'Example: --path "app -> document search -> model -> answer"')
+        if ' -> '.join(hops) != r['boundary']: r['boundary'] = ' -> '.join(hops); changed.append('path')
+    if g('access') is not None:
+        if g('access') not in ACCESS: raise UserError(f'Access must be one of {", ".join(ACCESS)}.')
+        if r['access'] != g('access'): r['access'] = g('access'); changed.append('access')
+    if g('activities') is not None:
+        v = g('activities'); acts = [x.strip().upper() for x in (v if isinstance(v, list) else str(v).replace(' ', ',').split(',')) if x.strip()]
+        bad = set(acts) - set(op.ACTIVITIES)
+        if bad: raise UserError('Unknown activity: ' + ', '.join(sorted(bad)), 'Use DESIGN, CONFIG, TEST, REDTEAM')
+        if not acts: raise UserError('Choose at least one activity.', 'Use DESIGN, CONFIG, TEST, REDTEAM')
+        acts = list(dict.fromkeys(acts))
+        if acts != r['activity_types']: r['activity_types'] = acts; changed.append('activities')
+    if g('scope') is not None:
+        if g('scope') not in ('in_scope', 'out_of_scope'): raise UserError('Scope must be in_scope or out_of_scope.')
+        if r['scope'] != g('scope'): r['scope'] = g('scope'); changed.append('scope')
+    if g('check') is not None and str(g('check')).strip() != route_check(arch, r):
+        set_route_check(arch, r, str(g('check'))); changed.append('check')
+    before = r.get('trust_boundaries', [])
+    if g('no_trust') or g('trust') is not None:
+        set_trust(r, [] if g('no_trust') else [parse_trust(x) for x in g('trust')])
+    elif 'path' in changed:
+        for m in prune_trust(r): out(S.yellow('Trust boundary mark removed (no longer a step of the path): ') + f"{m['from']} -> {m['to']}")
+    if r.get('trust_boundaries', []) != before: changed.append('trust boundaries')
+    return changed
+
+
+def show_route(arch, r, frozen):
+    hops = path_hops(r['boundary']); actor = r['actor'] if PLACEHOLDER not in r['actor'].lower() else S.yellow('not described yet')
+    heading(f"{r['id']}" + S.dim(f"   {'in scope' if r['scope'] == 'in_scope' else 'OUT OF SCOPE'} · access {r['access']} · {', '.join(r['activity_types'])}"
+                                 + (' · in the frozen plan' if r['id'] in frozen else '')))
+    out(f'  Actor        {actor}')
+    out(f"  Allowed to   {r.get('actor_permissions') or S.dim('(not described)')}")
+    out(f"  Path         {' -> '.join(['actor'] + hops) if hops else S.yellow('not described yet')}")
+    marks = r.get('trust_boundaries', [])
+    if marks:
+        for i, m in enumerate(marks):
+            out(f"  {'Trust' if i == 0 else '':<12} {m['from']} -> {m['to']}: {', '.join(m['changes'])}" + (S.dim(f"  ({m['note']})") if m.get('note') else ''))
+    else: out(f"  Trust        {S.dim('no trust boundary marked (a connection is not one by default)')}")
+    out(f"  Check        {route_check(arch, r) or S.dim('(not described)')}")
+
+
+def cmd_route(a):
+    """List, add, edit or remove routes. An edit applies all its fields in one write."""
+    ws = ws_from(a); arch = ws.arch(); action = getattr(a, 'action', None) or 'list'; rid = (getattr(a, 'id', None) or '').strip().upper()
+    frozen = frozen_route_ids(ws)
+    if action == 'list':
+        for r in routes_of(arch, rid or None): show_route(arch, r, frozen); out('')
+        out(S.dim('Change one: merestone route edit ROUTE-1 --actor "..." --permissions "..." --path "app -> search -> model -> answer"'))
+        out(S.dim('           --trust "search -> model: data_trust | retrieved text is data, not instructions" --check "..."'))
+        out(S.dim('Add a flow with a different actor, permissions, path or effect: merestone route add ORDERS --like ROUTE-1'))
+        return 0
+    if action == 'add':
+        ids = {r['id'] for r in arch['routes']}
+        rid = rid or next_id(ids, 'ROUTE-{}')
+        if not ROUTE_ID.match(rid): raise UserError(f'"{rid}" is not a valid route ID.', 'Use up to 32 letters, digits, - or _, e.g. ROUTE-2 or ORDERS.')
+        if rid in ids: raise UserError(f'Route {rid} already exists.', 'Choose another ID, e.g. ' + next_id(ids, 'ROUTE-{}'))
+        like = routes_of(arch, getattr(a, 'like', None) or arch['routes'][0]['id'])[0]
+        caps = op.library()['capabilities']; copy = bool(getattr(a, 'copy_caps', False))
+        tid = next_id({t['id'] for t in arch['threats']}, 'TH-{:03d}')
+        arch['threats'].append({'id': tid, 'hypothesis': THREAT_PLACEHOLDER, 'risk': 'To be evaluated'})
+        r = {'id': rid, 'asset_id': like['asset_id'], 'boundary': 'To be identified', 'actor': 'To be identified', 'access': 'unknown', 'scope': 'in_scope',
+             'capabilities': dict(like['capabilities']) if copy else {k: 'unknown' for k in caps},
+             'capability_evidence': dict(like['capability_evidence']) if copy else {},
+             'threat_ids': [tid], 'activity_types': list(like['activity_types'])}
+        arch['routes'].append(r)
+        changed = apply_route_edits(arch, r, a)
+        ws.save_arch(arch); ws.log(f'route add {rid}' + (f' (capabilities copied from {like["id"]})' if copy else ''), 'architecture.json')
+        out(S.green(f'Added {rid}') + S.dim(f"  (activities {', '.join(r['activity_types'])} from {like['id']}; capabilities "
+                                             + (f'copied from {like["id"]}: review them' if copy else 'all unknown') + (f"; set {', '.join(changed)}" if changed else '') + ')'))
+        if PLACEHOLDER in r['actor'].lower(): out(S.dim(f'Next: merestone route edit {rid} --actor "..." --path "..." --access gray-box'))
+        stale_note(ws); return 0
+    if not rid: raise UserError(f'"route {action}" needs a route ID.', 'Routes: ' + ', '.join(x['id'] for x in arch['routes']))
+    r = routes_of(arch, rid)[0]
+    if action == 'edit':
+        changed = apply_route_edits(arch, r, a)
+        if not changed: out('Nothing to change.'); return 0
+        ws.save_arch(arch); ws.log(f'route edit {rid}: ' + ', '.join(changed), 'architecture.json')
+        out(S.green(f'Saved {rid}: ') + ', '.join(changed)); stale_note(ws); return 0
+    if action == 'remove':
+        if len(arch['routes']) == 1: raise UserError('An assessment needs at least one route.', f'Describe {rid} instead: merestone route edit {rid} --actor "..." --path "..."')
+        if rid in frozen:
+            raise UserError(f'{rid} is part of the frozen plan {ws.cfg.get("series")}, so it cannot be removed.',
+                            f'Mark it out of scope instead: merestone route edit {rid} --scope out_of_scope   (its tasks stay visible and its results stay in {ws.cfg.get("series")})')
+        arch['routes'].remove(r)
+        used = {t for x in arch['routes'] for t in x['threat_ids']}
+        arch['threats'] = [t for t in arch['threats'] if t['id'] in used or t['id'] not in r['threat_ids']]
+        ws.save_arch(arch); ws.log(f'route remove {rid}', 'architecture.json')
+        out(S.green(f'Removed {rid}.') + S.dim(' No plan or evidence was changed.')); stale_note(ws); return 0
+    raise UserError(f'Unknown route action "{action}".', 'Use: list, add, edit, remove')
 
 
 def cmd_protocol(a):
@@ -376,9 +592,9 @@ ITEMS = {  # key -> (plain label, why it matters, example value)
     'stop': ('Stop conditions', 'When testing must stop at once, so a test never causes real harm.', 'real customer data appears'),
     'limits': ('Load limits', 'Maximum requests, total duration in seconds and parallel requests, so tests never overload the system.', 'requests=200 duration=3600 concurrency=1'),
     'activities': ('Design review included', 'Every assessment includes the common design review (DESIGN); without it the plan can never close.', 'DESIGN,CONFIG,TEST'),
-    'access': ('How much you can see', 'black-box: only as a user | gray-box: plus docs or configuration | white-box: code and logs. Tasks cannot be completed while access is unknown.', 'gray-box'),
-    'actor': ('Who acts', 'The person or system that attempts something on this route, with its starting permissions.', 'authenticated user of one customer'),
-    'boundary': ('Trust boundary crossed', 'Where trust changes along the route; it names what the tests protect.', 'user -> app -> document index -> model'),
+    'access': ('How much you can see', 'Your access as the assessor, not the actor\'s permissions. black-box: only as a user | gray-box: plus docs, configuration or test accounts | white-box: code and logs. Tasks cannot be completed while access is unknown.', 'gray-box'),
+    'actor': ('Who starts the action', 'The person, service or agent that starts this flow, with the identity it starts from. What it is allowed to do goes in its own field (merestone set permissions).', 'authenticated user of customer A'),
+    'boundary': ('Path of the flow', 'The components the request passes through, in order, ending with the result. A connection is not a trust boundary by default: mark those separately (merestone route edit --trust).', 'app -> document search -> model -> answer'),
     'caps-source': ('Source for capability answers', 'Capabilities marked present or absent need a source; unsure ones can stay unknown.', 'architecture doc v2'),
 }
 GAP_ITEM = {'authorization_ref': 'authorization', 'snapshot_ref': 'snapshot', 'evidence_store': 'evidence-store',
@@ -552,8 +768,8 @@ def next_steps(ws, plan, r):
     if any(x['access'] in ('unknown', 'none') for x in arch['routes']):
         steps.append(('Declare how you can access each route (tasks cannot complete while access is unknown)', 'merestone set access gray-box'))
     vague = [x for x in arch['routes'] if 'to be identified' in (x['boundary'] + x['actor']).lower()]
-    if vague: steps.append((f"Describe {vague[0]['id']}: who acts and which trust boundary it crosses (makes tasks and the report meaningful)",
-                            'merestone set boundary "<e.g. tenant A user -> shared index>"   and   merestone set actor "<e.g. authenticated tenant user>"'))
+    if vague: steps.append((f"Describe {vague[0]['id']}: who starts the action and the path it follows (makes tasks and the report meaningful)",
+                            f'merestone route edit {vague[0]["id"]} --actor "<e.g. authenticated user of customer A>" --path "<e.g. app -> document search -> model -> answer>"'))
     unk = sum(t['applicability'] == 'UNKNOWN' for t in plan['tasks'])
     if unk: steps.append((f'{unk} obligations depend on unverified capabilities', 'merestone caps'))
     todo = [t for t in plan['tasks'] if t['applicability'] == 'APPLICABLE' and not t['result'] and not t.get('exclusion')]
@@ -845,6 +1061,7 @@ Quick start
   merestone new my-eval --profile rag --guided    create a workspace (answers 16 questions)
   cd my-eval
   merestone setup                                 define permission, version, limits and access step by step
+  merestone route                                 the flows you assess: actor, permissions, path, trust boundaries
   merestone status                                what is missing and what to do next
   merestone plan                                  freeze the plan
   merestone tasks / show <TASK>                   browse what to test and how
@@ -878,6 +1095,26 @@ def build_parser():
     q.add_argument('assign', nargs='*', help='NAME=STATE pairs'); q.add_argument('--source', help='where you verified it (required for present/absent)'); q.add_argument('--route', help='only this route')
     q = cmd('set', cmd_set, 'Set scope and readiness fields without editing JSON.', 'Fields: ' + ', '.join(SET_FIELDS) + '\nExamples:\n  merestone set authorization "SEC-482 signed scope"\n  merestone set limits requests=200 duration=3600 concurrency=1\n  merestone set access gray-box')
     q.add_argument('field', choices=SET_FIELDS, metavar='FIELD', help='one of: ' + ', '.join(SET_FIELDS)); q.add_argument('value', nargs='*'); q.add_argument('--route', help='only this route')
+    q = cmd('route', cmd_route, 'List, add, edit or remove routes: the concrete flows you assess (who starts the action, the path it follows and its result).',
+            'A route is one flow. Add another when the actor, its permissions, the path or the effect changes.\n'
+            'An edit applies every option in one write; nothing is saved if any option is invalid.\n'
+            'Trust boundaries are marked explicitly: a connection between components is not one by default.\n'
+            'Changes: ' + ', '.join(TRUST_CHANGES) + '\n'
+            'Examples:\n  merestone route\n'
+            '  merestone route edit ROUTE-1 --actor "authenticated user of customer A" --permissions "read only customer A documents" \\\n'
+            '    --path "app -> document search -> model -> answer" --check "customer B documents are never retrieved" \\\n'
+            '    --trust "actor -> app: identity" --trust "document search -> model: data_trust | retrieved text is data, not instructions"\n'
+            '  merestone route add ORDERS --like ROUTE-1 --actor "authenticated user of customer A" --path "app -> model -> orders API -> order updated"\n'
+            '  merestone route remove ORDERS        (only routes that are not in the frozen plan)')
+    q.add_argument('action', nargs='?', choices=['list', 'add', 'edit', 'remove'], default='list'); q.add_argument('id', nargs='?', help='route ID, e.g. ROUTE-1')
+    q.add_argument('--actor', help='who starts the action'); q.add_argument('--permissions', help='what the actor is allowed to do (not your access)')
+    q.add_argument('--path', help='components in order, ending with the result: "app -> search -> model -> answer"')
+    q.add_argument('--access', choices=ACCESS, help='your access as the assessor'); q.add_argument('--activities', help='DESIGN,CONFIG,TEST,REDTEAM')
+    q.add_argument('--scope', choices=['in_scope', 'out_of_scope']); q.add_argument('--check', help='what you will check on this flow (stored as the route threat)')
+    q.add_argument('--trust', action='append', metavar='"FROM -> TO: CHANGES | NOTE"', help='mark a trust boundary (repeat; replaces the marks of the route)')
+    q.add_argument('--no-trust', action='store_true', help='remove every trust boundary mark of the route')
+    q.add_argument('--like', metavar='ROUTE', help='add: copy activities (and with --copy-caps, capability answers) from this route')
+    q.add_argument('--copy-caps', action='store_true', help='add: copy capability answers and sources instead of starting them unknown')
     q = cmd('protocol', cmd_protocol, 'Define the frozen test protocol for a case (before planning).', 'Example:\n  merestone protocol AI-006 --variants original,neighbor,benign --rule "No chunk from another tenant in context" --why "Deterministic ACL check"')
     q.add_argument('case'); q.add_argument('--variants', required=True, help='comma-separated variant names'); q.add_argument('--min', type=int, default=1, help='minimum trials per variant')
     q.add_argument('--design', choices=DESIGNS, default='deterministic'); q.add_argument('--rule', required=True, help='decision rule'); q.add_argument('--why', required=True, help='justification'); q.add_argument('--route')

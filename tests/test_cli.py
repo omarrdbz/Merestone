@@ -1,9 +1,12 @@
-import contextlib, io, json, sys, tempfile, unittest
+import contextlib, copy, io, json, sys, tempfile, unittest
 from pathlib import Path
 from unittest import mock
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import jsonutil
 import operational as op
 import merestone as ms
+
+ROOT = Path(__file__).resolve().parents[1]
 
 CAPS = op.library()['capabilities']
 
@@ -185,7 +188,8 @@ class CliTests(unittest.TestCase):
     def test_checklist_explains_access_actor_boundary(self):
         ws = Path(self.d) / 'w'; run('new', ws, '--profile', 'rag')
         code, out, _ = run('-w', ws, 'status')
-        for text in ('Permission to test', 'How much you can see', 'Who acts', 'Trust boundary crossed', 'merestone setup', 'merestone set access'):
+        for text in ('Permission to test', 'How much you can see', 'not the actor\'s permissions', 'Who starts the action', 'Path of the flow',
+                     'not a trust boundary by default', 'merestone setup', 'merestone set access'):
             self.assertIn(text, out)
 
     def test_setup_wizard_answers_everything_then_plan_freezes(self):
@@ -298,6 +302,98 @@ class CliTests(unittest.TestCase):
         code, out, err = run('demo', '--out', Path(self.d) / 'demo')
         self.assertEqual(code, 0, err); self.assertIn('FAIL', out); self.assertIn('PASS', out)
         self.assertTrue((Path(self.d) / 'demo/summary.json').exists())
+
+
+class RouteTests(unittest.TestCase):
+    """Routes: the concrete flows being assessed (actor, permissions, path, trust boundaries, check)."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory(); self.ws = Path(self.tmp.name) / 'w'
+        assert run('new', self.ws, '--profile', 'rag')[0] == 0
+    def tearDown(self): self.tmp.cleanup()
+    def r(self, *args): return run('-w', self.ws, *args)
+    def arch(self): return op.read(self.ws / 'architecture.json')
+
+    def test_edit_sets_every_field_in_one_write(self):
+        code, out, err = self.r('route', 'edit', 'ROUTE-1', '--actor', 'Authenticated user of customer A', '--permissions', 'Read only customer A documents',
+                                '--path', 'App → Document search → Model → Answer', '--check', 'Customer B documents are never retrieved',
+                                '--trust', 'actor -> App: identity', '--trust', 'Document search -> Model: data trust | retrieved text is data')
+        self.assertEqual(code, 0, err)
+        a = self.arch(); r = a['routes'][0]
+        self.assertEqual((r['actor'], r['actor_permissions'], r['boundary']),
+                         ('Authenticated user of customer A', 'Read only customer A documents', 'App -> Document search -> Model -> Answer'))
+        self.assertEqual(r['trust_boundaries'], [{'from': 'actor', 'to': 'App', 'changes': ['identity']},
+                                                 {'from': 'Document search', 'to': 'Model', 'changes': ['data_trust'], 'note': 'retrieved text is data'}])
+        self.assertEqual(ms.route_check(a, r), 'Customer B documents are never retrieved')
+        history = op.read(self.ws / 'merestone.json')['history']
+        self.assertEqual(sum(h['action'].startswith('route edit ROUTE-1') for h in history), 1)
+        self.assertIn('Path         actor -> App -> Document search', self.r('route')[1])
+
+    def test_invalid_edit_writes_nothing(self):
+        before = (self.ws / 'architecture.json').read_bytes()
+        for bad in (['--actor', 'X', '--path', 'App -> Model', '--trust', 'App -> Search: identity'],    # not a step of the path
+                    ['--actor', 'X', '--trust', 'actor -> App: secrecy'],                                # unknown change
+                    ['--actor', 'X', '--path', 'App -> -> Model'],                                       # unnamed component
+                    ['--actor', ' ']):
+            code, _, err = self.r('route', 'edit', 'ROUTE-1', *bad)
+            self.assertEqual(code, 2, bad); self.assertTrue(err.strip(), bad)
+            self.assertEqual((self.ws / 'architecture.json').read_bytes(), before, bad)
+
+    def test_path_change_keeps_only_marks_that_are_still_steps(self):
+        self.r('route', 'edit', 'ROUTE-1', '--path', 'App -> Search -> Model', '--trust', 'actor -> App: identity', '--trust', 'Search -> Model: data_trust')
+        code, out, _ = self.r('set', 'boundary', 'App -> Index -> Model')
+        self.assertEqual(code, 0); self.assertIn('Search -> Model', out)
+        self.assertEqual(self.arch()['routes'][0]['trust_boundaries'], [{'from': 'actor', 'to': 'App', 'changes': ['identity']}])
+        self.r('route', 'edit', 'ROUTE-1', '--no-trust')
+        self.assertNotIn('trust_boundaries', self.arch()['routes'][0])
+
+    def test_add_and_remove_routes_without_touching_plans(self):
+        code, out, err = self.r('route', 'add', 'orders', '--path', 'App -> Model -> Orders API -> Order updated')
+        self.assertEqual(code, 0, err)
+        a = self.arch(); new = a['routes'][1]
+        self.assertEqual((new['id'], new['access'], new['scope']), ('ORDERS', 'unknown', 'in_scope'))
+        self.assertEqual(set(new['capabilities'].values()), {'unknown'}); self.assertEqual(new['capability_evidence'], {})
+        self.assertEqual(new['activity_types'], a['routes'][0]['activity_types'])
+        self.assertNotEqual(new['threat_ids'], a['routes'][0]['threat_ids'])
+        self.assertEqual(self.r('route', 'add', 'ORDERS')[0], 2)                       # duplicate ID
+        self.assertEqual(self.r('route', 'add', 'two words')[0], 2)                    # invalid ID
+        self.r('caps', 'retrieval=present', '--source', 'doc', '--route', 'ROUTE-1')
+        self.assertEqual(self.r('route', 'add', 'COPY', '--copy-caps')[0], 0)
+        self.assertEqual(self.arch()['routes'][2]['capability_evidence'], {'retrieval': 'doc'})
+        self.assertEqual(self.r('plan', '--anyway')[0], 0)
+        plan_bytes = (self.ws / 'plans/plan-001.json').read_bytes()
+        code, _, err = self.r('route', 'remove', 'ORDERS')                             # in the frozen plan
+        self.assertEqual(code, 2); self.assertIn('--scope out_of_scope', err)
+        self.r('route', 'add', 'LATER')
+        code, out, err = self.r('route', 'remove', 'LATER')
+        self.assertEqual(code, 0, err); self.assertIn('No plan or evidence was changed', out)
+        self.assertEqual([r['id'] for r in self.arch()['routes']], ['ROUTE-1', 'ORDERS', 'COPY'])
+        self.assertEqual((self.ws / 'plans/plan-001.json').read_bytes(), plan_bytes)
+        self.assertEqual({t['id'] for t in self.arch()['threats']}, {t for r in self.arch()['routes'] for t in r['threat_ids']})
+
+    def test_check_on_a_shared_threat_gets_its_own_threat(self):
+        a = self.arch(); a['routes'].append(dict(copy.deepcopy(a['routes'][0]), id='ROUTE-2')); jsonutil.write_json(self.ws / 'architecture.json', a)
+        self.assertEqual(self.r('set', 'check', 'Only own orders change', '--route', 'ROUTE-2')[0], 0)
+        a = self.arch(); r1, r2 = a['routes']
+        self.assertNotEqual(r1['threat_ids'], r2['threat_ids'])
+        self.assertEqual((ms.route_check(a, r1), ms.route_check(a, r2)), ('', 'Only own orders change'))
+        self.assertEqual(self.r('set', 'permissions', 'Change own orders', '--route', 'ROUTE-2')[0], 0)
+        self.assertEqual(self.arch()['routes'][1]['actor_permissions'], 'Change own orders')
+
+    def test_descriptive_fields_never_change_the_obligations(self):
+        """Old architectures stay valid and new descriptive fields never add or remove tasks."""
+        a = self.arch(); lib = op.library()
+        before = op.digest(op.expected_tasks(a, lib))
+        self.r('route', 'edit', 'ROUTE-1', '--permissions', 'Read own documents', '--trust', 'actor -> App: identity', '--path', 'App -> Model', '--check', 'B never leaks')
+        after = self.arch(); r = after['routes'][0]
+        self.assertTrue({'actor_permissions', 'trust_boundaries'} <= set(r))
+        specs = op.expected_tasks(after, lib)
+        self.assertEqual([s['task_id'] for s in specs], [s['task_id'] for s in op.expected_tasks(a, lib)])
+        self.assertEqual(before, op.digest([dict(s, boundary=a['routes'][0]['boundary']) for s in specs]))
+        bad = copy.deepcopy(after); bad['routes'][0]['trust_boundaries'][0]['changes'] = ['secrecy']
+        with self.assertRaises(ValueError): op.validate_architecture(bad, lib)
+        for p in sorted((ROOT / 'examples/pilots-final').glob('*/plan.json')):           # frozen records from before the change
+            plan = op.read(p); op.check_plan(plan)
 
 
 if __name__ == '__main__':

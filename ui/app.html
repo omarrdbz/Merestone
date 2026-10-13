@@ -126,7 +126,55 @@ hr.sep{border:0;border-top:1px solid var(--line2);margin:16px 0}
 .step:hover{color:var(--ink)}
 .step i{font-style:normal;font-size:11.5px;color:var(--faint)}
 .step.ok i{color:var(--pass)}.step.bad i{color:var(--fail)}
-.rtabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.rbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.rtabs{display:flex;gap:6px;flex-wrap:wrap}
+.rtab{display:grid;text-align:left;border:1px solid var(--line);border-radius:6px;background:var(--surface);padding:4px 10px 5px;cursor:pointer;max-width:260px;min-width:0;color:var(--ink)}
+.rtab b{font:500 12px var(--mono);display:flex;align-items:center;gap:6px}.rtab span{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rtab:hover{border-color:var(--faint)}.rtab[aria-pressed=true]{border-color:var(--ink);background:var(--sel)}
+.rtab .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--unk)}
+.helps{display:grid;gap:6px;margin-bottom:14px}
+details.help{border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+details.help>summary{cursor:pointer;padding:8px 12px 8px 28px;font-size:13px;font-weight:500;list-style:none;display:block;position:relative;border-radius:8px}
+details.help>summary::-webkit-details-marker{display:none}
+details.help>summary::before{content:"";position:absolute;left:13px;top:14px;width:0;height:0;border-left:5px solid var(--faint);border-top:4px solid transparent;border-bottom:4px solid transparent}
+details.help[open]>summary::before{transform:rotate(90deg)}
+details.help>summary:hover{background:var(--sel)}
+details.help .hb{padding:2px 14px 14px;display:grid;gap:10px;font-size:13px}
+dl.exl,dl.legend{display:grid;grid-template-columns:minmax(120px,200px) 1fr;gap:4px 14px;margin:0;font-size:13px}
+dl.exl dt,dl.legend dt{color:var(--muted)}dl.exl dd,dl.legend dd{margin:0}
+dl.legend{font-size:12px;grid-template-columns:minmax(90px,120px) 1fr}
+@media (max-width:560px){dl.exl,dl.legend{grid-template-columns:1fr;gap:0}dl.exl dd,dl.legend dd{margin-bottom:6px}}
+ul.rel{margin:0;padding-left:18px;display:grid;gap:4px}
+.excmp{display:grid;grid-template-columns:1fr 1fr;gap:10px}.excmp div{border:1px solid var(--line2);border-radius:6px;padding:8px 10px;display:grid;gap:2px}.excmp span{font-size:12.5px;color:var(--muted)}
+@media (max-width:760px){.excmp{grid-template-columns:1fr}.card-h{flex-direction:column;align-items:stretch}}
+.savebar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end;max-width:420px}
+.savebar.bottom{max-width:none;margin-top:14px;padding-top:12px;border-top:1px solid var(--line2)}
+@media (max-width:760px){.savebar{justify-content:flex-start;max-width:none}}
+.ss{font-size:12.5px;color:var(--muted);display:inline-flex;gap:6px;align-items:baseline}
+.ss::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--pass);transform:translateY(-1px)}
+.ss.warn::before{background:var(--unk)}.ss.err::before{background:var(--fail)}.ss.err{color:var(--fail)}.ss.busy::before{display:none}
+.edited{font:500 10.5px var(--f);color:var(--unk);border:1px solid var(--unk);border-radius:3px;padding:0 4px;margin-left:4px;letter-spacing:0}
+.lb{font-weight:600;color:var(--muted);font-size:12px}
+.tbs{display:grid;gap:6px}
+.tb{display:grid;gap:6px;border:1px solid var(--line2);border-radius:6px;padding:8px 10px}
+.tb.on{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-s)}
+.tb-h{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px}.tb-n{font:600 11px var(--mono);color:var(--faint)}.tb-p{font-weight:500}
+.tb-c{display:flex;gap:6px;flex-wrap:wrap}
+.tgl{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:2px 11px;font-size:12px;cursor:pointer;color:var(--muted)}
+.tgl:hover{border-color:var(--faint);color:var(--ink)}.tgl[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.maplegend{display:flex;align-items:center;gap:4px 14px;flex-wrap:wrap;margin-top:6px}.maplegend>span{display:inline-flex;align-items:center;gap:6px}
+.lg-stone{width:10px;height:10px;background:var(--stone);clip-path:polygon(50% 0,100% 38%,82% 100%,18% 100%,0 38%)}
+.lg-hand{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--faint)}
+.effect{border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:grid;gap:10px;margin-top:18px;background:var(--surface2)}
+.effect .eh{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.effect .cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}@media (max-width:760px){.effect .cols{grid-template-columns:1fr}}
+.sum{display:grid;gap:6px;align-content:start}.sum .big{font-size:20px;font-weight:600}
+table.acts{max-width:440px}table.acts th[scope=row]{font:500 12px var(--mono);color:var(--ink);border-bottom:1px solid var(--line2)}
+ul.exs{list-style:none;margin:0;padding:0;display:grid;gap:5px;font-size:12.5px}ul.exs li{display:grid;grid-template-columns:150px 1fr;gap:2px 10px}
+ul.exs li .mono{font-size:12px;color:var(--muted);word-break:break-all}
+@media (max-width:560px){ul.exs li{grid-template-columns:1fr}}
+.why{border-top:1px solid var(--line2);padding-top:10px;display:grid;gap:6px}
+.why dl{display:grid;grid-template-columns:100px 1fr;gap:3px 14px;margin:0;font-size:12.5px}.why dt{color:var(--muted)}.why dd{margin:0;word-break:break-word}
 .map{border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;background:var(--surface)}
 .map svg{display:block;margin:0 auto;max-width:100%;height:auto}
 .map .node rect{fill:var(--surface);stroke:var(--line);stroke-width:1.2}
@@ -139,18 +187,22 @@ hr.sep{border:0;border-top:1px solid var(--line2);margin:16px 0}
 .map .stone polygon{fill:var(--stone);stroke:var(--stone);stroke-width:1}
 .map .stone text{fill:var(--bg);font:600 10px var(--mono);pointer-events:none}
 .map .stone:hover polygon,.map .stone.on polygon{fill:var(--ink);stroke:var(--ink)}
-.map .stone:focus{outline:none}
+.map .stone:focus,.map .hand:focus{outline:none}
+.map .stone:focus-visible polygon{stroke:var(--accent);stroke-width:3}
+.map .hand{cursor:pointer}.map .hand circle{fill:var(--surface);stroke:var(--faint);stroke-width:1.5}.map .hand .hit{fill:transparent;stroke:none}
+.map .hand:hover circle:not(.hit),.map .hand.on circle:not(.hit){stroke:var(--ink);stroke-width:2.2}
+.map .hand:focus-visible .hit{stroke:var(--accent);stroke-width:2.5}
+.map .chev{fill:none;stroke:var(--accent);stroke-width:1.6}
+.map .node.result rect{stroke:var(--accent)}
+.map .tlbl{fill:var(--muted);font:500 10.5px var(--f)}
 .map .lbl{fill:var(--faint);font:10.5px var(--mono)}
-.stone-detail{margin-top:10px;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;font-size:13px;color:var(--muted)}
-.stone-detail p{flex:1;min-width:240px}
-.stone-detail .tag{font:500 12px var(--mono);color:var(--ink);white-space:nowrap}
 .hops{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .hop{display:flex;align-items:center;border:1px solid var(--line);border-radius:6px;padding:1px 1px 1px 8px;background:var(--surface)}
 .hop input{border:0!important;background:none;padding:3px 2px;width:auto;min-width:60px;min-height:0;font-size:13px;box-shadow:none!important}
 .hop button{border:0;background:none;color:var(--faint);cursor:pointer;padding:2px 6px;font-size:14px;border-radius:4px}.hop button:hover{color:var(--fail)}
 .hops .arrow{color:var(--faint)}
 .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
-.opt{border:1px solid var(--line);border-radius:6px;padding:8px 11px;cursor:pointer;background:var(--surface);text-align:left}
+.opt{border:1px solid var(--line);border-radius:6px;padding:8px 11px;cursor:pointer;background:var(--surface);text-align:left;display:flex;flex-direction:column;justify-content:flex-start;gap:1px}
 .opt b{display:block;font-size:13px;font-weight:500}.opt span{display:block;font-size:12px;color:var(--muted);margin-top:1px}
 .opt:hover{border-color:var(--faint)}
 .opt[aria-pressed=true]{border-color:var(--ink);background:var(--sel)}
@@ -323,7 +375,8 @@ const store={get(k,d){try{const v=localStorage.getItem('merestone.'+k);return v=
 let S=null, ST=null;                       // static catalog data, workspace state
 const FC={};                               // fieldcard cache
 const F={};                                // form values, by namespace
-const UI={view:store.get('view','arch'),route:0,drawer:null,dtab:'work',capMode:store.get('capMode','interview'),capQ:'',q:'',module:'',activity:'',ltab:'all',stone:0,allPend:false,busy:0,offline:false,theme:store.get('theme','system'),lastSync:Date.now()};
+const UI={view:store.get('view','arch'),route:0,drawer:null,dtab:'work',capMode:store.get('capMode','interview'),capQ:'',q:'',module:'',activity:'',routeF:'',ltab:'all',stone:-1,allPend:false,busy:0,offline:false,theme:store.get('theme','system'),lastSync:Date.now(),
+  det:{},pv:{},pvReq:null,routeErr:{},saving:null};   // det: open help panels · pv: engine previews of unsaved activities · routeErr/saving: route save state
 const PLACEHOLDER='to be identified';
 const ICON={
   arch:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="12" r="2.5"/><path d="M7.5 12h9"/><path d="M12 7l2.5 2-1 3h-3l-1-3z" fill="currentColor"/></svg>',
@@ -364,7 +417,7 @@ async function act(action,body,okTitle){
   catch(e){toast(e.message,e.hint,'err');return null;}
   finally{busy(-1);}
 }
-async function refresh(){ST=await api('state');UI.lastSync=Date.now();render();}
+async function refresh(){const prev=ST&&ST.rev;ST=await api('state');if(ST.rev!==prev)UI.pv={};UI.lastSync=Date.now();render();}
 function busy(d){UI.busy+=d;renderSync();}
 function setOffline(v){if(UI.offline!==v){UI.offline=v;renderSync();}}
 
@@ -398,12 +451,14 @@ const accessLabel=t=>t.scope!=='in_scope'?'Out of scope':t.access==='none'?'No a
 function unsavedArchitecture(){
   if(!ST||!ST.arch)return [];
   const a=ST.arch, pending=[];
-  a.routes.forEach(r=>{if(routeDirty(r))pending.push({label:'Route '+r.id,target:'sec-route',route:r.id});});
+  a.routes.forEach(r=>{if(routeDirty(r))pending.push({label:'Route '+r.id,target:'save-route',route:r.id});});
   const values={authorization:a.authorization_ref,snapshot:a.snapshot_ref,'evidence-store':a.evidence_store,reviewer:a.inventory_review.reviewer,'inventory-evidence':a.inventory_review.evidence_ref,owner:(a.assets[0]||{}).owner||'',stop:''};
   Object.entries(values).forEach(([k,v])=>{if(String(getF('rd.'+k,v))!==String(v))pending.push({label:S.items[k]?.label||'Asset owner',target:'fld-'+k});});
   if(Object.keys(a.limits).some(k=>String(getF('lim.'+k,a.limits[k]))!==String(a.limits[k])))pending.push({label:'Load limits',target:'fld-limits'});
   a.routes.forEach(r=>{const f=F['proto:'+r.id];if(!f||!f.case)return;
     const p=(r.test_protocols||[]).find(p=>p.case_id===f.case);
+    // a form only opened (e.g. by viewing a task) holds the defaults: nothing to save
+    if(!p&&f.variants.join()==='original,benign'&&+f.min===1&&f.design==='deterministic'&&!String(f.rule||'').trim()&&!String(f.why||'').trim())return;
     if(!p||f.variants.join()!==p.required_variants.join()||+f.min!==p.min_trials_per_variant||f.design!==p.design||f.rule!==p.decision_rule||f.why!==p.justification)pending.push({label:'Protocol '+f.case,target:'sec-proto',route:r.id});});
   return pending;
 }
@@ -487,63 +542,223 @@ function steps(){
   const routeOk=rs.every(r=>!['unknown','none'].includes(r.access)&&!vague(r.actor)&&!vague(r.boundary));
   const unk=rs.reduce((n,r)=>n+Object.values(r.capabilities).filter(v=>v==='unknown').length,0), miss=rs.reduce((n,r)=>n+missingSources(r).length,0);
   const np=rs.reduce((n,r)=>n+(r.test_protocols||[]).length,0);
-  return [['sec-route','Route',routeOk?'ok':'bad',routeOk?'✓':'!',routeOk?'complete':'actor, components or access missing'],['sec-ready','Before testing',gaps.length?'bad':'ok',gaps.length||'✓',gaps.length?gaps.length+' missing':'complete'],
+  return [['sec-route','Flow (route)',routeOk?'ok':'bad',routeOk?'✓':'!',routeOk?'complete':'actor, path or access missing'],['sec-ready','Before testing',gaps.length?'bad':'ok',gaps.length||'✓',gaps.length?gaps.length+' missing':'complete'],
     ['sec-caps','Capabilities',miss?'bad':unk?'':'ok',miss?'!':unk?unk:'✓',miss?miss+' answers without a source':unk?unk+' unknown':'complete'],['sec-proto','Protocols',np?'ok':'',np,np+' defined'],['sec-freeze','Plan',p&&!p.stale?'ok':p?'bad':'',p&&!p.stale?'✓':p?'!':'–',p&&!p.stale?'frozen':p?'revision pending':'not frozen yet']];
 }
-/* ---------- route map ---------- */
-const rbase=r=>({actor:vague(r.actor)?'':r.actor,hops:hops(r.boundary),access:r.access,activities:[...r.activity_types],scope:r.scope});
-const rsame=(f,b)=>(f.actor||'')===b.actor&&f.hops.map(x=>x.trim()).filter(Boolean).join(' -> ')===b.hops.join(' -> ')&&f.access===b.access&&f.activities.join()===b.activities.join()&&f.scope===b.scope;
+/* ---------- route: the flow being assessed ---------- */
+const TRUST=['permissions','identity','authority','data_trust'];
+const THREAT_PLACEHOLDER='Complete actor, access, boundary, effect and control';
+const ROUTE_LBL={actor:'actor',perms:'permissions',hops:'path',check:'check',trust:'trust boundaries',access:'access',activities:'activities',scope:'scope'};
+// One illustrative flow used by every hint of the route editor, so the help always tells the same story.
+const EXAMPLE={actor:'Authenticated user of customer A',perms:'Read only customer A documents',hops:['App','Document search','Model','Answer'],
+  check:'Customer B documents are never retrieved',
+  trust:[{changes:['identity'],note:'The session identifies the customer A user'},{changes:['permissions'],note:'The search must apply the customer A filter'},
+    {changes:['data_trust'],note:'Retrieved text is data, not instructions'},{changes:[],note:''}]};
+const EXAMPLE2={actor:'Authenticated user of customer A',perms:'Change only their own open orders',hops:['App','Model','Orders API','Order updated']};
+// Words in a path that suggest a capability to confirm. A hint only: naming a component never changes a capability.
+const NUDGE=[[/search|index|retriev|\brag\b|vector|knowledge/i,'retrieval'],[/model|llm|\bgpt|assistant/i,'llm_generation'],[/\btools?\b|function|plugin/i,'tool_calling'],
+  [/\bmcp\b/i,'mcp_client'],[/memory/i,'persistent_memory'],[/\bsql\b|database/i,'text_to_sql'],[/browser|html|web page/i,'html_rendering'],[/interpreter|sandbox|run code/i,'code_execution']];
+const tLabel=k=>((S.trust_changes||[]).find(x=>x.key===k)||{label:k.replace('_',' ')}).label;
+const tHint=k=>((S.trust_changes||[]).find(x=>x.key===k)||{hint:''}).hint;
+const routeCheck=r=>{const t=((ST.arch&&ST.arch.threats)||[]).find(x=>x.id===(r.threat_ids||[])[0]);const h=t?t.hypothesis:'';return h.trim()===THREAT_PLACEHOLDER||vague(h)?'':h;};
+const frozenRoute=id=>((plan()||{}).routes||[]).find(r=>r.id===id);
+const inFrozenPlan=id=>!!frozenRoute(id);
+const canon=v=>Array.isArray(v)?'['+v.map(canon).join(',')+']':v&&typeof v==='object'?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canon(v[k])).join(',')+'}':JSON.stringify(v??null);
+function routeVsFrozen(r){   // 'none' without a plan · 'new' not in the frozen plan · 'changed' saved values differ from it · 'same'
+  if(!plan())return 'none';const fr=frozenRoute(r.id);if(!fr)return 'new';
+  const pick=x=>canon([x.actor,x.actor_permissions||'',x.boundary,x.trust_boundaries||[],x.access,x.scope,x.activity_types,x.capabilities||{},x.capability_evidence||{},x.test_protocols||[]]);
+  return pick(r)===pick(fr)&&routeCheck(r)===(fr.check||'')?'same':'changed';}
+function marksFor(r,hs){   // saved marks (by component names) -> one entry per step of this path
+  const nodes=['actor',...hs],tb=r.trust_boundaries||[];
+  return hs.map((_,j)=>{const m=tb.find(x=>x.from===nodes[j]&&x.to===nodes[j+1]);return m?{changes:TRUST.filter(k=>m.changes.includes(k)),note:m.note||''}:{changes:[],note:''};});}
+function orphanMarks(r){const hs=hops(r.boundary),nodes=['actor',...hs];return (r.trust_boundaries||[]).filter(m=>!hs.some((_,j)=>m.from===nodes[j]&&m.to===nodes[j+1]));}
+function trustList(f){   // draft marks -> the records the server stores ({from,to,changes,note}); a repeated step is merged
+  const nodes=['actor',...f.hops.map(x=>String(x).trim())],out=new Map();
+  (f.trust||[]).forEach((m,j)=>{const ch=TRUST.filter(k=>m.changes.includes(k));if(!ch.length||j>=f.hops.length)return;const key=nodes[j]+'\u0000'+nodes[j+1],note=String(m.note||'').trim(),o=out.get(key);
+    if(o){o.changes=TRUST.filter(k=>o.changes.includes(k)||ch.includes(k));if(!o.note&&note)o.note=note;}else out.set(key,{from:nodes[j],to:nodes[j+1],changes:ch,note});});
+  return [...out.values()];}
+const rbase=r=>{const hs=hops(r.boundary);return {actor:vague(r.actor)?'':r.actor,perms:r.actor_permissions||'',hops:hs,check:routeCheck(r),trust:marksFor(r,hs),access:r.access,activities:[...r.activity_types],scope:r.scope};};
+function rdiff(f,b){   // draft fields that differ from the saved route
+  const d=[],t=s=>String(s||'').trim();
+  if(t(f.actor)!==b.actor)d.push('actor');if(t(f.perms)!==b.perms)d.push('perms');
+  if(f.hops.map(t).join(' -> ')!==b.hops.join(' -> '))d.push('hops');if(t(f.check)!==b.check)d.push('check');
+  if(JSON.stringify(trustList(f))!==JSON.stringify(trustList(b)))d.push('trust');
+  if(f.access!==b.access)d.push('access');if(f.activities.join()!==b.activities.join())d.push('activities');if(f.scope!==b.scope)d.push('scope');
+  return d;}
+const rsame=(f,b)=>!rdiff(f,b).length;
 function rform(r){const n='route:'+r.id,b=rbase(r),key=JSON.stringify(b);
   if(F[n]&&F[n]._key!==key&&rsame(F[n],JSON.parse(F[n]._key)))delete F[n];   // changed elsewhere (e.g. the terminal) and not edited here
-  return ns(n,()=>({...JSON.parse(key),_key:key}));}
+  const f=ns(n,()=>({...JSON.parse(key),_key:key}));
+  while(f.trust.length<f.hops.length)f.trust.push({changes:[],note:''});
+  return f;}
 function routeDirty(r){return !rsame(rform(r),rbase(r));}
+document.addEventListener('input',e=>{const m=(e.target.dataset&&e.target.dataset.bind||'').match(/^route:([^.]+)\./);if(m&&UI.routeErr[m[1]])delete UI.routeErr[m[1]];});
+function routeSummaryText(r){const hs=hops(r.boundary);if(vague(r.actor)&&!hs.length)return 'not described yet';
+  const cut=(s,m)=>s.length>m?s.slice(0,m-1)+'…':s;return cut(vague(r.actor)?'who?':r.actor,24)+' → '+cut(hs.length?hs[hs.length-1]:'?',18);}
+function actInfo(k){const cs=Object.values(S.cases||{}).filter(c=>c.activity===k),core=cs.filter(c=>(c.applies_if||[]).some(cl=>!cl.length)).length,rest=cs.length-core;
+  const dep=rest===1?'1 that depends':rest+' that depend';
+  return k==='DESIGN'?`Adds ${core} common design reviews on this route plus ${dep} on capabilities. Needed on at least one route.`
+    :k==='CONFIG'?`Adds ${core} common configuration reviews plus ${dep} on capabilities.`
+    :k==='TEST'?`Adds one test per case (${cs.length}); capabilities decide whether each applies.`:`Adds ${cs.length} chained scenarios by actor and objective.`;}
+const capWord=keys=>keys.map(k=>`<code>${esc(k)}</code>`).join(' + ');
+function whyShort(e){const w=e.why||{};
+  return w.core?'applicable · common core, needs no capability':w.present?`applicable · ${capWord(w.present)} present`:w.unknown?`pending · ${w.unknown.map(k=>`<code>${esc(k)}</code>`).join(', ')} unknown`:`not applicable · ${(w.absent||[]).map(k=>`<code>${esc(k)}</code>`).join(', ')} absent`;}
+function draftPreview(r,f){   // engine preview with unsaved activities (GET /api/preview); cached per route and activity set
+  if(!f.activities.length)return {error:'Choose at least one activity.'};
+  const key=r.id+'|'+f.activities.join(',');if(UI.pv[key])return UI.pv[key];
+  if(UI.pvReq!==key){UI.pvReq=key;clearTimeout(UI.pvT);UI.pvT=setTimeout(async()=>{
+    try{const j=await api('preview?route='+encodeURIComponent(r.id)+'&activities='+encodeURIComponent(f.activities.join(',')));UI.pv[key]=j.draft;}
+    catch(e){UI.pv[key]={error:e.message};}
+    if(UI.pvReq===key)UI.pvReq=null;render();},180);}
+  return null;}
+function sumBlock(s,title,id,waiting){
+  if(!s)return `<div class="sum"><h4>${title}</h4><p class="small muted">${waiting?'<span class="spin"></span> Calculating with the engine…':'The preview is unavailable until the saved architecture is valid.'}</p></div>`;
+  if(s.error)return `<div class="sum"><h4>${title}</h4><p class="small" style="color:var(--fail)">${esc(s.error)}</p></div>`;
+  const tot=s.total||1, acts=Object.entries(s.activities||{});
+  return `<div class="sum"><h4>${title}</h4><p><b class="big">${s.total}</b> tasks on ${esc(id)}</p>
+    <div class="bar" aria-hidden="true"><i style="width:${100*s.APPLICABLE/tot}%;background:var(--accent)"></i><i style="width:${100*s.UNKNOWN/tot}%;background:var(--unk)"></i></div>
+    <p class="small muted">${s.APPLICABLE} applicable · ${s.UNKNOWN} pending confirmation · ${s.NOT_APPLICABLE} not applicable</p>
+    ${acts.length?`<div class="tw"><table class="t acts"><thead><tr><th scope="col">Activity</th><th scope="col">Applicable</th><th scope="col">Pending</th><th scope="col">Not applicable</th></tr></thead><tbody>${acts.map(([k,v])=>`<tr><th scope="row">${k}</th><td>${v.APPLICABLE}</td><td>${v.UNKNOWN}</td><td>${v.NOT_APPLICABLE}</td></tr>`).join('')}</tbody></table></div>`:''}</div>`;}
+function effectPanel(r,f,d){
+  const saved=(ST.preview||{})[r.id], actsDirty=d.includes('activities'), p=plan(), w=ST.workspace, id=r.id;
+  const draft=actsDirty?draftPreview(r,f):null, shown=actsDirty?draft:saved;
+  const ex=shown&&!shown.error&&shown.examples||[];
+  const blocked=f.scope!=='in_scope'?`<p class="note warn small">Out of scope: these tasks stay in the plan but none can be completed${f.scope!==r.scope?' (once you save)':''}.</p>`
+    :(f.access==='unknown'||f.access==='none')?`<p class="note warn small">${f.access==='none'?'No access':'Access unknown'}: these tasks stay open until you declare how much you can see.</p>`:'';
+  let planLine='';
+  if(p){const rv=(ST.revision&&ST.revision.routes||{})[id]||{added:0,removed:0,changed:0,results:0},frozenN=tasks().filter(t=>t.route_id===id).length;
+    planLine=inFrozenPlan(id)?`<p class="small"><b>Frozen ${esc(w.series)}:</b> ${frozenN} tasks on ${esc(id)}${rv.results?`, ${rv.results} with a recorded result`:''}. ${p.stale&&(rv.added||rv.removed||rv.changed)?`A revision with the saved values would add ${rv.added} tasks here, remove ${rv.removed} and update ${rv.changed}. Recorded results stay in ${esc(w.series)}; they are not copied into the revision.`:'The saved route matches it.'}${d.length?' Unsaved edits are not included until you save.':''}</p>`
+      :`<p class="small"><b>Not in ${esc(w.series)} yet.</b> A revision with the saved values would add ${rv.added} tasks for ${esc(id)}.</p>`;}
+  return `<div class="effect" id="route-effect"><div class="eh"><h3>Effect on the plan</h3><span class="chip ${actsDirty?'unk':'teal'}">${actsDirty?'Includes unsaved activities':'Saved route'}</span></div>
+   <p class="small muted">Calculated by the planning engine from the activities and the capability answers (03). Actor, permissions, path and check describe the tasks; they do not add or remove any.</p>
+   <div class="${actsDirty?'cols':''}">${actsDirty?sumBlock(saved,'Saved',id):''}${sumBlock(shown,actsDirty?'With your unsaved activities'+(saved&&shown&&!shown.error?` (${shown.total-saved.total>=0?'+':'−'}${Math.abs(shown.total-saved.total)} tasks)`:''):'If frozen now',id,actsDirty)}</div>
+   ${ex.length?`<div class="stack-s"><h4>Examples of tasks on ${esc(id)}</h4><ul class="exs">${ex.map(e=>`<li><span class="mono">${esc(e.alias)}</span><span>${esc(e.title)} <span class="faint">· ${esc(e.activity)} · ${whyShort(e)}</span></span></li>`).join('')}</ul></div>`:''}
+   ${blocked}${planLine}</div>`;}
 function routeCard(){
-  const rs=ST.arch.routes;UI.route=Math.min(UI.route,rs.length-1);const r=rs[UI.route], f=rform(r), id=r.id, n='route:'+id;
-  const acc={'black-box':'Only as a user: the UI or the API.','gray-box':'Plus documentation, configuration or test accounts.','white-box':'Code, logs and traces too.'};
-  return `<div class="card" id="sec-route"><div class="card-h"><div><span class="eyebrow">01 · Route and boundaries</span><h2>Where information travels</h2>
-  <p>Risk lives on the route: who acts, which components the request crosses and where trust changes. Each boundary stone is a place where a control should hold.</p></div>
-  ${routeDirty(r)?`<button class="btn primary" type="button" data-act="saveRoute" data-route="${esc(id)}">Save route</button>`:''}</div>
-  ${rs.length>1?`<div class="rtabs">${rs.map((x,i)=>`<button type="button" class="btn sm ${i===UI.route?'primary':''}" data-act="route" data-i="${i}">${esc(x.id)}</button>`).join('')}</div>`:''}
-  <div class="map" id="map">${mapSvg(f)}</div>
-  <div class="stone-detail" id="stoneDetail"></div>
+  const rs=ST.arch.routes;UI.route=Math.max(0,Math.min(UI.route,rs.length-1));
+  const r=rs[UI.route], f=rform(r), id=r.id, n='route:'+id, b=rbase(r), d=rdiff(f,b), p=plan(), w=ST.workspace||{};
+  const ed=k=>d.includes(k)?'<span class="edited">edited</span>':'';
+  const acc={'black-box':'You use it like the actor: the UI or the API only.','gray-box':'Plus documentation, configuration or test accounts.','white-box':'Plus code, logs and traces.'};
+  const err=UI.routeErr[id];
+  const status=UI.saving===id?`<span class="ss busy"><span class="spin"></span> Saving ${esc(id)}…</span>`
+    :d.length?`<span class="ss ${err?'err':'warn'}">${err?'Not saved: '+esc(err)+(/[.!?]$/.test(err.trim())?'':'.')+' Your edits are kept.':'Unsaved: '+esc(d.map(k=>ROUTE_LBL[k]).join(', '))}</span>`
+    :vague(r.actor)&&!b.hops.length?'<span class="ss warn">Not described yet</span>'
+    :`<span class="ss ok">${{none:'Saved',new:`Saved · not in ${esc(w.series)} until you freeze a revision`,changed:`Saved · differs from ${esc(w.series)} until you freeze a revision`,same:`Saved · matches ${esc(w.series)}`}[routeVsFrozen(r)]}</span>`;
+  const bar=`<div class="savebar">${status}${d.length&&UI.saving!==id?`<button class="btn sm" type="button" data-act="routeDiscard" data-route="${esc(id)}">Discard changes</button><button class="btn primary" type="button" id="save-route" data-act="saveRoute" data-route="${esc(id)}">Save route</button>`:''}</div>`;
+  const det=(k,def=false)=>(UI.det[k]??def)?'open':'';
+  const tabs=`<div class="rbar"><div class="rtabs" role="group" aria-label="Routes">${rs.map((x,i)=>`<button type="button" class="rtab" data-act="route" data-i="${i}" aria-pressed="${i===UI.route}" title="${esc(x.id)}: ${esc(routeSummaryText(x))}"><b>${esc(x.id)}${routeDirty(x)?' <i class="dot" aria-label="unsaved changes"></i>':''}</b><span>${esc(routeSummaryText(x))}</span></button>`).join('')}</div>
+    <button type="button" class="btn sm" data-act="routeAdd">+ Add a route</button>${rs.length>1?`<button type="button" class="btn sm ghost" data-act="routeRemove" data-route="${esc(id)}">Remove ${esc(id)}…</button>`:''}</div>`;
+  const nodes=['actor',...f.hops.map(x=>String(x).trim()||'(unnamed)')];
+  const helps=`<div class="helps">
+   <details class="help" data-det="example" ${det('example')}><summary>Example: an assistant that answers from documents</summary><div class="hb">
+    <p class="small muted">Illustrative only. Loading it fills this editor for ${esc(id)}; nothing is saved until you select <b>Save route</b>, and capability answers are never changed by it.</p>
+    <dl class="exl"><dt>Who starts the action</dt><dd>${esc(EXAMPLE.actor)}</dd><dt>What they are allowed to do</dt><dd>${esc(EXAMPLE.perms)}</dd>
+     <dt>Path, ending with the result</dt><dd>${esc(EXAMPLE.hops.join(' → '))}</dd>
+     <dt>Trust boundaries</dt><dd>${EXAMPLE.trust.map((m,j)=>`${esc(['Actor',...EXAMPLE.hops][j])} → ${esc(EXAMPLE.hops[j])}: ${m.changes.length?esc(m.changes.map(tLabel).join(', ').toLowerCase()):'<span class="faint">nothing changes, not a boundary</span>'}`).join('<br>')}</dd>
+     <dt>What you will check</dt><dd>${esc(EXAMPLE.check)}</dd>
+     <dt>Your access <span class="faint">(not loaded)</span></dt><dd>gray-box, if you have test accounts for customers A and B</dd>
+     <dt>Capabilities <span class="faint">(not loaded)</span></dt><dd>confirm <code>retrieval</code>, <code>multi_tenant</code> and <code>llm_generation</code> in 03 · Capabilities</dd></dl>
+    <div><button type="button" class="btn sm" data-act="exLoad" data-route="${esc(id)}">Load this example into ${esc(id)}</button></div></div></details>
+   <details class="help" data-det="plan" ${det('plan')}><summary>How this route shapes your plan</summary><div class="hb">
+    <ul class="rel"><li><b>Capabilities</b> (03) decide which cases apply: applicable, pending confirmation while unknown, or not applicable when absent.</li>
+     <li><b>Activities</b> decide which kinds of tasks exist: design and configuration reviews, tests and scenarios.</li>
+     <li><b>Actor, permissions, path and check</b> give each task its context: who acts, what they may do and where trust changes. They add no tasks.</li>
+     <li><b>Access and scope</b> decide whether results can be recorded: unknown or no access, or out of scope, keeps tasks open.</li>
+     <li><b>Each route</b> has its own tasks (named <code>CASE@${esc(id)}</code>), evidence and results.</li></ul>
+    <p class="note small">Writing “search” or “model” in the path does not confirm a capability. Answer the questions in <a href="#sec-caps" data-act="goto" data-target="sec-caps">03 · Capabilities</a>; until then the related tasks stay pending.</p>
+    <p class="small muted"><b>Saving:</b> everything in this card is saved together with <b>Save route</b>. Capability answers save as you choose them. ${p?`A frozen plan changes only when you freeze a revision; results recorded in ${esc(w.series)} stay there.`:'Freezing turns the saved routes into the plan.'}</p></div></details>
+   <details class="help" data-det="split" ${det('split')}><summary>When to add another route</summary><div class="hb">
+    <p class="small">Add a route when one of these changes. Keep a single route when only the wording of the requests changes: those are test variants.</p>
+    <ul class="rel"><li><b>Actor</b>: an administrator instead of a customer user.</li><li><b>Permissions</b>: reading documents instead of changing orders.</li>
+     <li><b>Path</b>: the request reaches an orders API instead of the document search.</li><li><b>Effect</b>: data is changed instead of an answer being shown.</li></ul>
+    <div class="excmp"><div><b>Read documents</b><span>${esc(EXAMPLE.actor)} (${esc(EXAMPLE.perms.toLowerCase())}) → ${esc(EXAMPLE.hops.join(' → '))}</span></div>
+     <div><b>Change an order</b><span>${esc(EXAMPLE2.actor)} (${esc(EXAMPLE2.perms.toLowerCase())}) → ${esc(EXAMPLE2.hops.join(' → '))}</span></div></div>
+    <p class="small muted">Each route keeps its own tasks, evidence and results. A route that is in the frozen plan cannot be removed: mark it out of scope instead.</p>
+    <div><button type="button" class="btn sm" data-act="routeAdd">+ Add a route</button></div></div></details></div>`;
+  const nudges=[];if(f.hops.length){const seen=new Set();f.hops.forEach(h=>NUDGE.forEach(([re,k])=>{if(re.test(h)&&!seen.has(k)&&(r.capabilities[k]||'unknown')==='unknown'){seen.add(k);nudges.push([h,k]);}}));}
+  const orphans=orphanMarks(r), marked=(f.trust||[]).slice(0,f.hops.length).filter(m=>m.changes.length).length;
+  const trustRows=f.hops.map((_,j)=>{const m=f.trust[j]||{changes:[],note:''},on=m.changes.length>0,lbl=`${nodes[j]==='actor'?'Actor':nodes[j]} → ${nodes[j+1]}`;
+    return `<div class="tb ${UI.stone===j?'on':''}" id="tb-${esc(id)}-${j}"><div class="tb-h"><span class="tb-n">${j+1}</span><span class="tb-p">${esc(lbl)}</span><span class="chip ${on?'teal':''}">${on?'trust boundary':'no change marked'}</span></div>
+     <div class="tb-c" role="group" aria-label="What changes from ${esc(lbl)}">${TRUST.map(k=>`<button type="button" class="tgl" data-act="trust" data-route="${esc(id)}" data-j="${j}" data-k="${k}" aria-pressed="${m.changes.includes(k)}" title="${esc(tHint(k))}">${esc(tLabel(k))}</button>`).join('')}</div>
+     ${on?`<input type="text" ${bind(n+'.tnote'+j)} value="${esc(m.note)}" aria-label="Note: what changes from ${esc(lbl)}" placeholder="What changes here, e.g. ${esc(EXAMPLE.trust[Math.min(j,2)].note)}">`:''}</div>`;}).join('');
+  const trustBox=`<details class="help tbx" data-det="trust" id="fld-trust" ${det('trust',f.hops.length>0)}><summary>Trust boundaries ${ed('trust')} <span class="muted" style="font-weight:400">· ${marked} marked of ${f.hops.length} ${f.hops.length===1?'step':'steps'}</span></summary><div class="hb">
+    <p class="small muted">A trust boundary is a step where something changes: permissions, identity, authority or trust in the data. Not every connection is one. Mark only what you have confirmed; the drawing shows a stone only where you mark one.</p>
+    <dl class="legend">${TRUST.map(k=>`<dt>${esc(tLabel(k))}</dt><dd>${esc(tHint(k))}</dd>`).join('')}</dl>
+    ${orphans.length?`<p class="note warn small">${orphans.length} saved ${orphans.length===1?'mark does':'marks do'} not match this path (${orphans.map(m=>esc(m.from+' → '+m.to)).join(', ')}) and ${orphans.length===1?'is':'are'} ignored. Saving the route removes ${orphans.length===1?'it':'them'}.</p>`:''}
+    ${f.hops.length?`<div class="tbs">${trustRows}</div>`:'<p class="small muted">Add the components of the path first; each step between them can then be marked.</p>'}</div></details>`;
+  return `<div class="card" id="sec-route"><div class="card-h"><div><span class="eyebrow">01 · Route${rs.length>1?' · '+esc(id):''}</span><h2>Flow you will assess</h2>
+  <p>A route is one concrete flow through the system: <b>who starts the action</b>, <b>which components it passes through</b> and <b>what result it produces</b>. The plan keeps separate tasks, evidence and results for each route.</p></div>
+  ${bar}</div>
+  ${tabs}${helps}
+  ${f._example&&d.length?`<div class="note warn" style="margin-bottom:12px"><b>Example loaded: illustrative values, not your system.</b> Review every field and trust boundary, then save, or select Discard changes to restore the saved route.</div>`:''}
+  <div class="map" id="map">${mapSvg(f,id)}</div>
+  <p class="tiny faint maplegend"><span><span class="lg-stone" aria-hidden="true"></span>trust boundary you marked</span><span><span class="lg-hand" aria-hidden="true"></span>step not marked</span><span>select a step to say what changes there</span></p>
   <hr class="sep">
   <div class="stack">
-   <div class="grid2"><label class="f" id="fld-actor">Who acts (actor)<input type="text" ${bind(n+'.actor')} value="${esc(f.actor)}" placeholder="e.g. authenticated user of one customer"><span class="hint">The person or system that attempts something, with its starting permissions.</span></label>
-   <div class="f" id="fld-boundary"><span class="small muted" style="font-weight:600">Components the request crosses, in order</span>
-    <div class="hops">${f.hops.map((h,i)=>`${i?'<span class="arrow">→</span>':''}<span class="hop"><input type="text" ${bind(n+'.hop'+i)} value="${esc(h)}" size="${Math.max(6,h.length)}" aria-label="Component ${i+1}"><button type="button" data-act="hopDel" data-route="${esc(id)}" data-i="${i}" aria-label="Remove">×</button></span>`).join('')}
-    <button type="button" class="btn sm" data-act="hopAdd" data-route="${esc(id)}">+ add</button></div>
-    <span class="hint small faint">e.g. app → document index → model → tool. Trust changes between each pair.</span></div></div>
-   <div id="fld-access"><span class="small muted" style="font-weight:600">How much you can see on this route</span><div class="opts" style="margin-top:5px">${S.access.map(x=>`<button type="button" class="opt" data-act="rset" data-route="${esc(id)}" data-k="access" data-val="${x}" aria-pressed="${f.access===x}"><b>${x}</b><span>${acc[x]}</span></button>`).join('')}</div>
+   <div class="grid2"><label class="f" id="fld-actor"><span class="lb">Who starts the action ${ed('actor')}</span><input type="text" ${bind(n+'.actor')} value="${esc(f.actor)}" placeholder="e.g. ${esc(EXAMPLE.actor)}"><span class="hint">A person, service or agent, with the identity it starts from.</span></label>
+    <label class="f" id="fld-perms"><span class="lb">What they are allowed to do ${ed('perms')}</span><input type="text" ${bind(n+'.perms')} value="${esc(f.perms)}" placeholder="e.g. ${esc(EXAMPLE.perms)}"><span class="hint">The actor's legitimate permissions on this flow. Not your access as assessor, which is set below.</span></label></div>
+   <div class="f" id="fld-boundary"><span class="lb">Path: components in order, ending with the result ${ed('hops')}</span>
+    <div class="hops">${f.hops.map((h,i)=>`${i?'<span class="arrow" aria-hidden="true">→</span>':''}<span class="hop"><input type="text" ${bind(n+'.hop'+i)} value="${esc(h)}" size="${Math.max(6,String(h).length)}" aria-label="Component ${i+1}${i===f.hops.length-1?' (result)':''}"><button type="button" data-act="hopDel" data-route="${esc(id)}" data-i="${i}" aria-label="Remove component ${i+1}">×</button></span>`).join('')}
+    <button type="button" class="btn sm" data-act="hopAdd" data-route="${esc(id)}">+ add component</button></div>
+    <span class="hint">e.g. ${esc(EXAMPLE.hops.join(' → '))}. The last component is the result: an answer, a change or an action.</span>
+    ${nudges.length?`<p class="small note">Capabilities to confirm in 03: ${nudges.slice(0,3).map(([h,k])=>`“${esc(h)}” may mean <code>${esc(k)}</code>`).join('; ')}. Naming a component does not confirm it. <button type="button" class="btn sm ghost" data-act="goto" data-target="sec-caps">Go to capabilities</button></p>`:''}</div>
+   ${trustBox}
+   <label class="f" id="fld-check"><span class="lb">What you will check ${ed('check')}</span><input type="text" ${bind(n+'.check')} value="${esc(f.check)}" placeholder="e.g. ${esc(EXAMPLE.check)}"><span class="hint">The control that must hold on this flow, written so a result can confirm or refute it. Stored as the route's threat (${esc((r.threat_ids||[])[0]||'')}).</span></label>
+   <div id="fld-access"><span class="lb" id="acc-label">How much you can see: your access as assessor ${ed('access')}</span><p class="hint small faint">What you can observe while testing. It does not change what the actor is allowed to do.</p><div class="opts" role="group" aria-labelledby="acc-label" style="margin-top:5px">${S.access.map(x=>`<button type="button" class="opt" data-act="rset" data-route="${esc(id)}" data-k="access" data-val="${x}" aria-pressed="${f.access===x}"><b>${x}</b><span>${acc[x]}</span></button>`).join('')}</div>
     ${f.access==='unknown'||f.access==='none'?'<p class="small" style="color:var(--fail);margin-top:4px">Tasks cannot be completed while access is unknown or unavailable.</p>':''}</div>
-   <div id="fld-activities"><span class="small muted" style="font-weight:600">What this assessment includes</span><div class="opts" style="margin-top:5px">${Object.entries(S.activities).map(([k,d])=>`<button type="button" class="opt" data-act="ract" data-route="${esc(id)}" data-val="${k}" aria-pressed="${f.activities.includes(k)}"><b>${k}</b><span>${esc(d)}</span></button>`).join('')}</div>
-    ${!f.activities.includes('DESIGN')?'<p class="small" style="color:var(--unk);margin-top:4px">Include DESIGN on at least one route to complete the assessment.</p>':''}</div>
-   <div id="fld-scope" class="stack-s"><div class="row"><span id="scope-label" class="small muted" style="font-weight:600">Assessment scope</span><div class="seg" role="group" aria-labelledby="scope-label">${['in_scope','out_of_scope'].map(x=>`<button type="button" data-act="rset" data-route="${esc(id)}" data-k="scope" data-val="${x}" aria-pressed="${f.scope===x}">${x==='in_scope'?'In scope':'Out of scope'}</button>`).join('')}</div></div><p class="small muted">${f.scope==='in_scope'?'This route is included in the assessment.':'Tasks on this route cannot be completed. Changing scope does not count as passing or remove pending obligations.'} Save the route to apply this choice.</p></div>
-  </div></div>`;
+   <div id="fld-activities"><span class="lb" id="act-label">What this assessment includes on this route ${ed('activities')}</span><div class="opts" role="group" aria-labelledby="act-label" style="margin-top:5px">${Object.entries(S.activities).map(([k,dsc])=>`<button type="button" class="opt" data-act="ract" data-route="${esc(id)}" data-val="${k}" aria-pressed="${f.activities.includes(k)}"><b>${k}</b><span>${esc(dsc)}</span><span class="faint">${esc(actInfo(k))}</span></button>`).join('')}</div>
+    ${!f.activities.includes('DESIGN')&&!rs.some(x=>x.id!==id&&x.activity_types.includes('DESIGN'))?'<p class="small" style="color:var(--unk);margin-top:4px">Include DESIGN on at least one route to complete the assessment.</p>':''}</div>
+   <div id="fld-scope" class="stack-s"><div class="row"><span id="scope-label" class="lb">Assessment scope ${ed('scope')}</span><div class="seg" role="group" aria-labelledby="scope-label">${['in_scope','out_of_scope'].map(x=>`<button type="button" data-act="rset" data-route="${esc(id)}" data-k="scope" data-val="${x}" aria-pressed="${f.scope===x}">${x==='in_scope'?'In scope':'Out of scope'}</button>`).join('')}</div></div><p class="small muted">${f.scope==='in_scope'?'This route is included in the assessment.':'Tasks on this route cannot be completed. Changing scope does not count as passing or remove pending obligations.'} Save the route to apply this choice.</p></div>
+  </div>
+  ${effectPanel(r,f,d)}
+  ${d.length?`<div class="savebar bottom">${status}${UI.saving!==id?`<button class="btn sm" type="button" data-act="routeDiscard" data-route="${esc(id)}">Discard changes</button><button class="btn primary" type="button" data-act="saveRoute" data-route="${esc(id)}">Save route</button>`:''}</div>`:''}</div>`;
 }
-function mapSvg(f){
-  const nodes=[{t:'Actor',s:f.actor||'who acts?',cls:'actor'}];
-  if(f.hops.length)f.hops.forEach((h,i)=>nodes.push({t:h,s:i===f.hops.length-1?'final effect':'component '+(i+1)}));
-  else nodes.push({t:'?',s:'describe the route',cls:'ghost'},{t:'?',s:'final effect',cls:'ghost'});
-  const W=140,G=66,H=50,y=50,n=nodes.length,width=Math.max(720,40+n*W+(n-1)*G);
+function mapSvg(f,id){
+  const hs=f.hops, real=hs.length>0;
+  const nodes=[{t:'Actor',s:f.actor||'who starts?',cls:'actor'}];
+  if(real)hs.forEach((h,i)=>nodes.push({t:String(h).trim()||'(unnamed)',s:i===hs.length-1?'result':'step '+(i+1),cls:i===hs.length-1?'result':''}));
+  else nodes.push({t:'?',s:'add the path',cls:'ghost'},{t:'?',s:'result',cls:'ghost'});
+  const W=140,G=70,H=50,y=44,n=nodes.length,width=Math.max(720,40+n*W+(n-1)*G);
   const x=i=>20+i*(W+G);const cut=(s,m)=>s.length>m?s.slice(0,m-1)+'…':s;
-  const flow=`M${x(0)+W} ${y+H/2} H${x(n-1)}`;
-  let svg=`<svg viewBox="0 0 ${width} 140" width="${width}" style="min-width:${Math.min(width,560)}px" role="group" aria-label="Route diagram"><path id="flowp" class="flow" d="${flow}"/>`;
-  if(f.hops.length)svg+=`<circle class="packet" r="6"><animateMotion dur="${2+n*0.8}s" repeatCount="indefinite"><mpath href="#flowp"/></animateMotion></circle>`;
-  nodes.forEach((d,i)=>{svg+=`<g class="node ${d.cls||''}"><title>${esc(d.t)} · ${esc(d.s)}</title><rect x="${x(i)}" y="${y}" width="${W}" height="${H}" rx="9"/><text x="${x(i)+W/2}" y="${y+21}" text-anchor="middle">${esc(cut(d.t,17))}</text><text class="sub" x="${x(i)+W/2}" y="${y+38}" text-anchor="middle">${esc(cut(d.s,21))}</text></g>`;});
-  for(let i=0;i<n-1;i++){const cx=x(i)+W+G/2,cy=y+H/2;
-    svg+=`<g class="stone ${UI.stone===i?'on':''}" tabindex="0" role="button" data-stone="${i}" aria-label="Boundary ${i+1}"><polygon points="${cx},${cy-16} ${cx+14},${cy-6} ${cx+9},${cy+14} ${cx-9},${cy+14} ${cx-14},${cy-6}"/><text x="${cx}" y="${cy+5}" text-anchor="middle">${i+1}</text></g>`;}
-  svg+=`<text class="lbl" x="${x(0)+W/2}" y="${y+H+28}" text-anchor="middle">origin</text><text class="lbl" x="${x(n-1)+W/2}" y="${y+H+28}" text-anchor="middle">effect → decides the result</text></svg>`;
+  const marks=(f.trust||[]).slice(0,hs.length), nMarked=marks.filter(m=>m.changes.length).length;
+  let svg=`<svg viewBox="0 0 ${width} 150" width="${width}" style="min-width:${Math.min(width,560)}px" role="group" aria-label="Diagram of ${esc(id)}: ${esc(nodes.map(d=>d.t).join(' → '))}. ${nMarked} trust ${nMarked===1?'boundary':'boundaries'} marked."><path id="flowp" class="flow" d="M${x(0)+W} ${y+H/2} H${x(n-1)}"/>`;
+  if(real)svg+=`<circle class="packet" r="5"><animateMotion dur="${2+n*0.8}s" repeatCount="indefinite"><mpath href="#flowp"/></animateMotion></circle>`;
+  nodes.forEach((d,i)=>{if(i)svg+=`<path class="chev" d="M${x(i)-9} ${y+H/2-5} L${x(i)-2} ${y+H/2} L${x(i)-9} ${y+H/2+5}"/>`;
+    svg+=`<g class="node ${d.cls||''}"><title>${esc(d.t)} · ${esc(d.s)}</title><rect x="${x(i)}" y="${y}" width="${W}" height="${H}" rx="9"/><text x="${x(i)+W/2}" y="${y+21}" text-anchor="middle">${esc(cut(d.t,17))}</text><text class="sub" x="${x(i)+W/2}" y="${y+38}" text-anchor="middle">${esc(cut(d.s,21))}</text></g>`;});
+  let k=0;
+  for(let i=0;i<n-1;i++){const cx=x(i)+W+G/2,cy=y+H/2,from=nodes[i].t,to=nodes[i+1].t;
+    if(!real){continue;}
+    const m=marks[i]||{changes:[]},on=m.changes.length>0,sel=UI.stone===i?'on':'';
+    if(on){k++;svg+=`<g class="stone ${sel}" tabindex="0" role="button" data-stone="${i}" aria-label="Step ${i+1}, ${esc(from)} to ${esc(to)}: trust boundary ${k}, ${esc(m.changes.map(tLabel).join(', '))}. Select to edit."><title>Trust boundary ${k}: ${esc(m.changes.map(tLabel).join(', '))}</title><polygon points="${cx},${cy-16} ${cx+14},${cy-6} ${cx+9},${cy+14} ${cx-9},${cy+14} ${cx-14},${cy-6}"/><text x="${cx}" y="${cy+5}" text-anchor="middle">${k}</text></g>
+      <text class="tlbl" x="${cx}" y="${cy+34}" text-anchor="middle">${esc(cut(m.changes.map(tLabel).join(' · ').toLowerCase(),22))}</text>`;}
+    else svg+=`<g class="hand ${sel}" tabindex="0" role="button" data-stone="${i}" aria-label="Step ${i+1}, ${esc(from)} to ${esc(to)}: not marked as a trust boundary. Select to mark what changes."><title>Step ${i+1}: no change marked</title><circle cx="${cx}" cy="${cy}" r="11" class="hit"/><circle cx="${cx}" cy="${cy}" r="5"/></g>`;}
+  svg+=`<text class="lbl" x="${x(0)+W/2}" y="${y+H+40}" text-anchor="middle">starts here</text><text class="lbl" x="${x(n-1)+W/2}" y="${y+H+40}" text-anchor="middle">result: decides the outcome</text></svg>`;
   return svg;
 }
 function wireMap(){
-  const show=i=>{UI.stone=i;$$('#map .stone').forEach(g=>g.classList.toggle('on',+g.dataset.stone===i));
-    const r=ST.arch.routes[UI.route],f=rform(r);const names=['Actor',...(f.hops.length?f.hops:['?','?'])];
-    const d=$('#stoneDetail');if(!d)return;
-    d.innerHTML=`<span class="tag">Boundary ${i+1} · ${esc(names[i])} → ${esc(names[i+1])}</span><p class="muted">Trust changes here. Ask: can something that crosses from <b>${esc(names[i])}</b> into <b>${esc(names[i+1])}</b> make it do what the actor is not allowed to? The planned tasks of this route inherit this description.</p>`;};
-  $$('#map .stone').forEach(g=>{g.addEventListener('click',()=>show(+g.dataset.stone));g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();show(+g.dataset.stone);}});});
-  const n=$$('#map .stone').length;show(Math.min(UI.stone,Math.max(0,n-1)));
+  const pick=i=>{UI.stone=i;UI.det.trust=true;render();const id=ST.arch.routes[UI.route].id,row=document.getElementById('tb-'+id+'-'+i);
+    if(row){row.scrollIntoView({block:'nearest',behavior:'smooth'});row.querySelector('button')?.focus({preventScroll:true});}};
+  $$('#map [data-stone]').forEach(g=>{g.addEventListener('click',()=>pick(+g.dataset.stone));g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(+g.dataset.stone);}});});
   if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){try{$('#map svg').pauseAnimations();}catch(e){}}
 }
+function applyExample(r){const f=rform(r);
+  Object.assign(f,{actor:EXAMPLE.actor,perms:EXAMPLE.perms,hops:[...EXAMPLE.hops],check:EXAMPLE.check,trust:EXAMPLE.trust.map(m=>({changes:[...m.changes],note:m.note})),_example:true});
+  UI.det.trust=true;UI.stone=0;
+  toast('Example loaded into '+r.id+'. Nothing is saved yet.','Edit it to describe your system, then select Save route. Discard changes restores the saved route.','warn');
+  gotoTarget('arch','fld-actor');}
+function confirmModal(title,text,go,goLabel,keepLabel,data=''){
+  openModal(`<div class="mh"><h2>${esc(title)}</h2><p class="small muted" style="margin-top:6px">${text}</p></div>
+   <div class="mb"><div class="row"><span class="grow"></span><button type="button" class="btn" data-act="closeModal">${esc(keepLabel)}</button><button type="button" class="btn primary" data-act="${go}" ${data}>${esc(goLabel)}</button></div></div>`);}
+function routeAddModal(focus){
+  const rs=ST.arch.routes,cur=rs[UI.route],ids=new Set(rs.map(r=>r.id));let i=1;while(ids.has('ROUTE-'+i))i++;
+  const f=ns('radd',()=>({id:'ROUTE-'+i,copy:false}));
+  openModal(`<div class="mh"><span class="eyebrow">Routes</span><h2>Add a route</h2><p class="small muted" style="margin-top:4px">A route is one flow. Add one when the actor, their permissions, the path or the effect differs from ${esc(cur.id)}.</p></div>
+   <div class="mb"><label class="f">Route ID<input type="text" ${bind('radd.id')} value="${val('radd.id')}" maxlength="32" autocomplete="off" spellcheck="false" data-enter="routeAddGo"><span class="hint">Short, without spaces, e.g. ROUTE-2 or ORDERS. Its tasks are named CASE@ID.</span></label>
+    <div class="stack-s"><span class="lb" id="radd-caps">Capability answers</span><div class="opts" role="group" aria-labelledby="radd-caps">
+     <button type="button" class="opt" data-act="raddSet" data-v="" aria-pressed="${!f.copy}"><b>Start as unknown</b><span>Recommended: confirm what this flow can do.</span></button>
+     <button type="button" class="opt" data-act="raddSet" data-v="1" aria-pressed="${!!f.copy}"><b>Copy from ${esc(cur.id)}</b><span>Answers and their sources; review them afterwards.</span></button></div></div>
+    <p class="small muted">Activities are copied from ${esc(cur.id)} (${esc(cur.activity_types.join(', '))}). Access starts unknown and the route starts in scope. You describe its actor and path next.</p>
+    <div class="row"><span class="grow"></span><button type="button" class="btn" data-act="closeModal">Cancel</button><button type="button" class="btn primary" data-act="routeAddGo">Add route</button></div></div>`,focus);}
 /* ---------- readiness ---------- */
 function readinessCard(){
   const a=ST.arch, L=a.limits, gaps=new Set(ST.readiness);
@@ -638,9 +853,19 @@ function protocolsCard(){
 }
 /* ---------- freeze ---------- */
 function previewBlock(){
-  const pv=ST.preview||{};
-  return `<div class="preview">${Object.entries(pv).map(([rid,d])=>{const tot=d.APPLICABLE+d.UNKNOWN+d.NOT_APPLICABLE||1;
-    return `<div class="pv"><b class="mono">${esc(rid)}</b><div class="bar"><i style="width:${100*d.APPLICABLE/tot}%;background:var(--accent)"></i><i style="width:${100*d.UNKNOWN/tot}%;background:var(--unk)"></i></div><span class="c small muted">${d.APPLICABLE} applicable · ${d.UNKNOWN} unknown · ${d.NOT_APPLICABLE} n/a</span></div>`;}).join('')}</div>`;
+  const pv=ST.preview||{}, rows=Object.entries(pv);
+  if(!rows.length)return '<p class="small muted">The preview appears once the architecture is valid.</p>';
+  const total=rows.reduce((n,[,d])=>n+(d.total||0),0);
+  return `<div class="preview">${rows.map(([rid,d])=>{const tot=d.APPLICABLE+d.UNKNOWN+d.NOT_APPLICABLE||1;
+    return `<div class="pv"><b class="mono">${esc(rid)}</b><div class="bar" aria-hidden="true"><i style="width:${100*d.APPLICABLE/tot}%;background:var(--accent)"></i><i style="width:${100*d.UNKNOWN/tot}%;background:var(--unk)"></i></div><span class="c small muted">${d.total} tasks: ${d.APPLICABLE} applicable · ${d.UNKNOWN} pending confirmation · ${d.NOT_APPLICABLE} not applicable</span></div>`;}).join('')}
+   <p class="tiny faint">${total} tasks in total, calculated by the planning engine from the saved routes. Each route keeps its own tasks, evidence and results.</p></div>`;
+}
+function revisionText(){
+  const p=plan(), w=ST.workspace, rv=ST.revision;if(!p||!rv)return '';
+  const next='plan-'+String((parseInt(String(w.series||'').split('-')[1],10)||0)+1).padStart(3,'0');
+  const per=Object.entries(rv.routes||{}).filter(([,x])=>x.added||x.removed||x.changed).map(([rid,x])=>`${esc(rid)}: +${x.added} / −${x.removed} / ~${x.changed}`).join(' · ');
+  const same=!(rv.added||rv.removed||rv.changed);
+  return `<p class="small">Freezing a revision creates <b>${next}</b> with the saved architecture: ${same?'the same tasks; only descriptions change (for example actor, permissions, path, trust boundaries, check or readiness fields)':`${rv.added} tasks added, ${rv.removed} removed and ${rv.changed} updated${per?` (${per})`:''}`}. ${rv.results?`The ${rv.results} recorded ${rv.results===1?'result stays':'results stay'} in ${esc(w.series)} (record <code>${esc(rv.record||'')}</code>) and ${rv.results===1?'is':'are'} not copied; evidence files stay in the evidence store.`:`No results are recorded in ${esc(w.series)} yet.`} Earlier plans are never rewritten.</p>`;
 }
 function freezeCard(){
   const p=plan(), w=ST.workspace, blocking=ST.setup_items.filter(i=>i.blocking), dirty=unsavedArchitecture();
@@ -648,12 +873,12 @@ function freezeCard(){
   if(!p){body=`${blocking.length?`<div class="note warn"><b>${blocking.length} things are still undefined.</b> Defining them first avoids a revision later: ${blocking.map(i=>esc(S.items[i.key].label+(i.route?' ('+i.route+')':''))).join(', ')}.</div>
      <label class="check"><input type="checkbox" ${bind('freeze.anyway')} ${getF('freeze.anyway',false)?'checked':''}> Freeze anyway (the plan stays at code 2 until they are fixed)</label>`:'<div class="note ok">Saved readiness fields are complete.</div>'}
      <div><button type="button" class="btn primary" data-act="freeze" ${blocking.length&&!getF('freeze.anyway',false)?'disabled':''}>Freeze the plan</button></div>`;}
-  else if(p.stale){body=`<div class="note warn"><b>The architecture changed after ${esc(w.series)} was frozen.</b> Freeze a revision to apply it. A revision is a new plan: recorded results stay with ${esc(w.series)} and are not transferred.</div>
+  else if(p.stale){body=`<div class="note warn"><b>The saved architecture differs from ${esc(w.series)}.</b> A revision is a new plan; the frozen one is kept as it is.</div>${revisionText()}
      <div class="grid2"><label class="f">Reason<input type="text" ${bind('freeze.reason')} value="${val('freeze.reason')}" placeholder="e.g. readiness fields completed"></label><label class="f">Approver<input type="text" ${bind('freeze.approver')} value="${val('freeze.approver',store.get('reviewer',S.user))}"></label></div>
      <div><button type="button" class="btn primary" data-act="freeze">Freeze revision</button></div>`;}
-  else body=`<div class="note ok">${esc(w.series)} matches this architecture. Nothing to freeze.</div>`;
-  return `<div class="card" id="sec-freeze"><div class="card-h"><div><span class="eyebrow">05 · Plan</span><h2>${p?'Revise the frozen plan':'Freeze the plan'}</h2><p>Freezing turns this architecture into a fixed list of obligations with a manifest. If it were frozen now:</p></div></div>
-   ${previewBlock()}<hr class="sep"><div class="stack">${dirty.length?`<div class="note warn"><b>Unsaved changes:</b> ${dirty.map(x=>esc(x.label)).join(', ')}. Save these before freezing; the preview uses saved values.</div>`:''}${body}</div></div>`;
+  else body=`<div class="note ok">${esc(w.series)} matches the saved architecture. Nothing to freeze.</div>`;
+  return `<div class="card" id="sec-freeze"><div class="card-h"><div><span class="eyebrow">05 · Plan</span><h2>${p?'Revise the frozen plan':'Freeze the plan'}</h2><p>Freezing turns the saved routes into a fixed list of obligations with a manifest. If it were frozen now:</p></div></div>
+   ${previewBlock()}<hr class="sep"><div class="stack">${dirty.length?`<div class="note warn"><b>Unsaved changes:</b> ${dirty.map(x=>esc(x.label)).join(', ')}. Save or discard them before freezing; the preview and the plan use saved values only.</div>`:''}${body}</div></div>`;
 }
 
 /* ================= plan board ================= */
@@ -677,9 +902,10 @@ function miniBar(t){const s=sample(t);if(!s||t.result||!(t.trials.length||t.stag
 function boardView(){
   if(!plan())return `<div class="empty"><h1>No frozen plan yet</h1><p class="muted" style="margin:6px 0 18px">The plan appears once the architecture is frozen. Resolve what is pending in the sidebar, then freeze it.</p>
     ${previewBlock()}<p style="margin-top:18px"><button type="button" class="btn primary" data-act="goto" data-target="sec-freeze">Go to Freeze the plan</button></p></div>`;
-  const all=tasks(), mods=[...new Set(all.map(t=>t.module))].sort(), acts=[...new Set(all.map(t=>t.activity))].sort();
+  const all=tasks(), mods=[...new Set(all.map(t=>t.module))].sort(), acts=[...new Set(all.map(t=>t.activity))].sort(), rids=[...new Set(all.map(t=>t.route_id))];
   const q=UI.q.trim().toLowerCase(), p=plan();
-  const sel=all.filter(t=>(!UI.module||t.module===UI.module)&&(!UI.activity||t.activity===UI.activity)&&(!q||(t.alias+' '+t.title+' '+t.module).toLowerCase().includes(q)));
+  if(UI.routeF&&!rids.includes(UI.routeF))UI.routeF='';
+  const sel=all.filter(t=>(!UI.routeF||t.route_id===UI.routeF)&&(!UI.module||t.module===UI.module)&&(!UI.activity||t.activity===UI.activity)&&(!q||(t.alias+' '+t.title+' '+t.module).toLowerCase().includes(q)));
   const c=Object.fromEntries(COLS.map(k=>[k,sel.filter(t=>t.bucket===k).length]));
   const tabs=[['all','Selected',sel.filter(t=>t.bucket!=='NOT_APPLICABLE').length],['FAIL','Failed',c.FAIL],['TODO','To do',c.TODO],['UNKNOWN','Unknown',c.UNKNOWN],['PASS','Passed',c.PASS]].concat(c.EXCLUDED||UI.ltab==='EXCLUDED'?[['EXCLUDED','Excluded',c.EXCLUDED]]:[]).concat([['NOT_APPLICABLE','Not applicable',c.NOT_APPLICABLE]]);
   const shown=sel.filter(t=>UI.ltab==='all'?t.bucket!=='NOT_APPLICABLE':t.bucket===UI.ltab);
@@ -691,7 +917,7 @@ function boardView(){
     const h=rowHint(t);
     rows+=`<tr class="t ${t.bucket} ${UI.drawer===t.alias?'sel':''}" tabindex="0" aria-label="Open ${esc(t.alias)}: ${esc(t.title)}" data-act="open" data-task="${esc(t.alias)}"><td><i class="d"></i></td><td class="id">${esc(t.alias)}</td><td class="tt">${esc(t.title)}</td><td class="m">${esc(t.module)}</td><td class="m">${esc(t.activity.charAt(0)+t.activity.slice(1).toLowerCase())}</td><td class="r ${h[1]}">${h[0]}${miniBar(t)}</td></tr>`;});
   return `<div class="ph"><div><h1>Plan</h1><p>${esc(p.series)} · ${all.length} obligations · frozen ${when(p.created_at)}${ST.integrity_error?'':' · verifies against its manifest'}</p></div>
-    <div class="filters"><select data-filter="module" aria-label="Module"><option value="">All modules</option>${mods.map(m=>`<option ${m===UI.module?'selected':''}>${esc(m)}</option>`).join('')}</select>
+    <div class="filters">${rids.length>1?`<select data-filter="routeF" aria-label="Route"><option value="">All routes</option>${rids.map(x=>`<option value="${esc(x)}" ${x===UI.routeF?'selected':''}>${esc(x)}</option>`).join('')}</select>`:''}<select data-filter="module" aria-label="Module"><option value="">All modules</option>${mods.map(m=>`<option ${m===UI.module?'selected':''}>${esc(m)}</option>`).join('')}</select>
     <select data-filter="activity" aria-label="Activity"><option value="">All activities</option>${acts.map(m=>`<option ${m===UI.activity?'selected':''}>${esc(m)}</option>`).join('')}</select>
     <input type="search" id="boardq" placeholder="Search  /" value="${esc(UI.q)}" data-filter="q" aria-label="Search tasks"></div></div>
    ${p.stale?'<div class="note warn" style="margin-top:12px">The architecture changed after this plan was frozen. The list shows the frozen plan; freeze a revision to apply the changes.</div>':''}
@@ -731,10 +957,26 @@ function renderDrawer(){
 }
 async function loadFieldcard(id){try{FC[id]=(await api('fieldcard?case='+encodeURIComponent(id))).html;}catch(e){FC[id]=`<p class="muted">${esc(e.message)}</p>`;}if(UI.drawer&&UI.dtab==='card')renderDrawer();}
 function fieldcardTab(t){return FC[t.case_id]?`<div class="fc">${FC[t.case_id]}</div>`:'<p class="muted"><span class="spin"></span> Loading the fieldcard…</p>';}
+function trustLine(marks){return (marks||[]).length?marks.map(m=>`${esc(m.from==='actor'?'Actor':m.from)} → ${esc(m.to)} <span class="faint">(${esc(m.changes.map(tLabel).join(', ').toLowerCase())})</span>`).join('<br>'):'<span class="faint">none marked</span>';}
+function whyTask(t){   // explained with the frozen route, not with later edits
+  const fr=frozenRoute(t.route_id)||{capabilities:{}}, caps=fr.capabilities||{}, rule=(S.cases[t.case_id]||{}).applies_if||[];
+  const kind={DESIGN:'design reviews (DESIGN)',CONFIG:'configuration reviews (CONFIG)',TEST:'tests (TEST)',REDTEAM:'scenarios (REDTEAM)'}[t.activity]||esc(t.activity);
+  let cond;
+  if(rule.some(cl=>!cl.length))cond='It belongs to the common core, so it needs no capability.';
+  else if(t.applicability==='APPLICABLE'){const cl=rule.find(cl=>cl.every(k=>caps[k]==='present'))||[];cond=`It applies because ${capWord(cl)} ${cl.length>1?'were':'was'} marked present on ${esc(t.route_id)} when the plan was frozen.`;}
+  else if(t.applicability==='UNKNOWN'){const need=[...new Set(rule.filter(cl=>!cl.some(k=>caps[k]==='absent')).flat().filter(k=>(caps[k]||'unknown')==='unknown'))];
+    cond=`It stays pending until ${need.map(k=>`<code>${esc(k)}</code>`).join(', ')} ${need.length>1?'are':'is'} confirmed.`;}
+  else cond='It does not apply: every way it could apply needs a capability that was marked absent.';
+  const hs=hops(t.boundary);
+  return `<div class="why"><h4>Why this task is in your plan</h4>
+   <p class="small">${esc(t.route_id)} includes ${kind}, so the plan lists every case of that kind for this route. ${cond} Its evidence and result belong to ${esc(t.route_id)} only.</p>
+   <dl><dt>Actor</dt><dd>${vague(t.actor)?'<span class="faint">not described</span>':esc(t.actor)}</dd>${fr.actor_permissions?`<dt>Allowed to</dt><dd>${esc(fr.actor_permissions)}</dd>`:''}
+    <dt>Path</dt><dd>${hs.length?esc(['Actor',...hs].join(' → ')):'<span class="faint">not described</span>'}</dd>
+    <dt>Trust</dt><dd>${trustLine(fr.trust_boundaries)}</dd>${fr.check?`<dt>Check</dt><dd>${esc(fr.check)}</dd>`:''}</dl></div>`;}
 function facts(t){const pr=t.test_protocol;
   return `<div class="facts"><div class="fact"><span>Route</span><b>${esc(t.route_id)}</b></div><div class="fact"><span>Access</span><b>${esc(t.access)}</b></div><div class="fact"><span>Applicability</span><b>${esc(t.applicability)}</b></div>
-  <div class="fact"><span>Controls</span><b>${esc(t.control_ids.join(', ')||'–')}</b></div><div class="fact" style="grid-column:1/-1"><span>Boundary · actor</span><b>${esc(t.boundary)} · ${esc(t.actor)}</b></div>
-  ${pr?`<div class="fact" style="grid-column:1/-1"><span>Protocol (frozen)</span><b>${esc(pr.required_variants.join(', '))} × ${pr.min_trials_per_variant} · ${esc(pr.design)}</b><div class="small muted">${esc(pr.decision_rule)}</div></div>`:''}</div>`;}
+  <div class="fact"><span>Controls</span><b>${esc(t.control_ids.join(', ')||'–')}</b></div>
+  ${pr?`<div class="fact"><span>Protocol (frozen)</span><b>${esc(pr.required_variants.join(', '))} × ${pr.min_trials_per_variant} · ${esc(pr.design)}<span class="small muted" style="display:block">${esc(pr.decision_rule)}</span></b></div>`:''}</div>${whyTask(t)}`;}
 function workTab(t){
   const r=routeOf(t.route_id)||{capabilities:{}};const c=S.cases[t.case_id]||{applies_if:[]};
   if(t.bucket==='NOT_APPLICABLE'){const cl=c.applies_if.map(x=>x.filter(k=>r.capabilities[k]==='absent'));
@@ -892,7 +1134,7 @@ function gapKey(g){return({authorization_ref:'authorization',snapshot_ref:'snaps
 function fieldFor(k){return({access:'fld-access',actor:'fld-actor',boundary:'fld-boundary',activities:'fld-activities','caps-source':'fld-caps-source'})[k]||'fld-'+k;}
 /* ================= export modal & help ================= */
 let modalReturn=null;
-function openModal(html){const m=$('#modal');if(!m.classList.contains('on'))modalReturn=document.activeElement;m.innerHTML=`<div class="scrim on" data-act="closeModal" style="position:absolute"></div><div class="box">${html}<button class="x" type="button" data-act="closeModal" aria-label="Close">×</button></div>`;m.classList.add('on');const title=m.querySelector('h2');if(title){title.id='modal-title';m.setAttribute('aria-labelledby',title.id);}$('#app').inert=true;setTimeout(()=>{const b=m.querySelector('.box button, .box input');if(b)b.focus();},30);}
+function openModal(html,focus){const m=$('#modal');if(!m.classList.contains('on'))modalReturn=document.activeElement;m.innerHTML=`<div class="scrim on" data-act="closeModal" style="position:absolute"></div><div class="box">${html}<button class="x" type="button" data-act="closeModal" aria-label="Close">×</button></div>`;m.classList.add('on');const title=m.querySelector('h2');if(title){title.id='modal-title';m.setAttribute('aria-labelledby',title.id);}$('#app').inert=true;setTimeout(()=>{const b=(focus&&m.querySelector(focus))||m.querySelector('.box button, .box input');if(b)b.focus();},30);}
 function closeModal(){const m=$('#modal'),wasOpen=m.classList.contains('on');m.classList.remove('on');m.innerHTML='';$('#app').inert=false;if(wasOpen&&modalReturn?.isConnected)modalReturn.focus();}
 function exportModal(){
   const lay=getF('exp.layout','board'),fmt=getF('exp.format','html');
@@ -909,7 +1151,7 @@ function helpModal(){openModal(`<div class="mh"><h2>Keyboard shortcuts</h2></div
 
 /* ================= actions ================= */
 function gotoTarget(view,id){if(view&&UI.view!==view){UI.view=view;store.set('view',view);}closeDrawer();closeModal();document.body.classList.remove('side-open');$('#scrim').classList.remove('on');render();
-  if(id)setTimeout(()=>{const el=document.getElementById(id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});const f=el.closest('.fld')||el;f.classList.remove('flash');void f.offsetWidth;f.classList.add('flash');const i=el.querySelector('input,textarea,button');if(i)i.focus({preventScroll:true});},50);
+  if(id)setTimeout(()=>{const el=document.getElementById(id);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});const f=el.closest('.fld')||el;f.classList.remove('flash');void f.offsetWidth;f.classList.add('flash');const i=el.matches('input,textarea,button,select')?el:el.querySelector('input,textarea,button');if(i)i.focus({preventScroll:true});},50);
   else $('#main').scrollTo({top:0});}
 const A={
   view:el=>{document.body.classList.remove('side-open');$('#scrim').classList.remove('on');UI.view=el.dataset.v;store.set('view',UI.view);closeDrawer();render();$('#main').scrollTo({top:0});$('#main').focus({preventScroll:true});},
@@ -920,19 +1162,61 @@ const A={
   setf:el=>{setF(el.dataset.path,el.dataset.val);render();},
   create:async()=>{const r=await act('new',{folder:getF('new.folder',ST.default_folder||'my-assessment'),name:getF('new.name',''),profile:getF('new.profile','rag')},'Workspace created');if(r){UI.view='arch';render();}},
   open:async el=>{if(el.dataset.task){openTask(el.dataset.task);return;}const r=await act('open',{folder:el.dataset.folder||getF('open.folder','')},'Workspace opened');if(r){UI.view='arch';render();}},
-  route:el=>{UI.route=+el.dataset.i;UI.stone=0;render();},
+  route:el=>{UI.route=+el.dataset.i;UI.stone=-1;render();},
   rset:el=>{const r=routeOf(el.dataset.route);rform(r)[el.dataset.k]=el.dataset.val;render();},
   ract:el=>{const f=rform(routeOf(el.dataset.route)),v=el.dataset.val;f.activities=f.activities.includes(v)?f.activities.filter(x=>x!==v):[...f.activities,v].sort((a,b)=>['DESIGN','CONFIG','TEST','REDTEAM'].indexOf(a)-['DESIGN','CONFIG','TEST','REDTEAM'].indexOf(b));render();},
-  hopAdd:el=>{const f=rform(routeOf(el.dataset.route));f.hops.push('');const n='route:'+el.dataset.route;render();setTimeout(()=>{const i=document.getElementById('b-'+n+'.hop'+(f.hops.length-1));if(i)i.focus();},20);},
-  hopDel:el=>{const f=rform(routeOf(el.dataset.route));f.hops.splice(+el.dataset.i,1);render();},
-  saveRoute:async el=>{const r=routeOf(el.dataset.route),f=rform(r),id=r.id,calls=[];
-    if((rbase(r).actor&&!f.actor.trim())||(hops(r.boundary).length&&!f.hops.length)||f.hops.some(h=>!h.trim())){toast('Describe the actor and every component before saving.','Remove empty components or give them a name.','err');return;}
-    if(!f.activities.length){toast('Choose at least one activity.','','err');return;}
-    if((f.actor||'')!==(vague(r.actor)?'':r.actor)&&f.actor.trim())calls.push(['actor',f.actor]);
-    const b=f.hops.map(s=>s.trim()).filter(Boolean).join(' -> ');if(b&&b!==hops(r.boundary).join(' -> '))calls.push(['boundary',b]);
-    if(f.access!==r.access)calls.push(['access',f.access]);if(f.activities.join()!==r.activity_types.join())calls.push(['activities',f.activities.join(',')]);if(f.scope!==r.scope)calls.push(['scope',f.scope]);
-    busy(1);try{for(const [k,v] of calls)await api('set',{field:k,value:v,route:id});delete F['route:'+id];await refresh();toast('Route '+id+' saved.',calls.map(c=>c[0]).join(', '),'ok');}
-    catch(e){toast(e.message,e.hint,'err');await refresh();}finally{busy(-1);}},
+  hopAdd:el=>{const f=rform(routeOf(el.dataset.route));f.hops.push('');f.trust.length=f.hops.length-1;f.trust.push({changes:[],note:''});const n='route:'+el.dataset.route;render();setTimeout(()=>{const i=document.getElementById('b-'+n+'.hop'+(f.hops.length-1));if(i)i.focus();},20);},
+  hopDel:el=>{const f=rform(routeOf(el.dataset.route)),i=+el.dataset.i,name=String(f.hops[i]).trim()||'the component';
+    // removing component i joins the step into it and the step out of it; their marks no longer describe the new step
+    const lost=f.trust.slice(i,i+2).some(m=>m&&m.changes.length);
+    if(i<f.hops.length-1)f.trust.splice(i,2,{changes:[],note:''});else f.trust.splice(i,1);
+    f.hops.splice(i,1);UI.stone=-1;render();
+    if(lost)toast('Trust boundary marks next to '+name+' were cleared.','Mark the new step again if trust changes there. Nothing is saved until you select Save route.','warn');},
+  trust:el=>{const f=rform(routeOf(el.dataset.route)),j=+el.dataset.j,k=el.dataset.k,m=f.trust[j]||(f.trust[j]={changes:[],note:''});
+    m.changes=m.changes.includes(k)?m.changes.filter(x=>x!==k):TRUST.filter(x=>x===k||m.changes.includes(x));UI.stone=j;render();},
+  saveRoute:async el=>{const r=routeOf(el.dataset.route),f=rform(r),b=rbase(r),id=r.id,d=rdiff(f,b);
+    const refuse=(msg,hint)=>{UI.routeErr[id]=msg;toast(msg,hint,'err');render();};
+    if((b.actor&&!String(f.actor).trim())||(b.hops.length&&!f.hops.length)||f.hops.some(h=>!String(h).trim())){refuse('Describe the actor and every component before saving.','Remove empty components or give them a name.');return;}
+    if(!f.activities.length){refuse('Choose at least one activity.','');return;}
+    if(!d.length)return;
+    // one request: the server validates every field and writes the route once, or writes nothing
+    const body={op:'edit',route:id};
+    if(d.includes('actor')&&String(f.actor).trim())body.actor=String(f.actor).trim();
+    if(d.includes('perms'))body.permissions=String(f.perms).trim();
+    if(d.includes('hops')&&f.hops.length)body.path=f.hops.map(x=>String(x).trim()).join(' -> ');
+    if(d.includes('check'))body.check=String(f.check).trim();
+    if(d.includes('trust')||d.includes('hops')||orphanMarks(r).length)body.trust=trustList(f);
+    if(d.includes('access'))body.access=f.access;if(d.includes('activities'))body.activities=f.activities.join(',');if(d.includes('scope'))body.scope=f.scope;
+    UI.saving=id;delete UI.routeErr[id];busy(1);render();
+    try{const res=await api('route',body);delete F['route:'+id];await refresh();
+      toast('Route '+id+' saved.',plan()?'Saved changes reach the frozen plan when you freeze a revision.':d.map(k=>ROUTE_LBL[k]).join(', '),'ok');}
+    catch(e){UI.routeErr[id]=e.message+(e.hint?' '+e.hint:'');toast(e.message,e.hint,'err');try{await refresh();}catch(_){}}
+    finally{UI.saving=null;busy(-1);render();}},
+  routeDiscard:el=>{const r=routeOf(el.dataset.route),d=rdiff(rform(r),rbase(r));
+    confirmModal('Discard unsaved changes on '+r.id+'?','The editor returns to the saved route ('+esc(d.map(k=>ROUTE_LBL[k]).join(', '))+' revert). Saved values, capability answers and the plan are not affected.','routeDiscardGo','Discard changes','Keep editing',`data-route="${esc(r.id)}"`);},
+  routeDiscardGo:el=>{const id=el.dataset.route;delete F['route:'+id];delete UI.routeErr[id];closeModal();render();
+    $$('.rtab').find(x=>x.getAttribute('aria-pressed')==='true')?.focus();toast('Changes on '+id+' discarded.','','ok');},
+  exLoad:el=>{const r=routeOf(el.dataset.route),f=rform(r),b=rbase(r),t=x=>String(x||'').trim();
+    const has=[f.actor,f.perms,f.check,b.actor,b.perms,b.check].some(t)||f.hops.some(t)||b.hops.length>0;
+    if(!has){applyExample(r);return;}
+    confirmModal('Replace what this route says with the example?','The example replaces who starts the action, permissions, path, check and trust boundary marks in the '+esc(r.id)+' editor. Access, activities, scope and capability answers are not changed. Nothing is saved until you select Save route, and Discard changes restores the saved route.','exLoadGo','Replace with the example','Keep my text',`data-route="${esc(r.id)}"`);},
+  exLoadGo:el=>{closeModal();applyExample(routeOf(el.dataset.route));},
+  routeAdd:()=>routeAddModal(),
+  raddSet:el=>{ns('radd').copy=!!el.dataset.v;routeAddModal(`[data-act="raddSet"][data-v="${el.dataset.v}"]`);},
+  routeAddGo:async()=>{const f=ns('radd'),id=String(getF('radd.id','')).trim().toUpperCase(),cur=ST.arch.routes[UI.route];
+    if(!/^[A-Z0-9][A-Z0-9_-]{0,31}$/.test(id)){toast('Use up to 32 letters, digits, - or _ for the route ID.','For example ROUTE-2 or ORDERS.','err');return;}
+    if(ST.arch.routes.some(r=>r.id===id)){toast('Route '+id+' already exists.','Choose another ID.','err');return;}
+    busy(1);try{await api('route',{op:'add',route:id,like:cur.id,copy_caps:!!f.copy});await refresh();}
+    catch(e){toast(e.message,e.hint,'err');return;}finally{busy(-1);}
+    delete F.radd;UI.route=Math.max(0,ST.arch.routes.findIndex(x=>x.id===id));UI.stone=-1;closeModal();gotoTarget('arch','fld-actor');
+    toast('Route '+id+' added.','Describe who starts the action, what they may do and the path, then save. Capability answers '+(f.copy?'were copied from '+cur.id+': review them in 03.':'start unknown: answer them in 03.'),'ok');},
+  routeRemove:el=>{const id=el.dataset.route,w=ST.workspace;
+    if(inFrozenPlan(id)){confirmModal(id+' is part of the frozen plan','Removing it would drop its tasks from the next revision. Mark it out of scope instead: its tasks stay visible as pending, and anything recorded stays in '+esc(w.series)+'.','routeOutOfScope','Mark '+id+' out of scope','Cancel',`data-route="${esc(id)}"`);return;}
+    confirmModal('Remove '+id+'?','Its actor, path, capability answers and protocols are deleted from the architecture'+(routeDirty(routeOf(id))?', together with its unsaved edits':'')+'. No plan, result or evidence file is changed.','routeRemoveGo','Remove '+id,'Cancel',`data-route="${esc(id)}"`);},
+  routeRemoveGo:async el=>{const id=el.dataset.route;const r=await act('route',{op:'remove',route:id},'Route '+id+' removed');
+    if(r){delete F['route:'+id];delete F['proto:'+id];UI.route=0;UI.stone=-1;closeModal();render();$$('.rtab')[0]?.focus();}},
+  routeOutOfScope:el=>{const id=el.dataset.route;rform(routeOf(id)).scope='out_of_scope';closeModal();gotoTarget('arch','fld-scope');
+    toast(id+' marked out of scope in the editor.','Select Save route to apply it, then freeze a revision.','warn');},
   saveField:async el=>{const key=el.dataset.key,field=el.dataset.field,v=String(getF('rd.'+key,'')).trim();if(!v){toast('Write a value first.','','err');return;}
     if(key==='reviewer')store.set('reviewer',v);
     const r=await act('set',{field,value:v});if(r){delete F.rd[key];render();}},
@@ -1029,7 +1313,7 @@ document.addEventListener('drop',e=>{e.preventDefault();$$('.drag').forEach(x=>x
 });
 
 /* ================= events ================= */
-const MUTATIONS=new Set(['create','open','saveRoute','saveField','saveLimits','stopDel','cap','capq','capsSource','saveProto','freeze','record','decide','review','doExport']);
+const MUTATIONS=new Set(['create','open','saveRoute','routeAddGo','routeRemoveGo','saveField','saveLimits','stopDel','cap','capq','capsSource','saveProto','freeze','record','decide','review','doExport']);
 let writing=false;
 async function dispatch(el,e){
   const fn=A[el.dataset.act];if(!fn||el.disabled)return;
@@ -1043,6 +1327,7 @@ document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if
 document.addEventListener('input',e=>{const el=e.target;
   if(el.dataset.bind){setF(el.dataset.bind,el.type==='checkbox'?el.checked:el.value);
     const m=el.dataset.bind.match(/^(route:[^.]+)\.hop(\d+)$/);if(m){F[m[1]].hops[+m[2]]=el.value;}
+    const tn=el.dataset.bind.match(/^(route:[^.]+)\.tnote(\d+)$/);if(tn&&F[tn[1]]&&F[tn[1]].trust[+tn[2]])F[tn[1]].trust[+tn[2]].note=el.value;
     if(el.tagName==='SELECT'||el.type==='checkbox'||/\.(variant|reachability|case|design)$/.test(el.dataset.bind)||m||/^(rd|lim|freeze|route:[^.]+|proto:[^.]+)\./.test(el.dataset.bind)||/\.note_/.test(el.dataset.bind)||/^(rec|dec|rev):/.test(el.dataset.bind))schedule();
     return;}
   if(el.dataset.filter){UI[el.dataset.filter]=el.value;schedule();}
@@ -1053,6 +1338,7 @@ document.addEventListener('keydown',e=>{
   const el=e.target, typing=el.matches&&el.matches('input,textarea,select');
   if($('#modal').classList.contains('on')){
     if(e.key==='Escape'){e.preventDefault();closeModal();return;}
+    if(e.key==='Enter'&&el.dataset&&el.dataset.enter){e.preventDefault();dispatch({dataset:{...el.dataset,act:el.dataset.enter}},e);return;}
     if(e.key==='Tab'){const items=$$('#modal .box button:not([disabled]), #modal .box input, #modal .box a[href]');const first=items[0],last=items[items.length-1];if(e.shiftKey&&el===first){e.preventDefault();last?.focus();}else if(!e.shiftKey&&el===last){e.preventDefault();first?.focus();}}
     return;
   }
@@ -1067,6 +1353,8 @@ document.addEventListener('keydown',e=>{
   else if(e.key==='e'||e.key==='E')A.export();else if(e.key==='t'||e.key==='T')A.theme();else if(e.key==='?')helpModal();else if(e.key==='p'||e.key==='P')A.rail();
 });
 document.addEventListener('focusout',async e=>{const el=e.target;if(el.dataset&&el.dataset.save==='name'){const v=el.value.trim();if(v&&v!==ST.arch.system_name){const r=await act('set',{field:'name',value:v},'System name saved');if(r)delete F.sys;}}});
+document.addEventListener('toggle',e=>{const d=e.target;if(d&&d.dataset&&d.dataset.det)UI.det[d.dataset.det]=d.open;},true);
+if(window.addEventListener)window.addEventListener('beforeunload',e=>{if(ST&&ST.workspace&&unsavedArchitecture().length){e.preventDefault();e.returnValue='';}});
 function applyTheme(){const h=document.documentElement;if(UI.theme==='system')h.removeAttribute('data-theme');else h.dataset.theme=UI.theme;}
 
 /* ================= start ================= */

@@ -10,10 +10,14 @@
 
 | Merestone term | Field / identifier | Operational definition |
 |---|---|---|
-| Route | `routes[]` | Complete path origin → transformation → context → decision → tool → resource → effect, with a concrete actor, identity and boundary. Unit of assessment. |
-| Trust boundary | `boundary` | Point where the trust level or authority changes: user/service, tenants, document/instruction, model/executor, agent/server, internal network/Internet, build/production. |
+| Route · flow | `routes[]` | One concrete flow being assessed: who starts the action, the components it passes through and the result it produces (origin → transformation → context → decision → tool → resource → effect). Unit of assessment: each route keeps its own tasks, evidence and results. A different actor, permissions, path or effect is a different route. |
+| Path | `boundary` | Ordered components of a route, ending with its result, written `a -> b -> c` (the field keeps its historical name). A connection between components is not a trust boundary by itself. |
+| Trust boundary | `trust_boundaries` | Step of the path where permissions, identity, authority or trust in the data change: user/service, tenants, document/instruction, model/executor, agent/server, internal network/Internet, build/production. Marked explicitly with what changes (`permissions`, `identity`, `authority`, `data_trust`); optional, descriptive, and never inferred from the path. |
 | Asset | `assets[]` | Component, data or business capability being protected. |
-| Actor | `actor` | Who attempts the effect, with their initial access. |
+| Actor | `actor` | Who starts the action and attempts the effect, with the identity it starts from. |
+| Actor permissions | `actor_permissions` | What the actor is legitimately allowed to do on the route. Distinct from the assessor's access (`access`). Optional and descriptive. |
+| Route check | `threats[].hypothesis` | What is verified on the route: the control that must hold, written so a result can confirm or refute it. Stored in the route's first threat. |
+| Access (assessor) | `access` | What the assessor can observe on the route: `black-box`, `gray-box`, `white-box`; `unknown` or `none` keep its tasks open. |
 | Capability | `capabilities` | Function the system has on a route (`present`, `absent`, `unknown`). `present`/`absent` require evidence; anything not reviewed stays `unknown`. |
 | Case · fieldcard | `cases` | Verification of a control at a boundary, documented in a fieldcard with applicability, procedure, oracle and evidence. |
 | Control (expected) | `CTL-*` | Invariant that should prevent the harm; the case oracle evaluates it. |

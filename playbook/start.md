@@ -36,7 +36,7 @@ From the framework folder, with Python 3.10 or later (the guided CLI `merestone.
 python fieldguide.py init --profile rag --out runs/architecture.json
 ```
 
-Complete that file with real assets and routes. Each route contains the asset, actor, boundary, access, scope, threats, capabilities and activities. Add routes for different tenants, tools, transports or consumers that change the hypothesis. Record evidence for every capability declared present or absent. Complete authorization, snapshot, limits and the inventory review. Add `test_protocols` for each case that will be run: variants, minimum trials per variant, design, rule and justification. Use [this template](../templates/test-protocol-v3.json). The absence of a protocol does not remove the obligation, but it prevents deciding it as PASS/FAIL.
+Complete that file with real assets and routes. Each route contains the asset, actor, path (`boundary`), access, scope, threats, capabilities and activities, and optionally the actor's permissions (`actor_permissions`) and the trust boundaries marked on the path (`trust_boundaries`). Add routes for different tenants, tools, transports or consumers that change the hypothesis. `merestone route` lists, adds and edits routes without editing JSON. Record evidence for every capability declared present or absent. Complete authorization, snapshot, limits and the inventory review. Add `test_protocols` for each case that will be run: variants, minimum trials per variant, design, rule and justification. Use [this template](../templates/test-protocol-v3.json). The absence of a protocol does not remove the obligation, but it prevents deciding it as PASS/FAIL.
 
 ```console
 python fieldguide.py plan --architecture runs/architecture.json --out runs/plan.json
@@ -69,7 +69,7 @@ python fieldguide.py report runs/plan.json --manifest runs/plan.json.manifest.js
 
 In a guided-CLI workspace the same check and report are `merestone status` and `merestone report`. For people who do not use the terminal, `merestone report --format html` writes a self-contained, read-only dashboard (`--layout document` for a top-to-bottom, print-friendly version); `--format both` writes Markdown and HTML together. `merestone ui` opens the same workflow as a local web interface (architecture editor, plan board, trial recording with drag-and-drop evidence and report export) that runs only on your computer.
 
-In the UI, save route, readiness and protocol edits before freezing. Capability answers save immediately. Scope changes affect a frozen plan only after a revision; marking a route out of scope does not count as passing its tasks. See the [UI guide](../docs/UI-GUIDE.md) for the complete save, revision and evidence workflow.
+In the UI, save route, readiness and protocol edits before freezing; a route's fields are saved together in one write. Capability answers save immediately. Scope changes affect a frozen plan only after a revision; marking a route out of scope does not count as passing its tasks. See the [UI guide](../docs/UI-GUIDE.md) for the complete save, revision and evidence workflow.
 
 Code 0: selected obligations resolved without FAIL and references verified. Code 1: there are FAILs and nothing pending. Code 2: missing readiness/evidence/verification, pending items/exclusions exist or the record is inconsistent. A code 0 does not certify the system: it depends on the scope, the frozen catalog and technical judgment. Without an external manifest or a verifiable store, no green closure is issued.
 

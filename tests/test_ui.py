@@ -175,6 +175,72 @@ class UiServerTests(unittest.TestCase):
         self.assertEqual(self.api('plan', {'reason': 'snapshot set', 'approver': 'R'})[0], 200)
         _, st = self.api('state'); self.assertEqual((st['workspace']['series'], st['plan']['stale']), ('plan-002', False))
 
+    def test_route_preview_matches_the_engine(self):
+        """The preview, the draft preview and the revision summary are what freezing actually produces."""
+        ws = ready_ws(self.d, present=('retrieval', 'llm_generation', 'multi_tenant'), activities='DESIGN,TEST')
+        self.start(ws)
+        self.assertEqual(self.api('route', {'op': 'add', 'route': 'ORDERS', 'like': 'ROUTE-1'})[0], 200)
+        self.assertEqual(self.api('route', {'op': 'edit', 'route': 'ORDERS', 'access': 'gray-box', 'actor': 'Customer A user',
+                                            'path': 'App -> Model -> Orders API -> Order updated'})[0], 200)
+        code, draft = self.api('preview?route=ROUTE-1&activities=DESIGN,CONFIG,TEST')
+        self.assertEqual(code, 200); self.assertEqual(draft['activities'], ['DESIGN', 'CONFIG', 'TEST'])
+        _, st = self.api('state'); self.assertEqual(st['preview']['ROUTE-1']['activities'].keys(), {'DESIGN', 'TEST'})
+        self.assertEqual(self.api('route', {'op': 'edit', 'route': 'ROUTE-1', 'activities': 'DESIGN,CONFIG,TEST'})[0], 200)
+        _, st = self.api('state')
+        self.assertEqual(st['preview']['ROUTE-1'], draft['draft'], 'the draft preview equals the saved one')
+        ex = {e['alias']: e for e in st['preview']['ROUTE-1']['examples']}
+        self.assertTrue(any(e['why'].get('core') for e in ex.values()))
+        self.assertEqual(self.api('plan', {})[0], 200)
+        _, st2 = self.api('state'); tasks = st2['plan']['tasks']
+        for rid, pv in st['preview'].items():
+            mine = [t for t in tasks if t['route_id'] == rid]
+            self.assertEqual(pv['total'], len(mine), rid)
+            for k in ('APPLICABLE', 'UNKNOWN', 'NOT_APPLICABLE'): self.assertEqual(pv[k], sum(t['applicability'] == k for t in mine), (rid, k))
+            for act, counts in pv['activities'].items():
+                for k, n in counts.items(): self.assertEqual(n, sum(t['activity'] == act and t['applicability'] == k for t in mine), (rid, act, k))
+            for e in pv['examples']:
+                t = next(t for t in mine if t['alias'] == e['alias']); self.assertEqual(t['applicability'], e['applicability'])
+        self.assertEqual(st2['revision']['added'] + st2['revision']['removed'] + st2['revision']['changed'], 0)
+        # a saved change is summarised before the revision exactly as the revision turns out
+        self.assertEqual(self.api('route', {'op': 'edit', 'route': 'ORDERS', 'activities': 'TEST', 'permissions': 'Change own orders'})[0], 200)
+        _, st3 = self.api('state'); rv = st3['revision']
+        self.assertTrue(st3['plan']['stale']); self.assertEqual(rv['routes']['ORDERS']['removed'], sum(t['route_id'] == 'ORDERS' and t['activity'] == 'DESIGN' for t in tasks))
+        old = ms.Workspace(ws).plan()
+        self.assertEqual(self.api('plan', {'reason': 'orders tested only', 'approver': 'R'})[0], 200)
+        import governance as gov
+        cmp = gov.compare_plans(old, ms.Workspace(ws).plan())
+        self.assertEqual((rv['added'], rv['removed'], rv['changed']), (len(cmp['added']), len(cmp['removed']), len(cmp['changed'])))
+        _, st4 = self.api('state')
+        frozen = {r['id']: r for r in st4['plan']['routes']}
+        self.assertEqual(frozen['ORDERS']['actor_permissions'], 'Change own orders')
+        self.assertEqual(frozen['ORDERS']['boundary'], 'App -> Model -> Orders API -> Order updated')
+
+    def test_route_api_saves_atomically_and_protects_frozen_routes(self):
+        ws = ready_ws(self.d); self.start(ws)
+        arch_file = ws / 'architecture.json'; before = arch_file.read_bytes()
+        bad = {'op': 'edit', 'route': 'ROUTE-1', 'actor': 'New actor', 'path': 'App -> Model',
+               'trust': [{'from': 'App', 'to': 'Search', 'changes': ['identity']}]}
+        code, err = self.api('route', bad)
+        self.assertEqual(code, 400); self.assertIn('not a step of ROUTE-1', err['error'])
+        self.assertEqual(arch_file.read_bytes(), before, 'a rejected save writes nothing')
+        self.assertEqual(self.api('route', dict(bad, trust='App -> Model'))[0], 400)
+        ok = dict(bad, trust=[{'from': 'actor', 'to': 'App', 'changes': ['identity'], 'note': 'session'}, {'from': 'App', 'to': 'Model', 'changes': ['data_trust'], 'note': ''}],
+                  permissions='Read own documents', check='No other tenant data')
+        code, out = self.api('route', ok); self.assertEqual(code, 200, out)
+        a = ms.Workspace(ws).arch(); r = a['routes'][0]
+        self.assertEqual(r['trust_boundaries'], [{'from': 'actor', 'to': 'App', 'changes': ['identity'], 'note': 'session'}, {'from': 'App', 'to': 'Model', 'changes': ['data_trust']}])
+        self.assertEqual((r['actor'], r['actor_permissions'], ms.route_check(a, r)), ('New actor', 'Read own documents', 'No other tenant data'))
+        self.assertEqual(self.api('route', {'op': 'remove', 'route': 'ROUTE-1'})[0], 400)      # the last route
+        self.assertEqual(self.api('route', {'op': 'add', 'route': 'EXTRA'})[0], 200)
+        self.assertEqual(self.api('plan', {})[0], 400)                    # EXTRA still has unknown access
+        self.assertEqual(self.api('plan', {'anyway': True})[0], 200)
+        code, err = self.api('route', {'op': 'remove', 'route': 'EXTRA'})
+        self.assertEqual(code, 400); self.assertIn('out_of_scope', err['hint'])
+        self.assertEqual(self.api('route', {'op': 'rename', 'route': 'EXTRA'})[0], 400)
+        self.assertEqual(self.api('preview?route=ROUTE-1&activities=DESIGN,HACK')[0], 400)
+        self.assertEqual(self.api('preview?route=NOPE&activities=DESIGN')[0], 404)
+        _, s = self.api('static'); self.assertEqual([t['key'] for t in s['trust_changes']], list(ms.TRUST_CHANGES))
+
     def test_start_screen_creates_and_opens_workspaces(self):
         self.start(None, start_dir=self.d)
         _, st = self.api('state'); self.assertIsNone(st['workspace'])

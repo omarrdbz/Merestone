@@ -21,6 +21,7 @@ merestone demo                                             # watch a FAIL become
 merestone new ../assessments/my-eval --profile rag --guided   # workspace + 16 plain-language questions
 cd ../assessments/my-eval
 merestone setup                                            # permission, version, limits, access... one question at a time
+merestone route edit ROUTE-1 --actor "..." --path "app -> search -> model -> answer"   # the flow you assess
 merestone status                                           # what is missing and the exact command to fix it
 merestone plan                                             # freeze the plan
 merestone tasks --state todo                               # readable task IDs such as AI-006@ROUTE-1
@@ -36,9 +37,9 @@ merestone report --format html --open                      # visual dashboard to
 merestone ui                                               # opens the browser on 127.0.0.1; Ctrl+C stops it
 ```
 
-The same workflow without the terminal: an architecture editor (the route drawn as boundary stones, readiness fields, capabilities as switches or a 16-question interview, test protocols, freezing and revisions), the plan as a filterable list with each task and its fieldcard in a pane beside it, trial and review forms where evidence files are dropped in and hashed (SHA-256) automatically, the exit code and pending list always visible in the sidebar, and report export (board or document). It runs only on this computer with the standard library, sends nothing to the network, and every change goes through the same commands and checks as the CLI, so both can be used on the same workspace at the same time. Light and dark themes. Without a workspace it offers to create or open one. Options: `--port`, `--no-browser`.
+The same workflow without the terminal: an architecture editor (each route described as the flow you assess, with a guided example and boundary stones only where you mark a trust boundary; several routes; a preview of the effect on the plan calculated by the engine; readiness fields, capabilities as switches or a 16-question interview, test protocols, freezing and revisions), the plan as a filterable list with each task and its fieldcard in a pane beside it, trial and review forms where evidence files are dropped in and hashed (SHA-256) automatically, the exit code and pending list always visible in the sidebar, and report export (board or document). It runs only on this computer with the standard library, sends nothing to the network, and every change goes through the same commands and checks as the CLI, so both can be used on the same workspace at the same time. Light and dark themes. Without a workspace it offers to create or open one. Options: `--port`, `--no-browser`.
 
-Save route, readiness and protocol edits with their **Save** buttons before freezing the plan. Capability answers save as you select them; the system name saves when you leave its field. A frozen plan changes only when you freeze a revision. See the [UI workflow and troubleshooting guide](docs/UI-GUIDE.md) for scope, evidence, filters and keyboard navigation.
+Save route, readiness and protocol edits with their **Save** buttons before freezing the plan; a route's fields are saved together. Capability answers save as you select them; the system name saves when you leave its field. A frozen plan changes only when you freeze a revision. See the [UI workflow and troubleshooting guide](docs/UI-GUIDE.md) for scope, evidence, filters and keyboard navigation.
 
 **Install the `merestone` command once** (from this folder, Python 3.10+; no dependencies are downloaded):
 
