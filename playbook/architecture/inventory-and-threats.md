@@ -12,7 +12,9 @@
 
 The available list is in `catalog/capabilities.json`. The template keeps UNKNOWN for information that is not yet confirmed. PRESENT and ABSENT require an evidence reference. Scope and access are recorded separately: `in_scope/out_of_scope` and `black-box/gray-box/white-box/none/unknown`.
 
-A route groups a concrete boundary and identity. If two tools use different permissions, create two routes. If the same tool is tested directly and through an LLM with different assumptions, document separate routes or variants. Memory activates its tests without requiring an agent loop. An MCP stdio server does not inherit HTTP OAuth, RAG or language generation.
+A route is one concrete flow: who starts the action (`actor`) and what that actor is allowed to do (`actor_permissions`), the components the request passes through in order, ending with the result (`boundary`), and what is checked on it (the route's threat). If two tools use different permissions, create two routes. If the same tool is tested directly and through an LLM with different assumptions, document separate routes or variants. Create another route when the actor, its permissions, the path or the effect changes; a different wording of the same request is a variant, not a route. Memory activates its tests without requiring an agent loop. An MCP stdio server does not inherit HTTP OAuth, RAG or language generation.
+
+Mark trust boundaries explicitly (`trust_boundaries`): only the steps where permissions, identity, authority or trust in the data change, each with what changes and a short note. Not every connection between components is a trust boundary, and naming a component in the path does not declare a capability: capabilities keep their own state and evidence. These descriptive fields do not add or remove obligations; capabilities and activities do.
 
 A case's condition is an OR between alternatives and an AND within each alternative. An omitted capability remains unknown. No case that depends on an unknown capability is marked not applicable. The plan keeps all decisions so that exclusions can be audited.
 

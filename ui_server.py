@@ -86,6 +86,12 @@ KIND_INFO = {
     'snapshot': 'Versions or state captured for this trial.',
     'metric': 'A measurement (rate, count, latency).',
 }
+TRUST_INFO = {   # what can change at a trust boundary (ms.TRUST_CHANGES), in plain language
+    'permissions': ('Permissions', 'What is allowed changes: a filter or rule must hold here (e.g. only customer A documents).'),
+    'identity': ('Identity', 'Who the request runs as changes: user session, service account, token or tenant.'),
+    'authority': ('Authority', 'Who decides or executes changes: e.g. model output becomes a tool call or a write.'),
+    'data_trust': ('Data trust', 'Content of lower trust enters: documents, web pages, tool output or user files.'),
+}
 ACTIVITY_INFO = {
     'DESIGN': 'Design review: requirements, architecture and responsibilities against documentation.',
     'CONFIG': 'Configuration review: settings, permissions and deployment, without attacking.',
@@ -165,28 +171,90 @@ class App:
                 'items': {k: {'label': v[0], 'why': v[1], 'example': v[2]} for k, v in self.ms.ITEMS.items()},
                 'gap_label': rh.GAP_LABEL, 'state_meta': rh.STATE_META, 'code_meta': {str(k): v for k, v in rh.CODE_META.items()},
                 'kinds': KIND_INFO, 'tech_kinds': list(self.ms.TECH_KINDS), 'evidence_kinds': list(self.ms.EVIDENCE_KINDS),
-                'activities': ACTIVITY_INFO, 'access': list(self.ms.ACCESS[:3]), 'designs': list(self.ms.DESIGNS), 'profiles': list(self.ms.PROFILES),
+                'activities': ACTIVITY_INFO, 'access': list(self.ms.ACCESS[:3]),
+                'trust_changes': [{'key': k, 'label': TRUST_INFO[k][0], 'hint': TRUST_INFO[k][1]} for k in self.ms.TRUST_CHANGES], 'designs': list(self.ms.DESIGNS), 'profiles': list(self.ms.PROFILES),
                 'mojo': {str(c): rh.mojo_svg(c, 5) for c in (0, 1, 2)}, 'mark': rh.MARK, 'user': getpass.getuser(),
             }
         return self._static
+
+    # ---------- plan preview (the engine's own selection, nothing re-implemented) ----------
+    def route_summary(self, arch, route_id):
+        """Obligations one route would produce, by applicability and activity, with a few explained examples.
+
+        Uses op.expected_tasks, the function that builds and verifies frozen plans, so the counts are
+        exactly what freezing this architecture would produce for the route."""
+        lib = self.lib; route = next(r for r in arch['routes'] if r['id'] == route_id)
+        rules = {c['id']: c['applies_if'] for c in lib['cases'] + lib['scenarios']}
+        specs = op.expected_tasks(dict(arch, routes=[route]), lib)
+        res = {'total': len(specs), 'APPLICABLE': 0, 'UNKNOWN': 0, 'NOT_APPLICABLE': 0, 'activities': {}, 'modules': {}, 'examples': []}
+        for s in specs:
+            res[s['applicability']] += 1
+            a = res['activities'].setdefault(s['activity'], {'APPLICABLE': 0, 'UNKNOWN': 0, 'NOT_APPLICABLE': 0}); a[s['applicability']] += 1
+            m = res['modules'].setdefault(s['module'], {'APPLICABLE': 0, 'UNKNOWN': 0, 'NOT_APPLICABLE': 0}); m[s['applicability']] += 1
+        res['activities'] = {k: res['activities'][k] for k in op.ACTIVITIES if k in res['activities']}
+        caps = route['capabilities']
+        def why(s):
+            rule = rules[s['case_id']]
+            if any(not clause for clause in rule): return {'core': True}
+            if s['applicability'] == 'APPLICABLE':
+                return {'present': next(cl for cl in rule if all(caps.get(k, 'unknown') == 'present' for k in cl))}
+            if s['applicability'] == 'UNKNOWN':
+                return {'unknown': sorted({k for cl in rule if all(caps.get(x, 'unknown') != 'absent' for x in cl) for k in cl if caps.get(k, 'unknown') == 'unknown'})}
+            return {'absent': sorted({k for cl in rule for k in cl if caps.get(k, 'unknown') == 'absent'})}
+        ex = lambda s: {'alias': self.ms.alias(s), 'case_id': s['case_id'], 'title': s['title'], 'activity': s['activity'], 'module': s['module'],
+                        'applicability': s['applicability'], 'why': why(s)}
+        picks = []
+        for act in op.ACTIVITIES:                         # one applicable example per activity, preferring capability-driven ones
+            cand = [s for s in specs if s['activity'] == act and s['applicability'] == 'APPLICABLE']
+            cand.sort(key=lambda s: 'core' in why(s))
+            if cand: picks.append(cand[0])
+        picks += sorted((s for s in specs if s['applicability'] == 'UNKNOWN'), key=lambda s: (len(why(s)['unknown']), s['case_id']))[:2]
+        picks += [s for s in specs if s['applicability'] == 'NOT_APPLICABLE'][:1]
+        res['examples'] = [ex(s) for s in picks[:6]]
+        return res
+
+    def revision(self, ws, plan, arch):
+        """What freezing a revision now would change, per route, compared with the frozen plan."""
+        specs = op.expected_tasks(arch, self.lib)
+        before = {t['task_id']: t for t in plan['tasks']}; after = {s['task_id']: s for s in specs}
+        fields = ('case_revision', 'applicability', 'scope', 'access', 'control_ids', 'threat_ids', 'technique_ids', 'test_protocol', 'boundary')
+        routes = {}
+        def bump(rid, k): routes.setdefault(rid, {'added': 0, 'removed': 0, 'changed': 0, 'results': 0})[k] += 1
+        for k in after.keys() - before.keys(): bump(after[k]['route_id'], 'added')
+        for k in before.keys() - after.keys(): bump(before[k]['route_id'], 'removed')
+        for k in before.keys() & after.keys():
+            if any(before[k][f] != after[k][f] for f in fields): bump(after[k]['route_id'], 'changed')
+        for t in plan['tasks']:
+            if t['result']: bump(t['route_id'], 'results')
+        total = {k: sum(r[k] for r in routes.values()) for k in ('added', 'removed', 'changed', 'results')}
+        return dict(total, routes=routes, record=ws.cfg.get('plan'), series=ws.cfg.get('series'))
+
+    def preview(self, route_id, activities):
+        """Draft preview: the saved architecture with this route's activities replaced (nothing is written)."""
+        with self.lock:
+            arch = self.ws().arch()
+            route = next((r for r in arch['routes'] if r['id'] == route_id), None)
+            if not route: raise ApiError(404, f'Unknown route {route_id}.')
+            acts = [a.strip().upper() for a in activities.split(',') if a.strip()]
+            if not acts or set(acts) - set(op.ACTIVITIES): raise ApiError(400, 'Choose activities among DESIGN, CONFIG, TEST and REDTEAM.')
+            route['activity_types'] = list(dict.fromkeys(acts))
+            return {'route': route_id, 'activities': route['activity_types'], 'draft': self.route_summary(arch, route_id)}
 
     def state(self):
         ms = self.ms
         if not self.root:
             near = sorted(str(c.name) for c in self.start_dir.iterdir() if c.is_dir() and (c / ms.WS_FILE).is_file()) if self.start_dir.is_dir() else []
-            return {'workspace': None, 'start_dir': str(self.start_dir), 'nearby': near, 'rev': 'none'}
+            framework = Path(__file__).resolve().parent
+            default_folder = str(framework.parent / 'assessments' / 'my-assessment') if self.start_dir.is_relative_to(framework) else 'my-assessment'
+            return {'workspace': None, 'start_dir': str(self.start_dir), 'default_folder': default_folder, 'nearby': near, 'rev': 'none'}
         with self.lock:
             ws = self.ws(); arch = ws.arch()
             items = []
             for it in ms.setup_items(arch):
                 items.append(dict(it, command=ms.item_command(it)))
-            preview = {}
             try:
-                for spec in op.expected_tasks(arch, self.lib):
-                    d = preview.setdefault(spec['route_id'], {'APPLICABLE': 0, 'UNKNOWN': 0, 'NOT_APPLICABLE': 0, 'modules': {}})
-                    d[spec['applicability']] += 1
-                    m = d['modules'].setdefault(spec['module'], {'APPLICABLE': 0, 'UNKNOWN': 0, 'NOT_APPLICABLE': 0}); m[spec['applicability']] += 1
-            except (KeyError, ValueError):
+                preview = {r['id']: self.route_summary(arch, r['id']) for r in arch['routes']}
+            except (KeyError, ValueError, StopIteration):
                 preview = {}
             res = {'workspace': {'root': str(ws.root), 'name': ws.root.name, 'series': ws.cfg.get('series'), 'profile': ws.cfg.get('profile'),
                                  'history': ws.cfg.get('history', [])[-80:], 'has_plan': ws.has_plan(), 'evidence_dir': ws.cfg['evidence_dir']},
@@ -210,11 +278,19 @@ class App:
                                                      'scope', 'access', 'test_protocol', 'execution', 'result', 'rationale', 'observations', 'reviewer',
                                                      'evidence_ids', 'trials', 'cleanup_confirmed', 'exclusion', 'control_ids', 'technique_ids', 'example_ids')}
                                  | {'alias': ms.alias(t), 'bucket': rh.bucket(t), 'state': ms.task_state(t), 'staged': staged.get(t['task_id'])})
+                frozen = plan['architecture']
                 res['plan'] = {'plan_id': plan['plan_id'], 'created_at': plan['created_at'], 'series': ws.cfg.get('series'),
                                'record': ws.cfg.get('plan'), 'stale': op.digest(arch) != plan['architecture_sha256'],
-                               'snapshot_ref': plan['architecture']['snapshot_ref'], 'tasks': tasks,
+                               'snapshot_ref': frozen['snapshot_ref'], 'tasks': tasks,
                                'evidence': plan['evidence'], 'amendments': plan.get('amendments', []),
-                               'routes': [{'id': x['id'], 'access': x['access'], 'activity_types': x['activity_types']} for x in plan['architecture']['routes']]}
+                               # the frozen description of each route: tasks are explained with what was frozen, not later edits
+                               'routes': [{k: x.get(k, d) for k, d in (('id', ''), ('access', ''), ('scope', ''), ('activity_types', []), ('actor', ''), ('actor_permissions', ''),
+                                                                      ('boundary', ''), ('trust_boundaries', []), ('capabilities', {}), ('capability_evidence', {}), ('test_protocols', []))}
+                                          | {'check': ms.route_check(frozen, x)} for x in frozen['routes']]}
+                try:
+                    res['revision'] = self.revision(ws, plan, arch)
+                except (KeyError, ValueError):
+                    res['revision'] = None
             return res
 
     def reports(self, ws):
@@ -259,6 +335,16 @@ class App:
                 if not 0 <= i < len(arch['stop_conditions']): raise ApiError(400, 'No such stop condition.')
                 removed = arch['stop_conditions'].pop(i); ws.save_arch(arch); ws.log('ui: remove stop condition', 'architecture.json')
             return {'ok': True, 'output': f'Removed stop condition: {removed}'}
+        if action == 'route':
+            what = s('op')
+            if what not in ('add', 'edit', 'remove'): raise ApiError(400, 'Unknown route action.')
+            opt = lambda k: b.get(k) if b.get(k) is not None else None
+            trust = b.get('trust')
+            if trust is not None and not (isinstance(trust, list) and all(isinstance(x, dict) for x in trust)):
+                raise ApiError(400, 'Trust boundaries must be a list of objects.')
+            return self.run(ms.cmd_route, action=what, id=s('route'), actor=opt('actor'), permissions=opt('permissions'), path=opt('path'),
+                            access=opt('access'), activities=opt('activities'), scope=opt('scope'), check=opt('check'), trust=trust,
+                            no_trust=False, like=s('like') or None, copy_caps=bool(b.get('copy_caps')))
         if action == 'protocol':
             return self.run(ms.cmd_protocol, case=s('case'), variants=s('variants'), min=int(b.get('min') or 1), design=s('design', 'deterministic'),
                             rule=s('rule'), why=s('why'), route=s('route') or None)
@@ -394,6 +480,7 @@ class Handler(BaseHTTPRequestHandler):
             if url.path == '/api/state': return self.json(200, self.app.state())
             if url.path == '/api/rev': return self.json(200, {'rev': self.app.rev()})
             if url.path == '/api/fieldcard': return self.json(200, self.app.fieldcard((q.get('case') or [''])[0]))
+            if url.path == '/api/preview': return self.json(200, self.app.preview((q.get('route') or [''])[0], (q.get('activities') or [''])[0]))
             return self.json(404, {'error': 'Not found.'})
         except Exception as e:  # noqa: BLE001 - report every failure to the page
             return self.fail(e)
