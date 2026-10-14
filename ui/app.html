@@ -587,7 +587,7 @@ function rdiff(f,b){   // draft fields that differ from the saved route
   return d;}
 const rsame=(f,b)=>!rdiff(f,b).length;
 function rform(r){const n='route:'+r.id,b=rbase(r),key=JSON.stringify(b);
-  if(F[n]&&F[n]._key!==key&&rsame(F[n],JSON.parse(F[n]._key)))delete F[n];   // changed elsewhere (e.g. the terminal) and not edited here
+  if(UI.saving!==r.id&&F[n]&&F[n]._key!==key&&rsame(F[n],JSON.parse(F[n]._key)))delete F[n];   // changed elsewhere and not edited here; an in-flight save may have newer edits, even a revert
   const f=ns(n,()=>({...JSON.parse(key),_key:key}));
   while(f.trust.length<f.hops.length)f.trust.push({changes:[],note:''});
   return f;}
@@ -627,7 +627,7 @@ function effectPanel(r,f,d){
     :(f.access==='unknown'||f.access==='none')?`<p class="note warn small">${f.access==='none'?'No access':'Access unknown'}: these tasks stay open until you declare how much you can see.</p>`:'';
   let planLine='';
   if(p){const rv=(ST.revision&&ST.revision.routes||{})[id]||{added:0,removed:0,changed:0,results:0},frozenN=tasks().filter(t=>t.route_id===id).length;
-    planLine=inFrozenPlan(id)?`<p class="small"><b>Frozen ${esc(w.series)}:</b> ${frozenN} tasks on ${esc(id)}${rv.results?`, ${rv.results} with a recorded result`:''}. ${p.stale&&(rv.added||rv.removed||rv.changed)?`A revision with the saved values would add ${rv.added} tasks here, remove ${rv.removed} and update ${rv.changed}. Recorded results stay in ${esc(w.series)}; they are not copied into the revision.`:'The saved route matches it.'}${d.length?' Unsaved edits are not included until you save.':''}</p>`
+    planLine=inFrozenPlan(id)?`<p class="small"><b>Frozen ${esc(w.series)}:</b> ${frozenN} tasks on ${esc(id)}${rv.results?`, ${rv.results} with a recorded result`:''}. ${p.stale&&(rv.added||rv.removed||rv.changed)?`A revision with the saved values would add ${rv.added} tasks here, remove ${rv.removed} and update ${rv.changed}. Recorded results stay in ${esc(w.series)}; they are not copied into the revision.`:routeVsFrozen(r)==='changed'?'The tasks are unchanged, but saved route information differs. Freeze a revision to include it.':'The saved route matches it.'}${d.length?' Unsaved edits are not included until you save.':''}</p>`
       :`<p class="small"><b>Not in ${esc(w.series)} yet.</b> A revision with the saved values would add ${rv.added} tasks for ${esc(id)}.</p>`;}
   return `<div class="effect" id="route-effect"><div class="eh"><h3>Effect on the plan</h3><span class="chip ${actsDirty?'unk':'teal'}">${actsDirty?'Includes unsaved activities':'Saved route'}</span></div>
    <p class="small muted">Calculated by the planning engine from the activities and the capability answers (03). Actor, permissions, path and check describe the tasks; they do not add or remove any.</p>
@@ -1188,10 +1188,14 @@ const A={
     if(d.includes('trust')||d.includes('hops')||orphanMarks(r).length)body.trust=trustList(f);
     if(d.includes('access'))body.access=f.access;if(d.includes('activities'))body.activities=f.activities.join(',');if(d.includes('scope'))body.scope=f.scope;
     UI.saving=id;delete UI.routeErr[id];busy(1);render();
-    try{const res=await api('route',body);delete F['route:'+id];await refresh();
-      toast('Route '+id+' saved.',plan()?'Saved changes reach the frozen plan when you freeze a revision.':d.map(k=>ROUTE_LBL[k]).join(', '),'ok');}
+    try{await api('route',body);await refresh();
+      // Keep edits made during either request, including a return to the previous saved value.
+      const draft=F['route:'+id],saved=rbase(routeOf(id)),pending=draft&&!rsame(draft,saved);
+      if(!pending)delete F['route:'+id];
+      toast('Route '+id+' saved.',pending?'Your newer edits are not saved yet. Save again to include them.':plan()?'Saved changes reach the frozen plan when you freeze a revision.':d.map(k=>ROUTE_LBL[k]).join(', '),'ok');}
     catch(e){UI.routeErr[id]=e.message+(e.hint?' '+e.hint:'');toast(e.message,e.hint,'err');try{await refresh();}catch(_){}}
-    finally{UI.saving=null;busy(-1);render();}},
+    finally{const draft=F['route:'+id];if(draft)draft._key=JSON.stringify(rbase(routeOf(id)));
+      UI.saving=null;busy(-1);render();}},
   routeDiscard:el=>{const r=routeOf(el.dataset.route),d=rdiff(rform(r),rbase(r));
     confirmModal('Discard unsaved changes on '+r.id+'?','The editor returns to the saved route ('+esc(d.map(k=>ROUTE_LBL[k]).join(', '))+' revert). Saved values, capability answers and the plan are not affected.','routeDiscardGo','Discard changes','Keep editing',`data-route="${esc(r.id)}"`);},
   routeDiscardGo:el=>{const id=el.dataset.route;delete F['route:'+id];delete UI.routeErr[id];closeModal();render();

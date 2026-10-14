@@ -76,6 +76,46 @@ test('a valid route scope change is saved in one request with its internal value
   assert.equal(run('JSON.stringify(calls[0][1])'),JSON.stringify({op:'edit',route:'ROUTE-1',scope:'out_of_scope'}));
 });
 
+for (const phase of ['write', 'refresh']) {
+  for (const latest of ['Second edit', '']) {
+    test(`route edits during ${phase} survive saving, including reverting to ${JSON.stringify(latest)}`, async () => {
+      const run=client();
+      run(`
+        rform(ST.arch.routes[0]).perms='First edit';
+        let finishWrite, finishRefresh, submitted;
+        api=(action,body)=>{submitted=body;return new Promise(resolve=>finishWrite=resolve)};
+        refresh=async()=>{
+          await new Promise(resolve=>finishRefresh=resolve);
+          ST.arch.routes[0].actor_permissions=submitted.permissions;
+          routeCard(); // refresh renders before the save handler resumes
+        };
+      `);
+      const saving=run(`A.saveRoute({dataset:{route:'ROUTE-1'}})`);
+      if (phase==='refresh') {run('finishWrite({})');await Promise.resolve();}
+      run(`rform(ST.arch.routes[0]).perms=${JSON.stringify(latest)}`);
+      if (phase==='write') {run('finishWrite({})');await Promise.resolve();}
+      run('finishRefresh()');await saving;
+      assert.equal(run('submitted.permissions'),'First edit');
+      assert.equal(run('ST.arch.routes[0].actor_permissions'),'First edit');
+      assert.equal(run('rform(ST.arch.routes[0]).perms'),latest);
+      assert.equal(run('routeDirty(ST.arch.routes[0])'),true);
+      assert.match(run('routeCard()'),/Unsaved: permissions/);
+      assert.match(run('messages.at(-1)[1]'),/newer edits.*not saved/i);
+      await run('A.freeze()');
+      assert.equal(run(`calls.some(c=>c[0]==='plan')`),false);
+    });
+  }
+}
+
+test('a successful save without newer edits clears the draft and uses normalized saved values', async () => {
+  const run=client();
+  run(`rform(ST.arch.routes[0]).perms='  Read own documents  ';
+    refresh=async()=>{ST.arch.routes[0].actor_permissions=calls[0][1].permissions;routeCard()};`);
+  await run(`A.saveRoute({dataset:{route:'ROUTE-1'}})`);
+  assert.equal(run('rform(ST.arch.routes[0]).perms'),'Read own documents');
+  assert.equal(run('routeDirty(ST.arch.routes[0])'),false);
+});
+
 test('scope can be saved on a draft route whose actor is still unknown', async () => {
   const run=client();run(`ST.arch.routes[0].actor='to be identified';ST.arch.routes[0].boundary='to be identified';rform(ST.arch.routes[0]).scope='out_of_scope'`);
   await run(`A.saveRoute({dataset:{route:'ROUTE-1'}})`);
@@ -315,3 +355,25 @@ test('the save status says whether the saved route matches the frozen plan', () 
   run(`ST.plan.routes=[]`);
   assert.match(run('routeCard()'),/Saved · not in plan-001 until you freeze a revision/);
 });
+
+for (const edit of [
+  `ST.arch.routes[0].actor_permissions='Read own documents'`,
+  `ST.arch.routes[0].trust_boundaries=[{from:'actor',to:'App',changes:['identity']}]`,
+  `ST.arch.threats[0].hypothesis='No cross-customer documents'`,
+]) {
+  test(`the effect panel reports descriptive changes without task changes: ${edit}`, () => {
+    const run=client();
+    run(`ST.plan={series:'plan-001',stale:false,tasks:[],routes:[{...JSON.parse(JSON.stringify(ST.arch.routes[0])),check:''}]};
+      ST.revision={routes:{'ROUTE-1':{added:0,removed:0,changed:0,results:0}}};`);
+    assert.match(run('routeCard()'),/The saved route matches it\./);
+    run(`${edit};ST.plan.stale=true`);
+    const page=run('routeCard()');
+    assert.match(page,/Saved · differs from plan-001/);
+    assert.match(page,/The tasks are unchanged, but saved route information differs/);
+    assert.doesNotMatch(page,/The saved route matches it\./);
+    run(`ST.revision.routes['ROUTE-1'].changed=2`);
+    assert.match(run('routeCard()'),/update 2/);
+    run(`ST.plan.routes=[];ST.revision.routes['ROUTE-1'].added=3`);
+    assert.match(run('routeCard()'),/Not in plan-001 yet/);
+  });
+}
